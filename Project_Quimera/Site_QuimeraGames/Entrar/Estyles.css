@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  align-items: center;       
+
+  background-color: #0b0f1a;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  color: white;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 26px;
+  margin-right: 28px;
+}
+
+.h1box {
+  border-radius: 10px;
+  width: 440px;
+  height: 540px;
+  padding-right: 10px;
+  padding-left: 40px;
+  background-color: rgb(19, 32, 65);
+}
+
+.iniciar_sessao {
+  color: #ffffff;
+  background-color: #A8030C;
+}
+
+.problemas_iniciar {
+  display: flex;
+  text-align: center;
+  color: black;
+}
+
+.conteudo {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #8fa2cf;
+  padding: 40px;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.lembrar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
