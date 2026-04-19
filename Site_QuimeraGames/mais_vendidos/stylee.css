@@ -1,0 +1,460 @@
+body {
+  background: #0A0F1C;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+input { display: none; }
+
+.img{
+  width: 100px;
+  height: 95px;
+  background: transparent;
+  margin-left: 25px;
+  border-radius: 6px;
+  padding-right: 30px;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(19, 32, 65, 0.95);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  gap: 30px;
+}
+
+
+
+.logo {
+  width: 100px;
+  height: auto;
+  border-radius: 12px;
+  margin-top: 5px;
+  margin-left: 15px;
+}
+
+.topo-esquerda,
+.topo-direita {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 0 20px;
+}
+
+.btn-nav,
+.btn-login {
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  background: rgba(255, 255, 255, 0.05);
+  gap: 30px;
+}
+
+.btn-nav.active,
+.btn-login:hover {
+  background: #e50914;
+} 
+
+.button{
+    display: flex;
+    justify-content: flex-start;
+    padding: 6px 15px;  
+    margin-left: 25px;
+    font-size: 15px;
+    background-color: #A8030C;
+    color:#ffffff;
+    border: none;
+    border-radius: 3px;
+    width: 70px;
+    height: 28px;
+}
+
+.button2{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    width: 90%;
+    height: 20px;
+    background-color: #132041;
+    margin-right: 50px;
+    font-size: 20px;
+}
+
+.entrar {
+  background-color: #A8030C;
+  color:#ffffff;
+  border: none;
+  border-radius: 3px;
+  width: 70px;
+  height: 28px;
+
+}
+
+.suporte {
+  background-color: #A8030C;
+  color:#ffffff;
+  border: none;
+  border-radius: 3px;
+  width: 70px;
+  height: 28px;
+
+}
+
+.textao {
+  color: #ffffff;
+  margin-top: 50px;
+  margin-left: 200px;
+}
+
+.linha-topo {
+  display: flex;
+  justify-content: space-between; /* empurra pro lado */
+  align-items: center;
+}
+
+.textos {
+  display: flex;
+  flex-direction: column;
+  margin-left: 60px;
+}
+
+.texto1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.texto2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+
+.jogos {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  color:#ffffff;
+  background-color: #001038;  
+  padding: 15px;
+  gap: 0px;
+  width: 1300px;
+  border-radius: 15px;
+  margin-left: 230px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.num {
+  padding-left: 15px;
+}
+
+.preco {
+  display: flex;
+  margin-left: auto;
+  margin-right: 25px;
+}
+
+.tudoai{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 130px;
+    width: 95.8% ; 
+    height: 120px;
+
+    background: linear-gradient(to bottom,#0f2449,#020817);
+    padding: 20px 40px;
+    color: white;
+    margin-top: 200px;
+}
+
+.primeira_cadastre{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.primeira{
+    font-size: 28px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.cad{
+    background-color: #A8030C;
+    color: white;
+    border: none;
+    padding: 4px 25px;
+    border-radius: 25px;
+    font-size: 24px;
+    cursor: pointer;
+  font-style: italic;
+  font-style: bold;
+}
+
+.cad:hover{
+  background-color: #d83b43;
+}
+
+.texto{
+    max-width: 350px;
+    font-size: 18px;
+    color: #cfd6e6;
+}
+
+.menu-busca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+
+.busca-input {
+  width: 360px;
+  background: rgba(42, 58, 90, 0.8);
+  border-radius: 999px;
+  padding: 8px 16px;
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.busca-input input {
+  background: transparent;
+  border: none;
+  color: white;
+  width: 100%;
+  outline: none;
+}
+
+.btn-dropdown {
+  background: transparent;
+  border: 2px solid #e50914;
+  border-radius: 999px;
+  padding: 8px 22px;
+  color: white;
+  cursor: pointer;
+}
+
+.painel-dropdown {
+  background-color: #0b1120;
+  width: 100%;
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(229, 9, 20, 0.1);
+
+  /* CORREÇÃO DO BLOQUEIO DOS CLIQUES E VISIBILIDADE */
+  opacity: 0;
+  transform: translateY(-15px) scale(0.98);
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.painel-dropdown.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+  pointer-events: auto;
+
+  /* Novo Brilho: 3 camadas de sombra vermelha e uma borda leve */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(229, 9, 20, 0.3),
+    0 0 80px rgba(229, 9, 20, 0.15);
+  border: 1px solid rgba(229, 9, 20, 0.4);
+}
+
+.banner-explorar-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.img-banner-explorar {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.overlay-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(11, 17, 32, 0.9), rgba(11, 17, 32, 0.3));
+  z-index: 1;
+}
+
+.banner-explorar-container:hover .img-banner-explorar {
+  transform: scale(1.05);
+}
+
+.menu-wrapper {
+  margin-left: 150px;
+  margin-top: 10px
+}
+
+.botaocat {
+  display: flex;
+  position: relative;
+  margin-left: 30px;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+.categorias_textao {
+  display: flex;
+  flex-direction: row;
+}
+
+
+
+
+.btn-nav,
+.btn-login {
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-nav.active {
+  background: #e50914;
+}
+
+.btn-login:hover {
+  background: #e50914;
+}
+
+/* CARRINHO */
+.btn-icon {
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+.btn-icon:hover {
+  transform: scale(1.2);
+}
+
+/* USUÁRIO */
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s;
+}
+
+.user-box:active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.user-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-nome {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+/* DROPDOWN USUÁRIO */
+.user-menu {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background: #13192b;
+  border-radius: 10px;
+  padding: 10px 0;
+  width: 160px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  z-index: 9999;
+}
+
+.user-menu a {
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.2s;
+  text-align: center;
+}
+
+.user-menu a:hover {
+  background: #37415a;
+}
+
+html, body { min-height: 100vh; display: flex; flex-direction: column; margin: 0; }
+.container, .main-pagamento, .categoria-container { flex: 1; } /* Empurra o rodapé pro fundo no Pesquisar */
+
+.topo-universal {
+    display: flex !important; justify-content: space-between !important; align-items: center !important;
+    padding: 15px 5% !important; background: rgba(19, 32, 65, 0.95) !important; width: 100% !important;
+    box-sizing: border-box !important; position: relative !important; z-index: 1000 !important;
+}
+.topo-universal .logo { width: 100px !important; height: auto !important; border-radius: 12px !important; }
+.topo-universal .topo-esquerda, .topo-universal .topo-direita { display: flex !important; align-items: center !important; gap: 20px !important; }
+.topo-universal .btn-nav, .topo-universal .btn-login {
+    border: none !important; color: white !important; padding: 12px 24px !important; border-radius: 25px !important;
+    cursor: pointer !important; font-weight: 600 !important; background: rgba(255, 255, 255, 0.05) !important;
+    font-size: 15px !important; text-decoration: none !important;
+}
+.topo-universal .btn-nav.active, .topo-universal .btn-login:hover { background: #e62429 !important; }
+
+/* ÍCONES E USUÁRIO (Para ficar igualzinho à imagem 3) */
+.topo-universal .btn-icon { background: transparent !important; border: none !important; font-size: 26px !important; cursor: pointer !important; color: white !important; padding: 0 !important; }
+.topo-universal .user-box { display: flex !important; align-items: center !important; gap: 10px !important; background: rgba(255,255,255,0.05) !important; padding: 6px 15px !important; border-radius: 20px !important; cursor: pointer !important; position: relative !important; transition: 0.3s !important; }
+.topo-universal .user-box:hover { background: rgba(255,255,255,0.1) !important; }
+.topo-universal .user-img { width: 32px !important; height: 32px !important; border-radius: 50% !important; object-fit: cover !important; margin: 0 !important; }
+.topo-universal .user-nome { font-size: 15px !important; font-weight: 600 !important; color: white !important; margin: 0 !important; font-family: sans-serif !important;}
+
+/* DROPDOWN MENU */
+.topo-universal .user-menu { position: absolute !important; top: 50px !important; right: 0 !important; background: #13192b !important; border-radius: 10px !important; padding: 10px 0 !important; width: 180px !important; display: none; flex-direction: column !important; box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important; z-index: 9999 !important; }
+.topo-universal .user-menu a { padding: 12px 20px !important; color: white !important; text-decoration: none !important; font-size: 14px !important; text-align: left !important; display: flex !important; justify-content: space-between !important; align-items: center !important; font-family: sans-serif !important;}
+.topo-universal .user-menu a:hover { background: #1f2a44 !important; }
+
+/* BADGES (Bolinhas Vermelhas) */
+.badge-bolinha { background: #e62429 !important; color: white !important; border-radius: 50% !important; padding: 2px 6px !important; font-size: 11px !important; font-weight: bold !important; }
+
+/* RODAPÉ BLINDADO */
+.rodape-universal { background: #111823 !important; color: #cdd5e0 !important; text-align: center !important; padding: 30px !important; border-top: 1px solid #30363d !important; width: 100% !important; box-sizing: border-box !important; margin-top: auto !important; font-family: sans-serif !important;}

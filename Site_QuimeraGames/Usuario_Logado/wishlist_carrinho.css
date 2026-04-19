@@ -1,0 +1,239 @@
+/* =========================================
+   LAYOUT DO CARRINHO
+   ========================================= */
+.cart-layout {
+    display: flex;
+    gap: 60px;
+    /* Muito mais espaço entre a lista e o resumo */
+    max-width: 1200px;
+    /* Deixou de ser apertado */
+    margin: 80px auto;
+    padding: 0 20px;
+    align-items: flex-start;
+    flex: 1;
+    width: 100%;
+}
+
+.cart-list {
+    flex: 2.2;
+    /* A lista de jogos ocupa mais espaço do que o resumo */
+}
+
+.cart-list h2 {
+    margin-bottom: 35px;
+    font-size: 32px;
+}
+
+.cart-summary {
+    flex: 1;
+    background: #13192b;
+    padding: 40px;
+    /* Mais respiro interno na caixa de resumo */
+    border-radius: 12px;
+    position: sticky;
+    top: 100px;
+}
+
+.cart-summary h3 {
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 17px;
+}
+
+.btn-checkout {
+    width: 100%;
+    background: #e62429;
+    border: none;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: 0.3s;
+}
+
+.btn-checkout:hover {
+    background: #c0181d;
+}
+
+.cart-item {
+    background: #13192b;
+    display: flex;
+    padding: 30px;
+    /* Mais respiro interno */
+    border-radius: 12px;
+    margin-bottom: 25px;
+    align-items: center;
+    position: relative;
+}
+
+.cart-item img.capa {
+    width: 100px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 35px;
+    /* Afasta bem a imagem dos textos */
+}
+
+.cart-info {
+    flex-grow: 1;
+}
+
+.cart-info h3 {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.cart-info small {
+    color: #ccc;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.remover-link {
+    color: #888;
+    text-decoration: underline;
+    font-size: 15px;
+    margin-left: 20px;
+    transition: 0.2s;
+}
+
+.remover-link:hover {
+    color: #e62429;
+}
+
+
+/* =========================================
+   LAYOUT DA WISHLIST (LISTA DE DESEJOS)
+   ========================================= */
+.wish-container {
+    max-width: 1000px;
+    /* Deixou de ser exprimido */
+    margin: 80px auto;
+    padding: 0 20px;
+    flex: 1;
+    width: 100%;
+}
+
+.wish-container h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 50px;
+}
+
+.wish-item {
+    background: #13192b;
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    /* Muito mais espaço dentro da caixa */
+    border-radius: 12px;
+    margin-bottom: 25px;
+    position: relative;
+    min-height: 180px;
+}
+
+.wish-item img.capa {
+    width: 110px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 40px;
+}
+
+.wish-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.wish-info small {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.wish-info h3 {
+    font-size: 26px;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.plataforma-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.8;
+}
+
+.plataforma-info span {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.wish-price {
+    font-size: 26px;
+    font-weight: bold;
+    margin-right: 20px;
+    margin-bottom: 40px;
+    /* Dá espaço para os links não encostarem */
+}
+
+.wish-actions {
+    position: absolute;
+    bottom: 20px;
+    right: 25px;
+    display: flex;
+    gap: 30px;
+    /* Afastou o remover do botão visualizar carrinho */
+}
+
+.wish-actions a {
+    color: #888;
+    text-decoration: underline;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.wish-actions a:hover {
+    color: #e62429;
+}
+
+.empty-state {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.sad-icon {
+    font-size: 80px;
+    display: block;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.btn-red {
+    background: #e62429;
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-red:hover {
+    background: #c0181d;
+}

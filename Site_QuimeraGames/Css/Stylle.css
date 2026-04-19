@@ -1,0 +1,392 @@
+/* --- FUNDOS E LAYOUT --- */
+.categoria-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 20px;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.conteudo-jogos {
+    flex: 1;
+}
+
+.categoria-cabecalho {
+    margin-bottom: 30px;
+}
+
+.categoria-cabecalho h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 800;
+}
+
+.categoria-cabecalho p {
+    font-size: 15px;
+    color: #a0a0a0;
+    max-width: 800px;
+    line-height: 1.5;
+}
+
+/* --- GRADE DE JOGOS MODERNIZADA --- */
+.jogos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.jogo-card {
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.jogo-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- ESTILOS DOS PAINÉIS DROPDOWN --- */
+.painel-dropdown {
+  background-color: #0b1120;
+  width: 100%;
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(229, 9, 20, 0.1);
+
+  /* CORREÇÃO DO BLOQUEIO DOS CLIQUES E VISIBILIDADE */
+  opacity: 0;
+  transform: translateY(-15px) scale(0.98);
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.painel-dropdown.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+  pointer-events: auto;
+
+  /* Novo Brilho: 3 camadas de sombra vermelha e uma borda leve */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(229, 9, 20, 0.3),
+    0 0 80px rgba(229, 9, 20, 0.15);
+  border: 1px solid rgba(229, 9, 20, 0.4);
+}
+
+
+
+/* --- CARROSSEL: CORREÇÃO DE SOBREPOSIÇÃO --- */
+.carousel-container {
+  width: 100%;
+  position: relative;
+  height: 520px;
+  /* Altura mantida conforme sua preferência */
+  margin-top: 20px;
+  padding-bottom: 60px;
+}
+
+.slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  /* Fixa todos os slides no mesmo ponto inicial */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 20px;
+  opacity: 0;
+  /* Esconde todos */
+  visibility: hidden;
+  transition: opacity 0.6s ease;
+  z-index: 1;
+}
+
+/* Mostra apenas o slide selecionado pelo rádio botão */
+#s1:checked~.slides #slide1,
+#s2:checked~.slides #slide2,
+#s3:checked~.slides #slide3,
+#s4:checked~.slides #slide4,
+#s5:checked~.slides #slide5,
+#s6:checked~.slides #slide6,
+#s7:checked~.slides #slide7 {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+
+.card-cat-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  /* O segredo do formato vertical da sua foto */
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease, filter 0.3s ease;
+  filter: brightness(0.9);
+}
+
+.card-cat-item:hover {
+  transform: translateY(-8px);
+}
+.img-cat-wrapper {
+  width: 100%;
+  border-radius: 6px;
+  /* Cantos levemente arredondados */
+  overflow: hidden;
+  margin-bottom: 12px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.card-cat-item:hover .img-cat-wrapper {
+  transform: scale(1.05);
+  /* Dá um leve zoom na imagem */
+  filter: brightness(1.1);
+}
+
+.card-cat-item:hover img {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+.card-cat-item span {
+  color: #e5e5e5;
+  font-size: 1.15rem;
+  /* Texto maior */
+  font-weight: 500;
+  /* Mais limpo */
+  transition: color 0.3s ease;
+  padding-left: 2px;
+}
+
+.card-cat-item:hover span {
+  color: white;
+}
+
+
+.carousel-categorias-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 10px;
+}
+
+.thumb-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+}
+
+.thumb-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.jogo-card:hover .thumb-wrapper img {
+    transform: scale(1.05);
+}
+
+.card-info-texto {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.jogo-titulo {
+    font-size: 15px;
+    color: white;
+    margin: 0 0 12px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+}
+
+.jogo-preco-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    margin-top: auto;
+}
+
+.badge-desconto {
+    background-color: #0074e4;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.preco-antigo {
+    color: #888;
+    text-decoration: line-through;
+}
+
+.preco-novo {
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.preco-novo.gratis {
+    color: #4CAF50;
+}
+
+/* --- BARRA LATERAL (FILTROS) --- */
+.barra-filtros {
+    width: 280px;
+    flex-shrink: 0;
+    background: rgba(19, 32, 65, 0.3);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.barra-filtros h3 {
+    font-size: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.filtro-busca {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 25px;
+}
+
+.filtro-busca input {
+    background: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    width: 100%;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.filtro-grupo {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-filtro-toggle {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: white;
+    text-align: left;
+    padding: 18px 0;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filtro-conteudo {
+    display: none;
+    padding-bottom: 20px;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filtro-conteudo.ativo {
+    display: flex;
+}
+
+.filtro-conteudo label {
+    font-size: 14px;
+    color: #b0b0b0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.2s;
+}
+
+.filtro-conteudo label:hover {
+    color: white;
+}
+
+/* Estilizando o checkbox padrão */
+.filtro-checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #e50914;
+}
+
+html, body { min-height: 100vh; display: flex; flex-direction: column; margin: 0; }
+.container, .main-pagamento, .categoria-container { flex: 1; } /* Empurra o rodapé pro fundo no Pesquisar */
+
+.topo-universal {
+    display: flex !important; justify-content: space-between !important; align-items: center !important;
+    padding: 15px 5% !important; background: rgba(19, 32, 65, 0.95) !important; width: 100% !important;
+    box-sizing: border-box !important; position: relative !important; z-index: 1000 !important;
+}
+.topo-universal .logo { width: 100px !important; height: auto !important; border-radius: 12px !important; }
+.topo-universal .topo-esquerda, .topo-universal .topo-direita { display: flex !important; align-items: center !important; gap: 20px !important; }
+.topo-universal .btn-nav, .topo-universal .btn-login {
+    border: none !important; color: white !important; padding: 12px 24px !important; border-radius: 25px !important;
+    cursor: pointer !important; font-weight: 600 !important; background: rgba(255, 255, 255, 0.05) !important;
+    font-size: 15px !important; text-decoration: none !important;
+}
+.topo-universal .btn-nav.active, .topo-universal .btn-login:hover { background: #e62429 !important; }
+
+/* ÍCONES E USUÁRIO (Para ficar igualzinho à imagem 3) */
+.topo-universal .btn-icon { background: transparent !important; border: none !important; font-size: 26px !important; cursor: pointer !important; color: white !important; padding: 0 !important; }
+.topo-universal .user-box { display: flex !important; align-items: center !important; gap: 10px !important; background: rgba(255,255,255,0.05) !important; padding: 6px 15px !important; border-radius: 20px !important; cursor: pointer !important; position: relative !important; transition: 0.3s !important; }
+.topo-universal .user-box:hover { background: rgba(255,255,255,0.1) !important; }
+.topo-universal .user-img { width: 32px !important; height: 32px !important; border-radius: 50% !important; object-fit: cover !important; margin: 0 !important; }
+.topo-universal .user-nome { font-size: 15px !important; font-weight: 600 !important; color: white !important; margin: 0 !important; font-family: sans-serif !important;}
+
+/* DROPDOWN MENU */
+.topo-universal .user-menu { position: absolute !important; top: 50px !important; right: 0 !important; background: #13192b !important; border-radius: 10px !important; padding: 10px 0 !important; width: 180px !important; display: none; flex-direction: column !important; box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important; z-index: 9999 !important; }
+.topo-universal .user-menu a { padding: 12px 20px !important; color: white !important; text-decoration: none !important; font-size: 14px !important; text-align: left !important; display: flex !important; justify-content: space-between !important; align-items: center !important; font-family: sans-serif !important;}
+.topo-universal .user-menu a:hover { background: #1f2a44 !important; }
+
+/* BADGES (Bolinhas Vermelhas) */
+.badge-bolinha { background: #e62429 !important; color: white !important; border-radius: 50% !important; padding: 2px 6px !important; font-size: 11px !important; font-weight: bold !important; }
+
+/* RODAPÉ BLINDADO */
+.rodape-universal { background: #111823 !important; color: #cdd5e0 !important; text-align: center !important; padding: 30px !important; border-top: 1px solid #30363d !important; width: 100% !important; box-sizing: border-box !important; margin-top: auto !important; font-family: sans-serif !important;}

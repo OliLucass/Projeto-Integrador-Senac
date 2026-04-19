@@ -1,0 +1,220 @@
+body {
+  margin: 0;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  align-items: center;       
+
+  background-color: #0b0f1a;
+  font-family: sans-serif;
+}
+
+h1 {
+  color: white;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 26px;
+  margin-right: 28px;
+}
+
+.h1box {
+  border-radius: 10px;
+  width: 440px;
+  height: 490px;
+  padding-right: 2px;
+  padding-left: 50px;
+  padding-top: 10px;
+  background: linear-gradient(to top,#132041,#1b3c91);
+  margin-top: 100px;
+}
+
+.tudoai{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 130px;
+    width: 95.8% ; 
+    height: 120px;
+
+    background: linear-gradient(to bottom,#0f2449,#020817);
+    padding: 20px 40px;
+    color: white;
+    margin-top: 120px;
+}
+
+.div1 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.div2 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.primeira_cadastre{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.primeira{
+    font-size: 28px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.cad{
+    background-color: #A8030C;
+    color: white;
+    border: none;
+    padding: 4px 25px;
+    border-radius: 25px;
+    font-size: 24px;
+    cursor: pointer;
+  font-style: italic;
+  font-style: bold;
+}
+
+.cad:hover{
+  background-color: #d83b43;
+}
+
+.texto{
+    max-width: 350px;
+    font-size: 18px;
+    color: #cfd6e6;
+}
+
+.iniciar_sessao {
+  color: #ffffff;
+  background-color: #A8030C;
+  padding: 14px;
+  font-size: 20px;
+  font-style: italic;
+  font-style: bold;
+  border-radius: 15px;
+  display: flex;
+  justify-self: center;
+  width: 300px;
+  justify-content: center;
+}
+
+.iniciar_sessao:hover {
+  background-color: #d83b43;
+}
+
+.problemas_iniciar {
+  display: flex;
+  text-align: center;
+  color: black;
+  margin-left: 60px;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.problemas_iniciar:hover {
+  color: rgb(63, 63, 63);
+} 
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  width: 100%;
+  margin-top: 55px;
+  gap: 20px;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+  border-radius: 12px;
+  margin-top: 5px;
+  margin-left: 15px;
+}
+
+.topo-esquerda,
+.topo-direita {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  padding: 0 20px;
+  margin-right: 20px;
+}
+
+.btn-nav,
+.btn-login {
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  background: rgba(255, 255, 255, 0.05);
+  gap: 30px;
+}
+
+.btn-nav.active,
+.btn-login:hover {
+  background: #e50914;
+}
+
+.erro-msg {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  background: #e50914;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+
+  z-index: 9999;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.conteudo {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  background-color: #8fa2cf;
+  padding: 35px;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.lembrar {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 260px;
+  white-space: nowrap;
+  margin-top: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}

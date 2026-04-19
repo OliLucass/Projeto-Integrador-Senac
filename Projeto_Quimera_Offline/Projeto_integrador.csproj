@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+<ItemGroup>
+  <Compile Remove="managed-doom-master\**" />
+  <EmbeddedResource Remove="managed-doom-master\**" />
+  <None Remove="managed-doom-master\**" />
+</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
+    <PackageReference Include="MySql.Data" Version="9.4.0" />
+  </ItemGroup>
+
+<ItemGroup>
+  <ProjectReference Include="managed-doom-master\managed-doom-master\ManagedDoom\ManagedDoom.csproj" />
+</ItemGroup>
+
+</Project>
