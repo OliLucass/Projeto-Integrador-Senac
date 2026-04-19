@@ -74,6 +74,7 @@ try {
   <meta charset="UTF-8">
   <title>Mais Vendidos</title>
   <link rel="stylesheet" href="stylee.css">
+  <link rel="stylesheet" href="../Css/responsive.css">
 
   <style>
     /* 🔥 DROPDOWN */

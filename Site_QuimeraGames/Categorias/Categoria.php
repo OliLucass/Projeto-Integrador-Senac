@@ -93,6 +93,7 @@ try {
     <title><?= htmlspecialchars($categoria['tipo_categoria']) ?> - QuimeraGames</title>
     <link rel="stylesheet" href="../Css/stylles.css">
     <link rel="stylesheet" href="../Css/Stylle.css">
+    <link rel="stylesheet" href="../Css/responsive.css">
 </head>
 
 <body>

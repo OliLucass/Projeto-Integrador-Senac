@@ -53,6 +53,7 @@ if (isset($_GET['id_jogo'], $_GET['preco'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento - QuimeraGames</title>
     <link rel="stylesheet" href="pagamento.css">
+    <link rel="stylesheet" href="../Css/responsive.css">
     <script>
         const PRECO_JOGO = "<?php echo $preco_jogo; ?>";
     </script>

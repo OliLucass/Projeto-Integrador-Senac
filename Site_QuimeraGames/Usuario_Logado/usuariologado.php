@@ -71,6 +71,7 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QuimeraGames - logado</title>
   <link rel="stylesheet" href="../Usuario_Logado/style.css">
+  <link rel="stylesheet" href="../Css/responsive.css">
 </head>
 
 <body>

@@ -103,6 +103,7 @@ try {
     <title><?php echo htmlspecialchars($jogo['titulo']); ?> - QuimeraGames</title>
     <link rel="stylesheet" href="../Css/stylles.css">
     <link rel="stylesheet" href="../Css/Styles.css">
+    <link rel="stylesheet" href="../Css/responsive.css">
 </head>
 
 <body>

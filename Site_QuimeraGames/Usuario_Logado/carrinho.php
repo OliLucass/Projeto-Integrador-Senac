@@ -35,6 +35,7 @@ $link_home = $logado ? 'usuariologado.php' : '../Index/index.php';
     <title>Meu Carrinho - QuimeraGames</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="wishlist_carrinho.css">
+    <link rel="stylesheet" href="../Css/responsive.css">
 </head>
 
 <body>

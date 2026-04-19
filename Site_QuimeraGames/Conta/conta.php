@@ -80,6 +80,7 @@ function mascararCPF($cpf) {
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../Css/responsive.css">
 <title>Conta</title>
 
 <style>
