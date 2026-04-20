@@ -90,7 +90,7 @@ function togglePainel(painelAtual, painelOutro) {
     if (painelOutro && painelOutro.classList.contains('show')) {
         painelOutro.classList.remove('show');
     }
-    if (painelAtual) painelAtual.classList.toggle('show');
+    painelAtual.classList.toggle('show');
     atualizarOverlay();
 }
 

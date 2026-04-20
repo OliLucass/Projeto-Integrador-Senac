@@ -17,7 +17,9 @@ if ($id_user > 0) {
     $qtd_wishlist = $stmt_conta_wish->fetchColumn();
 }
 
-$query = "SELECT j.* FROM jogos j INNER JOIN carrinho c ON j.id_play = c.id_play WHERE c.id_usuario = :u";
+$query = "SELECT j.* FROM jogos j 
+          INNER JOIN carrinho c ON j.id_play = c.id_play 
+          WHERE c.id_usuario = :u";
 $stmt = $pdo->prepare($query);
 $stmt->execute(['u' => $id_user]);
 $itens = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -35,7 +37,6 @@ $link_home = $logado ? 'usuariologado.php' : '../Index/index.php';
     <title>Meu Carrinho - QuimeraGames</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="wishlist_carrinho.css">
-    <link rel="stylesheet" href="../Css/responsive.css">
 </head>
 
 <body>

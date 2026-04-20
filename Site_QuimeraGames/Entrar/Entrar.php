@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Entrar</title>
     <link rel="stylesheet" href="styless.css">
-    <link rel="stylesheet" href="../Css/responsive.css">
 
     <style>
         .conteudo {

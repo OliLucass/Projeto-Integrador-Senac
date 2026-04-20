@@ -7,6 +7,22 @@ if (!isset($_SESSION['usuario_nome'])) {
     exit;
 }
 
+// --- ADICIONE ESTAS LINHAS PARA CORRIGIR O ERRO ---
+$qtd_carrinho = 0;
+$qtd_wishlist = 0;
+if (isset($_SESSION['id_user'])) {
+    $stmt_cart = $pdo->prepare("SELECT COUNT(*) FROM carrinho WHERE id_usuario = ?");
+    $stmt_cart->execute([$_SESSION['id_user']]);
+    $qtd_carrinho = $stmt_cart->fetchColumn();
+
+    $stmt_wish = $pdo->prepare("SELECT COUNT(*) FROM lista_desejos WHERE id_user = ?");
+    $stmt_wish->execute([$_SESSION['id_user']]);
+    $qtd_wishlist = $stmt_wish->fetchColumn();
+}
+$logado = isset($_SESSION['usuario_nome']);
+$link_home = $logado ? '../Usuario_Logado/usuariologado.php' : '../Index/index.php';
+// --------------------------------------------------
+
 $email = $_SESSION['usuario_email'];
 
 /* BUSCA USUARIO */
@@ -80,7 +96,6 @@ function mascararCPF($cpf) {
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../Css/responsive.css">
 <title>Conta</title>
 
 <style>
@@ -375,6 +390,7 @@ html, body { min-height: 100vh; display: flex; flex-direction: column; margin: 0
 
 /* RODAPÉ BLINDADO */
 .rodape-universal { background: #111823 !important; color: #cdd5e0 !important; text-align: center !important; padding: 30px !important; border-top: 1px solid #30363d !important; width: 100% !important; box-sizing: border-box !important; margin-top: auto !important; font-family: sans-serif !important;}
+
 
 
 </style>

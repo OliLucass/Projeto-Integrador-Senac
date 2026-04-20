@@ -6,7 +6,6 @@
 <title>Cadastro Quimera</title>
 
 <link rel="stylesheet" href="cStyles.css">
-<link rel="stylesheet" href="../Css/responsive.css">
 </head>
 
 <body>

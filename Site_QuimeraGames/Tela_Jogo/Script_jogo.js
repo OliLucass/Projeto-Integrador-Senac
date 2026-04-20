@@ -1,12 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // =======================================================
-    // 1. VERIFICAÇÃO DE LOGIN E AÇÕES (CARRINHO / WISHLIST)
-    // =======================================================
+    // 1. Definições Globais do Jogo
     const infoSessao = document.getElementById('dados-sessao');
     const logado = infoSessao ? infoSessao.getAttribute('data-logado') === 'true' : false;
     const idJogo = infoSessao ? infoSessao.getAttribute('data-jogo') : 0;
+    const jaTemDesconto = infoSessao ? infoSessao.getAttribute('data-tem-desconto') === 'true' : false;
 
+    // =======================================================
+    // 2. BOTÕES DE AÇÃO (Carrinho, Wishlist, Comprar)
+    // =======================================================
     const gerenciarAcao = (acao) => {
         if (!logado) {
             window.location.href = '../Entrar/Entrar.php';
@@ -15,18 +17,57 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Listeners dos botões de ação
     document.getElementById('btn-add-carrinho')?.addEventListener('click', () => gerenciarAcao('add_carrinho'));
     document.getElementById('btn-add-wishlist')?.addEventListener('click', () => gerenciarAcao('add_wishlist'));
+    
     document.getElementById('btn-comprar-agora')?.addEventListener('click', () => {
-    if (!logado) {
-        window.location.href = '../Entrar/Entrar.php';
-        return;
+        if (!logado) {
+            window.location.href = '../Entrar/Entrar.php';
+            return;
+        }
+        const precoEl = document.getElementById('preco-final');
+        const preco = precoEl ? precoEl.getAttribute('data-valor') : '0.00';
+        window.location.href = `../Pagamento/pagamento.php?id_jogo=${idJogo}&preco=${preco}`;
+    });
+
+    // =======================================================
+    // 3. LÓGICA DO CUPOM DE DESCONTO
+    // =======================================================
+    const btnCupom = document.getElementById('btn-aplicar-cupom');
+    const inputCupom = document.getElementById('input-cupom');
+    const msgCupom = document.getElementById('msg-cupom');
+    const precoFinal = document.getElementById('preco-final');
+
+    if (jaTemDesconto && inputCupom) {
+        inputCupom.placeholder = "Promoção ativa (Cupom indisponível)";
+        inputCupom.disabled = true;
+        if(btnCupom) btnCupom.disabled = true;
     }
-    const precoEl = document.getElementById('preco-final');
-    const preco = precoEl ? precoEl.getAttribute('data-valor') : '0';
-    window.location.href = `../Pagamento/pagamento.php?id_jogo=${idJogo}&preco=${preco}`;
-});
+
+    btnCupom?.addEventListener('click', () => {
+        const cupomDigitado = inputCupom.value.trim().toUpperCase();
+        let valorBase = parseFloat(precoFinal.getAttribute('data-valor'));
+        let desconto = 0;
+
+        if (cupomDigitado === 'QUIMERA5' && valorBase < 100) {
+            desconto = 0.05;
+        } else if (cupomDigitado === 'QUIMERA10' && valorBase >= 100) {
+            desconto = 0.10;
+        }
+
+        if (desconto > 0) {
+            let valorNovo = (valorBase * (1 - desconto)).toFixed(2);
+            precoFinal.setAttribute('data-valor', valorNovo);
+            precoFinal.innerText = 'R$ ' + parseFloat(valorNovo).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            msgCupom.innerText = `Cupom aplicado! (-${desconto * 100}%)`;
+            msgCupom.style.color = "#4CAF50";
+            inputCupom.disabled = true;
+            btnCupom.disabled = true;
+        } else {
+            msgCupom.innerText = "Cupom inválido ou não aplicável.";
+            msgCupom.style.color = "#e50914";
+        }
+    });
 
 
     // =======================================================
@@ -88,38 +129,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 msgLogin.style.display = 'block';
                 return;
             }
-            const notaNumero = document.querySelector('.nota-numero');
-            if (notaNumero) notaNumero.innerText = (index + 1).toFixed(1);
-            stars.forEach((s, i) => {
-                s.classList.toggle('active', i <= index);
-                s.classList.toggle('inactive', i > index);
+
+            const nota = index + 1;
+
+            // Envia a avaliação para o servidor
+            fetch('salvar_avaliacao.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `id_play=${idJogo}&nota=${nota}`
+            }).then(() => {
+                // Atualiza a nota exibida na tela
+                document.querySelector('.nota-numero').innerText = nota.toFixed(1);
+                stars.forEach((s, i) => {
+                    s.classList.toggle('active', i <= index);
+                    s.classList.toggle('inactive', i > index);
+                });
             });
         });
     });
 
-    // =======================================================
-    // 4. LÓGICA DO CUPOM DE DESCONTO
-    // =======================================================
-    const btnCupom = document.getElementById('btn-aplicar-cupom');
-    const inputCupom = document.getElementById('input-cupom');
-    const msgCupom = document.getElementById('msg-cupom');
-    const precoFinal = document.getElementById('preco-final');
-
-    btnCupom?.addEventListener('click', () => {
-        const cupomDigitado = inputCupom.value.trim().toUpperCase();
-        if (cupomDigitado === 'QUIMERA15') {
-            let valorBase = parseFloat(precoFinal.getAttribute('data-valor'));
-            let valorNovo = (valorBase * 0.85).toFixed(2);
-            let valorFormatado = parseFloat(valorNovo).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            precoFinal.setAttribute('data-valor', valorNovo); // atualiza o valor real usado na URL
-            precoFinal.innerText = 'R$ ' + valorFormatado;
-            msgCupom.innerText = "Cupom aplicado! (-15%)";
-            msgCupom.style.color = "#4CAF50";
-            inputCupom.disabled = true;
-            btnCupom.disabled = true;
-        } else {
-            msgCupom.innerText = "Cupom inválido.";
-            msgCupom.style.color = "#e50914";
-        }
-    });
-});
+}   );

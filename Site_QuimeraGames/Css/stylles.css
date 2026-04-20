@@ -118,7 +118,7 @@ body {
   width: 160px;
   display: none;
   flex-direction: column;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   z-index: 9999;
 }
 
@@ -146,7 +146,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   padding: 6px 12px;
   border-radius: 20px;
   cursor: pointer;
@@ -362,6 +362,18 @@ body {
   transform: scale(1.3);
 }
 
+.grid-categoria-especial {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 20px !important;
+}
+
+/* Isso garante que a imagem não tente esticar a coluna */
+.grid-categoria-especial .thumb-wrapper {
+  height: auto;
+  aspect-ratio: 3 / 4;
+}
+
 /* --- GRADE DE DESCONTOS (MANTIDA INTEGRALMENTE) --- */
 .jogos-grid {
   display: grid;
@@ -464,6 +476,11 @@ input[type="radio"] {
     0 0 40px rgba(229, 9, 20, 0.3),
     0 0 80px rgba(229, 9, 20, 0.15);
   border: 1px solid rgba(229, 9, 20, 0.4);
+}
+
+.menu-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .titulo-painel {
@@ -575,6 +592,8 @@ input[type="radio"] {
 }
 
 .card-cat-item {
+  text-decoration: none;
+  color: inherit;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -660,37 +679,157 @@ input[type="radio"] {
   visibility: visible;
 }
 
-html, body { min-height: 100vh; display: flex; flex-direction: column; margin: 0; }
-.container, .main-pagamento, .categoria-container { flex: 1; } /* Empurra o rodapé pro fundo no Pesquisar */
+html,
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.container,
+.main-pagamento,
+.categoria-container {
+  flex: 1;
+}
+
+/* Empurra o rodapé pro fundo no Pesquisar */
 
 .topo-universal {
-    display: flex !important; justify-content: space-between !important; align-items: center !important;
-    padding: 15px 5% !important; background: rgba(19, 32, 65, 0.95) !important; width: 100% !important;
-    box-sizing: border-box !important; position: relative !important; z-index: 1000 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 15px 5% !important;
+  background: rgba(19, 32, 65, 0.95) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  z-index: 1000 !important;
 }
-.topo-universal .logo { width: 100px !important; height: auto !important; border-radius: 12px !important; }
-.topo-universal .topo-esquerda, .topo-universal .topo-direita { display: flex !important; align-items: center !important; gap: 20px !important; }
-.topo-universal .btn-nav, .topo-universal .btn-login {
-    border: none !important; color: white !important; padding: 12px 24px !important; border-radius: 25px !important;
-    cursor: pointer !important; font-weight: 600 !important; background: rgba(255, 255, 255, 0.05) !important;
-    font-size: 15px !important; text-decoration: none !important;
+
+.topo-universal .logo {
+  width: 100px !important;
+  height: auto !important;
+  border-radius: 12px !important;
 }
-.topo-universal .btn-nav.active, .topo-universal .btn-login:hover { background: #e62429 !important; }
+
+.topo-universal .topo-esquerda,
+.topo-universal .topo-direita {
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+}
+
+.topo-universal .btn-nav,
+.topo-universal .btn-login {
+  border: none !important;
+  color: white !important;
+  padding: 12px 24px !important;
+  border-radius: 25px !important;
+  cursor: pointer !important;
+  font-weight: 600 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  font-size: 15px !important;
+  text-decoration: none !important;
+}
+
+.topo-universal .btn-nav.active,
+.topo-universal .btn-login:hover {
+  background: #e62429 !important;
+}
 
 /* ÍCONES E USUÁRIO (Para ficar igualzinho à imagem 3) */
-.topo-universal .btn-icon { background: transparent !important; border: none !important; font-size: 26px !important; cursor: pointer !important; color: white !important; padding: 0 !important; }
-.topo-universal .user-box { display: flex !important; align-items: center !important; gap: 10px !important; background: rgba(255,255,255,0.05) !important; padding: 6px 15px !important; border-radius: 20px !important; cursor: pointer !important; position: relative !important; transition: 0.3s !important; }
-.topo-universal .user-box:hover { background: rgba(255,255,255,0.1) !important; }
-.topo-universal .user-img { width: 32px !important; height: 32px !important; border-radius: 50% !important; object-fit: cover !important; margin: 0 !important; }
-.topo-universal .user-nome { font-size: 15px !important; font-weight: 600 !important; color: white !important; margin: 0 !important; font-family: sans-serif !important;}
+.topo-universal .btn-icon {
+  background: transparent !important;
+  border: none !important;
+  font-size: 26px !important;
+  cursor: pointer !important;
+  color: white !important;
+  padding: 0 !important;
+}
+
+.topo-universal .user-box {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  padding: 6px 15px !important;
+  border-radius: 20px !important;
+  cursor: pointer !important;
+  position: relative !important;
+  transition: 0.3s !important;
+}
+
+.topo-universal .user-box:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.topo-universal .user-img {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  margin: 0 !important;
+}
+
+.topo-universal .user-nome {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: white !important;
+  margin: 0 !important;
+  font-family: sans-serif !important;
+}
 
 /* DROPDOWN MENU */
-.topo-universal .user-menu { position: absolute !important; top: 50px !important; right: 0 !important; background: #13192b !important; border-radius: 10px !important; padding: 10px 0 !important; width: 180px !important; display: none; flex-direction: column !important; box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important; z-index: 9999 !important; }
-.topo-universal .user-menu a { padding: 12px 20px !important; color: white !important; text-decoration: none !important; font-size: 14px !important; text-align: left !important; display: flex !important; justify-content: space-between !important; align-items: center !important; font-family: sans-serif !important;}
-.topo-universal .user-menu a:hover { background: #1f2a44 !important; }
+.topo-universal .user-menu {
+  position: absolute !important;
+  top: 50px !important;
+  right: 0 !important;
+  background: #13192b !important;
+  border-radius: 10px !important;
+  padding: 10px 0 !important;
+  width: 180px !important;
+  display: none;
+  flex-direction: column !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+  z-index: 9999 !important;
+}
+
+.topo-universal .user-menu a {
+  padding: 12px 20px !important;
+  color: white !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+  text-align: left !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-family: sans-serif !important;
+}
+
+.topo-universal .user-menu a:hover {
+  background: #1f2a44 !important;
+}
 
 /* BADGES (Bolinhas Vermelhas) */
-.badge-bolinha { background: #e62429 !important; color: white !important; border-radius: 50% !important; padding: 2px 6px !important; font-size: 11px !important; font-weight: bold !important; }
+.badge-bolinha {
+  background: #e62429 !important;
+  color: white !important;
+  border-radius: 50% !important;
+  padding: 2px 6px !important;
+  font-size: 11px !important;
+  font-weight: bold !important;
+}
 
 /* RODAPÉ BLINDADO */
-.rodape-universal { background: #111823 !important; color: #cdd5e0 !important; text-align: center !important; padding: 30px !important; border-top: 1px solid #30363d !important; width: 100% !important; box-sizing: border-box !important; margin-top: auto !important; font-family: sans-serif !important;}
+.rodape-universal {
+  background: #111823 !important;
+  color: #cdd5e0 !important;
+  text-align: center !important;
+  padding: 30px !important;
+  border-top: 1px solid #30363d !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin-top: auto !important;
+  font-family: sans-serif !important;
+}

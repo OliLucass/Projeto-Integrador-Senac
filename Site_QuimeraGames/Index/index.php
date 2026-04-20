@@ -35,7 +35,7 @@ try {
   $stmt_carousel->execute();
   $jogos_carousel = $stmt_carousel->fetchAll(PDO::FETCH_ASSOC);
 
-  $stmt_descontos = $pdo->prepare("SELECT * FROM jogos ORDER BY MOD(id_play, :semana_plus) LIMIT 6");
+  $stmt_descontos = $pdo->prepare("SELECT * FROM jogos WHERE Valor > 0 ORDER BY MOD(id_play, :semana_plus) LIMIT 6");
   $stmt_descontos->bindValue(':semana_plus', ($semana_atual + 2), PDO::PARAM_INT);
   $stmt_descontos->execute();
   $jogos_descontos = $stmt_descontos->fetchAll(PDO::FETCH_ASSOC);
@@ -69,7 +69,6 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QuimeraGames</title>
   <link rel="stylesheet" href="../Css/stylles.css">
-  <link rel="stylesheet" href="../Css/responsive.css">
 </head>
 
 <body>

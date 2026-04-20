@@ -41,7 +41,7 @@ try {
     }
 
     // Busca Jogos da Categoria
-    $stmtJogos = $pdo->prepare("SELECT * FROM jogos WHERE id_categoria = :id");
+    $stmtJogos = $pdo->prepare("SELECT * FROM jogos WHERE id_categoria = :id LIMIT 15");
     $stmtJogos->bindValue(':id', $id_categoria, PDO::PARAM_INT);
     $stmtJogos->execute();
     $jogos = $stmtJogos->fetchAll(PDO::FETCH_ASSOC);
@@ -93,12 +93,12 @@ try {
     <title><?= htmlspecialchars($categoria['tipo_categoria']) ?> - QuimeraGames</title>
     <link rel="stylesheet" href="../Css/stylles.css">
     <link rel="stylesheet" href="../Css/Stylle.css">
-    <link rel="stylesheet" href="../Css/responsive.css">
 </head>
 
 <body>
 
     <header class="topo-universal">
+        <div id="overlay-escuro" class="fundo-escuro"></div>
         <div class="topo-esquerda">
             <a href="<?php echo $link_home; ?>"><img class="logo" src="../imagens/logo.png" alt="Logo"></a>
             <a href="<?php echo $link_home; ?>" style="text-decoration: none;"><button
@@ -141,40 +141,51 @@ try {
     </header>
 
     <div class="container">
-        <div class="menu-wrapper" style="position: relative; z-index: 1000; padding-top: 20px;">
-            <nav class="menu-busca">
+        <div class="menu-wrapper" style="position: relative; z-index: 1000;">
 
+            <nav class="menu-busca">
                 <button class="btn-dropdown" id="btn-explorar">Explorar ▾</button>
                 <button class="btn-dropdown" id="btn-categorias">Categorias ▾</button>
             </nav>
-        </div>
 
-        <div id="painel-categorias" class="painel-dropdown">
-            <h3 class="titulo-painel">Gêneros Populares</h3>
-            <div class="carousel-categorias-wrapper">
-                <button class="seta-cat esquerda" id="seta-esquerda">&#10094;</button>
-                <div class="categorias-painel-grid" id="grid-categorias">
-                    <?php foreach ($categorias_bd as $cat): ?>
-                        <?php $nome_cat = isset($nomes_categorias[$cat['id_categoria']]) ? $nomes_categorias[$cat['id_categoria']] : 'Outros'; ?>
-
-                        <a href="../Categorias/categoria.php?id=<?php echo $cat['id_categoria']; ?>" class="card-cat-item"
-                            style="text-decoration: none; color: inherit;">
-                            <div class="img-cat-wrapper">
-                                <img src="<?php echo htmlspecialchars($cat['capa']); ?>" alt="<?php echo $nome_cat; ?>">
-                            </div>
-                            <span><?php echo $nome_cat; ?></span>
-                        </a>
-
-                    <?php endforeach; ?>
+            <!-- PAINEL EXPLORAR -->
+            <div id="painel-explorar" class="painel-dropdown">
+                <div class="banner-explorar-container">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070"
+                        class="img-banner-explorar">
+                    <div class="overlay-banner"></div>
+                    <a href="../mais_vendidos/Index.php" class="btn-mais-vendidos-banner">
+                        Mais vendidos
+                    </a>
                 </div>
-                <button class="seta-cat direita" id="seta-direita">&#10095;</button>
             </div>
+
+            <!-- PAINEL CATEGORIAS -->
+            <div id="painel-categorias" class="painel-dropdown">
+                <h3 class="titulo-painel">Gêneros Populares</h3>
+
+                <div class="carousel-categorias-wrapper">
+                    <button class="seta-cat esquerda" id="seta-esquerda">&#10094;</button>
+
+                    <div class="categorias-painel-grid" id="grid-categorias">
+                        <?php foreach ($categorias_bd as $cat): ?>
+                            <?php $nome_cat = $nomes_categorias[$cat['id_categoria']] ?? 'Outros'; ?>
+
+                            <a href="../Categorias/categoria.php?id=<?php echo $cat['id_categoria']; ?>"
+                                class="card-cat-item">
+                                <div class="img-cat-wrapper">
+                                    <img src="<?php echo htmlspecialchars($cat['capa']); ?>" alt="<?php echo $nome_cat; ?>">
+                                </div>
+                                <span><?php echo $nome_cat; ?></span>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <button class="seta-cat direita" id="seta-direita">&#10095;</button>
+                </div>
+            </div>
+
         </div>
-
-
-
-
-
 
         <div class="categoria-container">
             <div class="conteudo-jogos">
@@ -186,7 +197,7 @@ try {
                     </p>
                 </div>
 
-                <div class="jogos-grid" id="lista-jogos">
+                <div class="jogos-grid grid-categoria-especial" id="lista-jogos">
                     <?php if (count($jogos) > 0): ?>
                         <?php foreach ($jogos as $jogo):
                             $valor_original = (float) $jogo['Valor'];

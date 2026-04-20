@@ -2,36 +2,32 @@
 session_start();
 require_once '../conexa.php';
 
-
-// CONTAGEM PARA OS BADGES (Cole isso no topo dos seus arquivos PHP)
-$qtd_carrinho = 0;
-$qtd_wishlist = 0;
-if (isset($_SESSION['id_user'])) {
-    $stmt_cart = $pdo->prepare("SELECT COUNT(*) FROM carrinho WHERE id_usuario = ?");
-    $stmt_cart->execute([$_SESSION['id_user']]);
-    $qtd_carrinho = $stmt_cart->fetchColumn();
-
-    $stmt_wish = $pdo->prepare("SELECT COUNT(*) FROM lista_desejos WHERE id_user = ?");
-    $stmt_wish->execute([$_SESSION['id_user']]);
-    $qtd_wishlist = $stmt_wish->fetchColumn();
-}
-$logado = isset($_SESSION['usuario_nome']);
-$link_home = $logado ? '../Usuario_Logado/usuariologado.php' : '../Index/index.php';
-
-
-// 1. Define as variáveis primeiro (Resolve o Erro da linha 11)
-$logado = isset($_SESSION['usuario_nome']);
-$id_user_logado = $_SESSION['id_user'] ?? 0;
-
-// 2. Pega os dados do jogo
+// 1. Pega o ID do jogo da URL
 $id_jogo = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-$veio_do_desconto = isset($_GET['desconto']) && $_GET['desconto'] == '1';
 
+// Validação básica se o ID existe
 if ($id_jogo === 0) {
     die("<h2 style='color:black; text-align:center; margin-top:50px; font-family:sans-serif;'>Jogo não encontrado na URL. Volte para a loja.</h2>");
 }
 
-// 3. Faz a contagem para os balõezinhos (Badge) e checa Lista de Desejos
+// 2. Consulta a média das avaliações (usando try-catch para evitar erro fatal)
+try {
+    $stmt_media = $pdo->prepare("SELECT AVG(nota) as media FROM avaliacoes WHERE id_play = :id");
+    $stmt_media->bindValue(':id', $id_jogo, PDO::PARAM_INT);
+    $stmt_media->execute();
+    $dados = $stmt_media->fetch(PDO::FETCH_ASSOC);
+
+    // Verifique se o retorno é um número válido
+    $media_nota = ($dados && $dados['media'] !== null) ? number_format((float) $dados['media'], 1, '.', '') : '0.0';
+} catch (PDOException $e) {
+    $media_nota = '0.0';
+}
+
+// 3. Definições de sessão e badges
+$logado = isset($_SESSION['usuario_nome']);
+$id_user_logado = $_SESSION['id_user'] ?? 0;
+$veio_do_desconto = isset($_GET['desconto']) && $_GET['desconto'] == '1';
+
 $qtd_carrinho = 0;
 $qtd_wishlist = 0;
 $ta_na_lista = false;
@@ -47,7 +43,7 @@ if ($logado && $id_user_logado > 0) {
     $stmt_wish->execute([$id_user_logado]);
     $qtd_wishlist = $stmt_wish->fetchColumn();
 
-    // Verifica se ESTE jogo está na Lista de Desejos
+    // Verifica se este jogo está na lista de desejos
     $stmt_check_lista = $pdo->prepare("SELECT COUNT(*) FROM lista_desejos WHERE id_user = ? AND id_play = ?");
     $stmt_check_lista->execute([$id_user_logado, $id_jogo]);
     if ($stmt_check_lista->fetchColumn() > 0) {
@@ -55,6 +51,7 @@ if ($logado && $id_user_logado > 0) {
     }
 }
 
+// 4. Busca os dados do jogo (continuação do seu código original)
 try {
     $query = "SELECT j.*, c.tipo_categoria 
               FROM jogos j 
@@ -67,7 +64,7 @@ try {
     $jogo = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$jogo) {
-        die("<h2 style='color:black; text-align:center; margin-top:50px; font-family:sans-serif;'>Jogo não encontrado no banco de dados. (ID pesquisado: $id_jogo)</h2>");
+        die("<h2 style='color:black; text-align:center; margin-top:50px; font-family:sans-serif;'>Jogo não encontrado no banco de dados.</h2>");
     }
 
     $trailer_url = isset($jogo['Trailers']) ? $jogo['Trailers'] : '';
@@ -76,6 +73,16 @@ try {
     }
 
     $valor_original = (float) $jogo['Valor'];
+
+    // Lógica de desconto automático
+    if ($valor_original < 100) {
+        // Menor que 100: 5% de desconto
+        $valor_venda = $valor_original * 0.95;
+    } else {
+        // 100 ou mais: 10% de desconto
+        $valor_venda = $valor_original * 0.90;
+    }
+    $cupom_sugerido = ($valor_original < 100) ? 'QUIMERA5' : 'QUIMERA10';
     $tem_desconto = $veio_do_desconto;
     $valor_venda = $tem_desconto ? ($valor_original * 0.90) : $valor_original;
 
@@ -103,7 +110,6 @@ try {
     <title><?php echo htmlspecialchars($jogo['titulo']); ?> - QuimeraGames</title>
     <link rel="stylesheet" href="../Css/stylles.css">
     <link rel="stylesheet" href="../Css/Styles.css">
-    <link rel="stylesheet" href="../Css/responsive.css">
 </head>
 
 <body>
@@ -152,7 +158,8 @@ try {
 
     <div class="container game-page-container">
         <div id="dados-sessao" data-logado="<?php echo $logado ? 'true' : 'false'; ?>"
-            data-jogo="<?php echo $id_jogo; ?>"></div>
+            data-jogo="<?php echo $id_jogo; ?>" data-tem-desconto="<?php echo $tem_desconto ? 'true' : 'false'; ?>">
+        </div>
 
         <div class="game-layout">
 
@@ -217,7 +224,7 @@ try {
                     <h3>Nota dos compradores da QuimeraGames</h3>
                     <p class="rating-sub">Fornecidas por compradores no ecossistema Quimera</p>
                     <div class="stars-container">
-                        <span class="nota-numero">4.0</span>
+                        <span class="nota-numero"><?php echo $media_nota; ?></span>
                         <div class="happy-stars">
                             <span class="star-icon active">★</span>
                             <span class="star-icon active">★</span>
@@ -266,12 +273,14 @@ try {
                                 <div class="price-values">
                                     <span class="v-old-side">R$
                                         <?php echo number_format($valor_original, 2, ',', '.'); ?></span>
-                                    <span class="v-new-side" id="preco-final" data-valor="<?php echo $valor_venda; ?>">R$
-                                        <?php echo number_format($valor_venda, 2, ',', '.'); ?></span>
+                                    <span class="v-new-side" id="preco-final" data-valor="<?php echo $valor_venda; ?>">
+                                        R$ <?php echo number_format($valor_venda, 2, ',', '.'); ?>
+                                    </span>
                                 </div>
                             <?php else: ?>
-                                <span class="v-new-side" id="preco-final" data-valor="<?php echo $valor_original; ?>">R$
-                                    <?php echo number_format($valor_original, 2, ',', '.'); ?></span>
+                                <span class="v-new-side" id="preco-final" data-valor="<?php echo $valor_venda; ?>">
+                                    R$ <?php echo number_format($valor_venda, 2, ',', '.'); ?>
+                                </span>
                             <?php endif; ?>
                         <?php else: ?>
                             <span class="v-new-side">Gratuito</span>
@@ -301,15 +310,19 @@ try {
                     </button>
 
                     <div class="cupom-area">
-                        <p class="cupom-titulo">Possui cupom de desconto?</p>
+                        <p class="cupom-titulo"> Sugestão de Cupom: <strong><?php echo $cupom_sugerido; ?></strong>
+                        </p>
                         <div class="cupom-input-group">
-                            <input type="text" id="input-cupom" placeholder="Ex: QUIMERA15">
+                            <input type="text" id="input-cupom" placeholder="Ex: <?php echo $cupom_sugerido; ?>">
                             <button id="btn-aplicar-cupom">Aplicar</button>
                         </div>
                         <p id="msg-cupom"></p>
                     </div>
 
-                    <button class="btn-action btn-steam" style="margin-top: 20px;">Ativar na Steam</button>
+                    <button class="btn-action btn-steam" style="margin-top: 20px;"
+                        onclick="window.open('https://store.steampowered.com/', '_blank')">
+                        Ativar na Steam
+                    </button>
                     <p class="steam-aviso">Este produto é ativado via <strong>chave de ativação</strong></p>
                 </div>
 
