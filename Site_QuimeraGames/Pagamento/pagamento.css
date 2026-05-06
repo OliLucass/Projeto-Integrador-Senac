@@ -10,56 +10,6 @@ body {
     font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-/* CABEÇALHO */
-.topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(19, 32, 65, 0.97);
-    padding: 15px 50px;
-}
-
-.topo-esquerda,
-.topo-direita {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.logo {
-    height: 50px;
-}
-
-.btn-nav {
-    background: transparent;
-    border: 1px solid #30363d;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 0.9rem;
-}
-
-.btn-nav.active {
-    background: #e62429;
-    border-color: #e62429;
-}
-
-.btn-dropdown {
-    background: transparent;
-    border: 2px solid #e50914;
-    border-radius: 999px;
-    padding: 8px 22px;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
-    font-size: 0.9rem;
-}
-
-.btn-dropdown:hover {
-    background: #e62429;
-}
 
 /* CONTAINER */
 .container {
@@ -284,16 +234,7 @@ body {
     border: 1px solid #30363d;
 }
 
-/* RODAPÉ */
-.rodape {
-    background: #111823;
-    padding: 30px;
-    text-align: center;
-    margin-top: 60px;
-    color: #cdd5e0;
-    font-size: 0.9rem;
-    border-top: 1px solid #30363d;
-}
+
 
 /* MODAL */
 .overlay {
@@ -567,34 +508,119 @@ html, body {
     background: #0b1320;
 }
 
-.topo-universal {
-    display: flex !important; justify-content: space-between !important; align-items: center !important;
-    padding: 15px 5% !important; background: rgba(19, 32, 65, 0.95) !important; width: 100% !important;
-    box-sizing: border-box !important; position: relative !important; z-index: 1000 !important;
+/* ========================================================
+   ✅ RESPONSIVIDADE: TELA DE PAGAMENTO CLEAN E ALINHADA
+======================================================== */
+@media screen and (max-width: 768px) {
+    /* Container e Espaçamentos Base */
+    .container {
+        width: 100% !important;
+        padding: 20px 15px 40px 15px !important;
+    }
+
+    /* Empilha: Imagem em cima, Formulário embaixo */
+    .main-pagamento {
+        flex-direction: column-reverse !important; 
+        align-items: center !important;
+        gap: 25px !important;
+    }
+
+    .col-dados, .col-logo {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* 1. Imagem do Jogo: Centralizada e com sombra elegante */
+    .imagem-jogo {
+        max-width: 250px !important;
+        height: auto !important;
+        margin: 0 auto;
+        display: block;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    /* 2. Textos e Títulos: Alinhados à esquerda para visual "App" */
+    .col-dados h1 {
+        font-size: 1.5rem !important;
+        text-align: left !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .label-saldo {
+        text-align: left !important;
+        font-size: 1rem !important;
+        display: block;
+    }
+
+    .valor-saldo {
+        font-size: 1.6rem !important;
+        text-align: left !important;
+        line-height: 1.3 !important;
+        margin-bottom: 10px !important;
+    }
+
+    #preco-exibicao {
+        text-align: left !important;
+        font-size: 2.2rem !important;
+        display: block;
+    }
+
+    /* 3. Caixa de Moedas mais discreta e alinhada */
+    #box-usar-moedas {
+        padding: 12px !important;
+        text-align: left !important;
+    }
+    
+    #box-usar-moedas label {
+        font-size: 0.95rem !important;
+        justify-content: flex-start !important; /* Alinha o checkbox e o texto à esquerda */
+        text-align: left !important;
+    }
+
+    /* 4. Métodos de Pagamento */
+    .metodos-pagamento h3 {
+        font-size: 1.3rem !important;
+        text-align: left !important;
+        margin-bottom: 15px !important;
+    }
+
+    .metodo-card {
+        padding: 15px !important;
+        font-size: 1rem !important;
+    }
+
+    /* 5. Textos Informativos: JUSTIFICADOS e com espaçamento de linha legível */
+    .texto-info {
+        text-align: justify !important;
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+    }
+
+    /* 6. Inputs do Cartão: Mesma linha, bem divididos */
+    .linha-inputs {
+        flex-direction: row !important;
+        gap: 12px !important;
+    }
+
+    .input-form {
+        padding: 14px 12px !important; /* Áreas de toque maiores para dedos */
+        font-size: 0.95rem !important;
+    }
+
+    /* 7. Modal (Pop-ups): Textos justificados */
+    .modal {
+        width: 92% !important;
+        padding: 25px 20px !important;
+    }
+
+    .modal h2 {
+        text-align: center !important; /* Mantém o título centralizado */
+    }
+
+    .modal p {
+        text-align: justify !important; /* Justifica a explicação */
+        line-height: 1.5 !important;
+    }
 }
-.topo-universal .logo { width: 100px !important; height: auto !important; border-radius: 12px !important; }
-.topo-universal .topo-esquerda, .topo-universal .topo-direita { display: flex !important; align-items: center !important; gap: 20px !important; }
-.topo-universal .btn-nav, .topo-universal .btn-login {
-    border: none !important; color: white !important; padding: 12px 24px !important; border-radius: 25px !important;
-    cursor: pointer !important; font-weight: 600 !important; background: rgba(255, 255, 255, 0.05) !important;
-    font-size: 15px !important; text-decoration: none !important;
-}
-.topo-universal .btn-nav.active, .topo-universal .btn-login:hover { background: #e62429 !important; }
-
-/* ÍCONES E USUÁRIO (Para ficar igualzinho à imagem 3) */
-.topo-universal .btn-icon { background: transparent !important; border: none !important; font-size: 26px !important; cursor: pointer !important; color: white !important; padding: 0 !important; }
-.topo-universal .user-box { display: flex !important; align-items: center !important; gap: 10px !important; background: rgba(255,255,255,0.05) !important; padding: 6px 15px !important; border-radius: 20px !important; cursor: pointer !important; position: relative !important; transition: 0.3s !important; }
-.topo-universal .user-box:hover { background: rgba(255,255,255,0.1) !important; }
-.topo-universal .user-img { width: 32px !important; height: 32px !important; border-radius: 50% !important; object-fit: cover !important; margin: 0 !important; }
-.topo-universal .user-nome { font-size: 15px !important; font-weight: 600 !important; color: white !important; margin: 0 !important; font-family: sans-serif !important;}
-
-/* DROPDOWN MENU */
-.topo-universal .user-menu { position: absolute !important; top: 50px !important; right: 0 !important; background: #13192b !important; border-radius: 10px !important; padding: 10px 0 !important; width: 180px !important; display: none; flex-direction: column !important; box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important; z-index: 9999 !important; }
-.topo-universal .user-menu a { padding: 12px 20px !important; color: white !important; text-decoration: none !important; font-size: 14px !important; text-align: left !important; display: flex !important; justify-content: space-between !important; align-items: center !important; font-family: sans-serif !important;}
-.topo-universal .user-menu a:hover { background: #1f2a44 !important; }
-
-/* BADGES (Bolinhas Vermelhas) */
-.badge-bolinha { background: #e62429 !important; color: white !important; border-radius: 50% !important; padding: 2px 6px !important; font-size: 11px !important; font-weight: bold !important; }
-
-/* RODAPÉ BLINDADO */
-.rodape-universal { background: #111823 !important; color: #cdd5e0 !important; text-align: center !important; padding: 30px !important; border-top: 1px solid #30363d !important; width: 100% !important; box-sizing: border-box !important; margin-top: auto !important; font-family: sans-serif !important;}
