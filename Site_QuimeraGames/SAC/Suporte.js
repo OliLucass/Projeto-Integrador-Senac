@@ -72,24 +72,24 @@ document.addEventListener("DOMContentLoaded", function () {
         formSuporte.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            const nome       = document.getElementById('name').value;
-            const email      = document.getElementById('email').value;
-            const cpf        = document.getElementById('cpf').value;
+            const nome = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const cpf = document.getElementById('cpf').value;
             const reclamacao = document.getElementById('reclamacao').value;
 
             const erros = [];
 
-            if (!validarNome(nome))            { erros.push('Nome inválido (mín. 3 letras, sem números).'); setStatus('name', false); }
-            else                               { setStatus('name', true); }
+            if (!validarNome(nome)) { erros.push('Nome inválido (mín. 3 letras, sem números).'); setStatus('name', false); }
+            else { setStatus('name', true); }
 
-            if (!validarEmail(email))          { erros.push('E-mail inválido.');                            setStatus('email', false); }
-            else                               { setStatus('email', true); }
+            if (!validarEmail(email)) { erros.push('E-mail inválido.'); setStatus('email', false); }
+            else { setStatus('email', true); }
 
-            if (!validarCPF(cpf))              { erros.push('CPF inválido.');                               setStatus('cpf', false); }
-            else                               { setStatus('cpf', true); }
+            if (!validarCPF(cpf)) { erros.push('CPF inválido.'); setStatus('cpf', false); }
+            else { setStatus('cpf', true); }
 
-            if (reclamacao.trim().length < 20) { erros.push('Mensagem muito curta (mín. 20 caracteres).');  setStatus('reclamacao', false); }
-            else                               { setStatus('reclamacao', true); }
+            if (reclamacao.trim().length < 20) { erros.push('Mensagem muito curta (mín. 20 caracteres).'); setStatus('reclamacao', false); }
+            else { setStatus('reclamacao', true); }
 
             if (erros.length > 0) {
                 mostrarErros(erros);
@@ -107,65 +107,82 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // ✅ AbortController para timeout de 20s no fetch
             const controller = new AbortController();
-            const timeoutId  = setTimeout(function () { controller.abort(); }, 20000);
+            const timeoutId = setTimeout(function () { controller.abort(); }, 20000);
 
             fetch('enviar.php', {
                 method: 'POST',
                 body: dados,
                 signal: controller.signal
             })
-            .then(function (res) {
-                clearTimeout(timeoutId);
+                .then(function (res) {
+                    clearTimeout(timeoutId);
 
-                // ✅ Verifica status HTTP antes de tentar parsear JSON
-                if (!res.ok) {
+                    // ✅ Verifica status HTTP antes de tentar parsear JSON
+                    if (!res.ok) {
+                        return res.text().then(function (txt) {
+                            throw new Error('Servidor retornou erro ' + res.status + ': ' + txt.substring(0, 200));
+                        });
+                    }
+
                     return res.text().then(function (txt) {
-                        throw new Error('Servidor retornou erro ' + res.status + ': ' + txt.substring(0, 200));
+                        try {
+                            return JSON.parse(txt);
+                        } catch (e) {
+                            // ✅ Se o PHP retornou HTML de erro em vez de JSON, mostra mensagem útil
+                            throw new Error('Resposta inesperada do servidor. Verifique os logs do PHP. Detalhe: ' + txt.substring(0, 300));
+                        }
                     });
-                }
+                })
+                .then(function (data) {
+                    setBtnLoading(false);
+                    if (data.sucesso) {
+                        const modal = document.getElementById('modalSucesso');
+                        const spanProtocolo = document.getElementById('numeroProtocolo');
+                        const btnFechar = document.getElementById('btnFecharModal');
 
-                return res.text().then(function (txt) {
-                    try {
-                        return JSON.parse(txt);
-                    } catch (e) {
-                        // ✅ Se o PHP retornou HTML de erro em vez de JSON, mostra mensagem útil
-                        throw new Error('Resposta inesperada do servidor. Verifique os logs do PHP. Detalhe: ' + txt.substring(0, 300));
+                        spanProtocolo.textContent = data.protocolo;
+                        modal.style.display = 'flex';
+
+                        btnFechar.onclick = function () {
+                            modal.style.display = 'none';
+                            formSuporte.reset();
+                            ['name', 'email', 'cpf', 'reclamacao'].forEach(function (id) {
+                                document.getElementById(id).style.outline = '';
+                            });
+                        };
+                    } else {
+                        mostrarErros([data.erro || 'Erro ao enviar. Tente novamente.']);
+                    }
+                })
+                .catch(function (err) {
+                    clearTimeout(timeoutId);
+                    setBtnLoading(false);
+
+                    if (err.name === 'AbortError') {
+                        mostrarErros(['Tempo limite excedido. O servidor demorou muito para responder.']);
+                    } else {
+                        // ✅ Mostra o erro real em vez de mensagem genérica
+                        mostrarErros([err.message || 'Erro de conexão com o servidor.']);
                     }
                 });
-            })
-            .then(function (data) {
-                setBtnLoading(false);
-                if (data.sucesso) {
-                    const modal         = document.getElementById('modalSucesso');
-                    const spanProtocolo = document.getElementById('numeroProtocolo');
-                    const btnFechar     = document.getElementById('btnFecharModal');
-
-                    spanProtocolo.textContent = data.protocolo;
-                    modal.style.display = 'flex';
-
-                    btnFechar.onclick = function () {
-                        modal.style.display = 'none';
-                        formSuporte.reset();
-                        ['name', 'email', 'cpf', 'reclamacao'].forEach(function (id) {
-                            document.getElementById(id).style.outline = '';
-                        });
-                    };
-                } else {
-                    mostrarErros([data.erro || 'Erro ao enviar. Tente novamente.']);
-                }
-            })
-            .catch(function (err) {
-                clearTimeout(timeoutId);
-                setBtnLoading(false);
-
-                if (err.name === 'AbortError') {
-                    mostrarErros(['Tempo limite excedido. O servidor demorou muito para responder.']);
-                } else {
-                    // ✅ Mostra o erro real em vez de mensagem genérica
-                    mostrarErros([err.message || 'Erro de conexão com o servidor.']);
-                }
-            });
         });
     }
+
+    function toggleMenu() {
+        const menu = document.getElementById("user-menu");
+        if (menu) {
+            menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+        }
+    }
+
+    // Fecha menus ao clicar fora
+    document.addEventListener("click", function (e) {
+        const userBox = document.querySelector(".user-box");
+        const menu = document.getElementById("user-menu");
+        if (userBox && menu && !userBox.contains(e.target)) {
+            menu.style.display = "none";
+        }
+    });
+
 
 });
