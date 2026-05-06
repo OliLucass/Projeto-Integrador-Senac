@@ -10,14 +10,12 @@ namespace Projeto_integrador
 {
     public class Conexao
     {
-        private static string connString = "server=10.37.44.72;user id=root;password=root;database=projeto_quimera";
+        private static string connString = "server=localhost;user id=root;password=;database=projeto_quimera";
+
         public MySqlConnection GetConnection()
         {
             return new MySqlConnection(connString);
-            //gvg
         }
-        
-
     }
 
 }
