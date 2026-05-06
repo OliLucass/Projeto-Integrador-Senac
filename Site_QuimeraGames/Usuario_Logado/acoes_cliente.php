@@ -27,17 +27,18 @@ if ($id_play > 0) {
 
     // --- LÓGICA DO CARRINHO ---
     if ($acao == 'add_carrinho') {
-        // CORRIGIDO: mudado de $id_jogo para $id_play
         $check = $pdo->prepare("SELECT COUNT(*) FROM carrinho WHERE id_usuario = ? AND id_play = ?");
         $check->execute([$id_user, $id_play]);
-
         if ($check->fetchColumn() == 0) {
-            // CORRIGIDO: mudado de $id_jogo para $id_play
             $pdo->prepare("INSERT INTO carrinho (id_usuario, id_play) VALUES (?, ?)")->execute([$id_user, $id_play]);
         }
         header("Location: " . $pagina_anterior);
         exit;
     } elseif ($acao == 'del_carrinho') {
+        // Sem o LIMIT 1 (Evita a tela branca)
+        $pdo->prepare("DELETE FROM carrinho WHERE id_usuario = ? AND id_play = ?")->execute([$id_user, $id_play]);
+        header("Location: " . $pagina_anterior);
+        exit;
     }
 
     // --- LÓGICA DA LISTA DE DESEJOS ---
