@@ -237,3 +237,137 @@
 .btn-red:hover {
     background: #c0181d;
 }
+
+/* ========================================================
+   ✅ RESPONSIVIDADE: CARRINHO E LISTA DE DESEJOS (Mobile)
+   Foco: Apple, Samsung, Xiaomi (Max 768px)
+======================================================== */
+@media screen and (max-width: 768px) {
+    
+    /* ==============================
+       1. TELA DO CARRINHO
+    ============================== */
+    .cart-layout {
+        flex-direction: column; /* Empilha a lista de jogos e o resumo */
+        gap: 30px;
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+
+    .cart-list, .cart-summary {
+        width: 100% !important;
+        flex: none;
+    }
+
+    .cart-summary {
+        position: static; /* Tira o efeito de ficar grudado na tela, permitindo a rolagem normal */
+        padding: 25px 20px;
+    }
+
+    .cart-item {
+        padding: 15px;
+        flex-direction: row; 
+        flex-wrap: wrap; /* Permite que os elementos "quebrem" de linha de forma inteligente */
+        gap: 15px;
+        align-items: center;
+    }
+
+    .cart-item img.capa {
+        width: 75px;
+        height: 105px;
+        margin-right: 0;
+    }
+
+    .cart-info {
+        flex: 1;
+        min-width: 150px; 
+    }
+
+    .cart-info h3 {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+    }
+
+    .remover-link {
+        width: 100%; /* Joga o link de remover para a parte de baixo do card */
+        text-align: right;
+        margin: 10px 0 0 0;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05); /* Cria uma linha divisória elegante */
+        display: block;
+    }
+
+    /* ==============================
+       2. TELA DA LISTA DE DESEJOS
+    ============================== */
+    .wish-container {
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+
+    .wish-container h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    .wish-item {
+        flex-direction: column; /* Transforma a linha em um "Card" vertical */
+        padding: 25px 15px;
+        text-align: center;
+        min-height: auto;
+    }
+
+    .wish-item img.capa {
+        margin-right: 0;
+        margin-bottom: 20px;
+        width: 120px;
+        height: 160px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .wish-info {
+        width: 100%;
+        align-items: center; /* Centraliza os textos */
+    }
+
+    .wish-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .wish-price {
+        margin-right: 0;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        margin-top: 10px;
+    }
+
+    .plataforma-info {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .wish-actions {
+        position: relative; /* Remove o posicionamento fixo problemático */
+        bottom: auto;
+        right: auto;
+        width: 100%;
+        justify-content: center;
+        gap: 15px;
+        flex-direction: column; /* Coloca um botão embaixo do outro */
+        border-top: 1px solid rgba(255,255,255,0.05);
+        padding-top: 20px;
+    }
+    
+    .wish-actions a {
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        color: white;
+    }
+
+    .wish-actions a:hover {
+        background: rgba(229, 9, 20, 0.2);
+    }
+}
