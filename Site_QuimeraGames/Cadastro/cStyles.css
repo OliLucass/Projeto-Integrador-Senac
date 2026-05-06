@@ -1,225 +1,524 @@
+/* =========================================
+   ESTRUTURA GERAL DA PÁGINA
+   ========================================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-.topo {
-  position: absolute;
-  top: 20px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between; /* separa os lados */
-  align-items: center;
-  padding: 0 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;  
-  align-items: center;       
-  background-color: #0b0f1a;
-  font-family: sans-serif;
-}
-.logo {
-  width: 100px;
-  height: auto;
-  border-radius: 12px;
-  margin-top: 5px;
-  margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #0b0f1a;
 }
 
-.topo-esquerda,
-.topo-direita {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+.main-cadastro {
+    flex: 1;
+    /* Ocupa o espaço livre e empurra o rodapé para baixo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    /* Evita bater no topo global */
 }
 
-.btn-login {
-  border: none;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
-  background: rgba(255, 255, 255, 0.05);
-  gap: 30px;
-}
+
 
 /* Container animação */
-.container {
+.container-animado {
     animation: fadeUp 0.8s ease;
+    width: 100%;
+    max-width: 420px;
 }
+
 
 @keyframes fadeUp {
     from {
         opacity: 0;
         transform: translateY(40px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Card */
-.card {
-    width: 450px;
-    padding: 25px;
-    border-radius: 20px;
-    background: #C3D4FF;
-    box-shadow: 0 0 25px rgba(0,0,0,0.3);
+/* =========================================
+   CARTÃO DE CADASTRO (PREMIUM DARK)
+   ========================================= */
+.card-cadastro {
+    width: 100%;
+    
+    padding: 35px 30px;
+    border-radius: 16px;
+    background: linear-gradient(to top, #132041, #1b3c91);
+    /* A originalidade da equipe */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Título */
-.card h1 {
+.card-cadastro h1 {
     text-align: center;
-    color: #132041;
+    color: white;
+    margin-bottom: 25px;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+/* Inputs Animados (Flutuantes) */
+.input-group {
+    position: relative;
     margin-bottom: 20px;
+    width: 100%;
 }
 
-/* Inputs */
-.input-group {
-    position: relative;
-    margin-bottom: 18px;
-}
-
-.input-group {
-    position: relative;
+.row-inputs {
+    display: flex;
+    gap: 15px;
 }
 
 .input-group input {
     width: 100%;
-    padding: 12px;
-    border-radius: 20px;
-    border: none;
-    background: #E5EDFF;
-    color: #132041;
+    padding: 14px;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
     outline: none;
+    font-size: 15px;
+    transition: 0.3s;
 }
 
-/* Label */
+.input-group input:focus {
+    border-color: #e62429;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Label Flutuante Dark Mode */
 .input-group label {
     position: absolute;
     left: 15px;
-    top: 12px;
-    color: #132041;
+    top: 15px;
+    color: #a0aec0;
     transition: 0.3s;
     pointer-events: none;
+    background: transparent;
 }
 
-/* Animação */
+/* Animação do Label */
+.input-group input:focus+label,
+.input-group input:not(:placeholder-shown)+label {
+    top: -10px;
+    left: 10px;
+    font-size: 13px;
+    color: #e62429;
+    background: #1b3c91;
+    /* Camufla com o fundo */
+    padding: 0 5px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.input-group > label {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    color: #a0aec0;
+    transition: 0.3s;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* Animação do Label */
 .input-group input:focus + label,
 .input-group input:not(:placeholder-shown) + label {
     top: -10px;
-    font-size: 12px;
-    color: #0A0F1C;
+    left: 10px;
+    font-size: 13px;
+    color: #e62429;
+    background: #1b3c91; /* Camufla com o fundo */
+    padding: 0 5px;
+    border-radius: 4px;
+    font-weight: bold;
 }
 
-
-/* Checkbox */
-.check {
-    margin-bottom: 15px;
-    color: #132041;
+/* =========================================
+   ÍCONE DO OLHO E BOTÕES
+   ========================================= */
+.lembrar-cadastro {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    z-index: 10;
 }
 
-/* Botão */
+.lembrar-cadastro input[type="checkbox"] {
+    display: none;
+}
+
+/* RESET COMPLETO: Impede a label do olho de copiar o visual da label de texto */
+.label-olho {
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0.6;
+    transition: 0.3s;
+    pointer-events: auto !important; 
+    
+    /* Remove qualquer fundo ou posição errada */
+    position: relative !important; 
+    left: 0 !important;
+    top: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+.label-olho:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.icone-senha {
+    width: 25px; /* Tamanho exato para encaixar perfeitamente */
+    height: auto;
+    font-size: 20px; 
+}
+
+.oculto { display: none; }
+.visivel { display: block; }
+
+/* Garante que o texto digitado não fique escondido atrás do olho */
+#senha, #confirme {
+    padding-right: 50px !important; 
+}
+
+/* Botão Cadastrar */
 .btn {
     width: 100%;
-    padding: 12px;
-    border-radius: 12px;
+    padding: 15px;
+    border-radius: 8px;
     border: none;
-    background: #A8030C;
+    background: #e62429;
     color: #fff;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    background: #c0181d;
+    box-shadow: 0 5px 15px rgba(230, 36, 41, 0.4);
+}
+
+/* Voltar (Padrão Verificar Email) */
+.footer-voltar {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.btnVoltar {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+    padding: 0;
+}
+
+.btnVoltar:hover {
+    color: #e62429;
+}
+
+.labelVoltar {
+    color: white;
+    font-weight: 600;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+/* =========================================
+   RODAPÉ (COMO SOLICITADO)
+   ========================================= */
+.rodape {
+    /* REMOVIDO o position: fixed; O Flexbox cuida dele agora! */
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 40px 20px;
+    background: linear-gradient(to bottom, #0f2449, #020817);
+    color: white;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.primeira_cadastre {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.primeira {
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    color: #fff;
+}
+
+.texto {
+    max-width: 400px;
+    font-size: 16px;
+    color: #a0aec0;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.cad {
+    background-color: transparent;
+    color: white;
+    border: 2px solid #e62429;
+    padding: 10px 30px;
+    border-radius: 25px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
 
-.btn:hover {
-    transform: scale(1.05);
-    background: #8e020a;
+.cad:hover {
+    background-color: #e62429;
+    box-shadow: 0 0 15px rgba(230, 36, 41, 0.4);
 }
 
-/* Rodapé */
-.footer {
-    margin-top: 20px;
-    background: #0A0F1C;
-    padding: 15px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
+/* =========================================
+   MOBILE COMPLETO (CELULARES)
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    /* Estrutura geral */
+    body {
+        padding: 0;
+    }
+
+    /* Área principal */
+    .main-cadastro {
+        padding: 20px 12px;
+        align-items: flex-start; /* sobe tudo */
+    }
+
+    /* Container */
+    .container-animado {
+        max-width: 100%;
+    }
+
+    /* CARD */
+    .card-cadastro {
+        padding: 25px 15px;
+        border-radius: 14px;
+    }
+
+    /* LOGO*/  
+    .logo {
+        display: flex;
+        margin: 0 auto 100px auto; /* centraliza e separa do título */
+        width: 60px;
+        position: relative; /* remove sobreposição */
+        top: 0;
+        left: 0;
+    }
+
+    /* Título */
+    .card-cadastro h1 {
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Inputs */
+    .input-group input {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .input-group label {
+        font-size: 13px;
+    }
+
+    /* Inputs lado a lado viram coluna */
+    .row-inputs {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Ajuste do ícone de senha */
+    .icone-senha {
+        width: 22px;
+    }
+
+    /* Espaço para o olho */
+    #senha, #confirme {
+        padding-right: 45px !important;
+    }
+
+    /* Botão */
+    .btn {
+        padding: 14px;
+        font-size: 15px;
+    }
+
+    /* Voltar */
+    .btnVoltar {
+        font-size: 14px;
+    }
+
+    /* Rodapé */
+    .rodape {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 25px 15px;
+    }
+
+    .primeira {
+        font-size: 18px;
+    }
+
+    .texto {
+        font-size: 14px;
+    }
+
+    .cad {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+/* =========================================
+   TABLET COMPLETO (CADASTRO)
+   ========================================= */
+
+@media (max-width: 1024px) {
+
+    /* BODY */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* MAIN (CORRIGE ESPAÇO EM CIMA) */
+    .main-cadastro {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px 20px 20px; /* menos espaço */
+    }
+
+    /* CONTAINER (CARD MAIOR ✅) */
+    .container-animado {
+        width: 100%;
+        max-width: 550px;
+    }
+
+    /* CARD */
+    .card-cadastro {
+        padding: 35px 30px;
+        border-radius: 16px;
+    }
+
+    .card-cadastro h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    /* INPUTS */
+    .input-group input {
+        padding: 15px;
+        font-size: 15px;
+    }
+
+    /* INPUTS lado a lado → coluna */
+    .row-inputs {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* BOTÃO */
+    .btn {
+        padding: 16px;
+        font-size: 17px;
+    }
+
+    /* OLHO SENHA */
+    .icone-senha {
+        width: 24px;
+    }
+
+    #senha, #confirme {
+        padding-right: 50px !important;
+    }
+
+    /* =========================================
+       RODAPÉ AJUSTADO ✅
+       ========================================= */
+
+    .rodape {
+        margin-top: auto;
+        padding: 20px 15px;
+        flex-direction: row;
+        justify-content: center;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .primeira_cadastre {
+        gap: 8px;
+    }
+
+    .primeira {
+        font-size: 18px;
+    }
+
+    .texto {
+        font-size: 14px;
+        max-width: 300px;
+    }
+
+    .cad {
+        font-size: 16px;
+        padding: 8px 20px;
+    }
 }
 
-.voltar{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: #A8030C;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    margin-right: 10px;
-    cursor: pointer;
-}
 
-.footer span {
-    color: #fff;
-}
 
 .rodape {
-    position: fixed; /* fixa no final da tela */
-    bottom: 0;
-    left: 0;
-
     width: 100%;
-    height: 100px;
-
     display: flex;
-    
-    justify-content: space-around; 
+    justify-content: space-evenly;
     align-items: center;
-
-    padding: 0 40px;
-    
+    padding: 20px 20px; /* antes era 40px (muito alto) */
     background: linear-gradient(to bottom, #0f2449, #020817);
     color: white;
-}
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 
-.primeira_cadastre{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.primeira{
-    font-size: 20px;
-    font-weight: bold;
-    font-style: italic;
-}
-
-.texto{
-    max-width: 350px;
-    font-size: 18px;
-    color: #cfd6e6;
-}
-
-.cad{
-    background-color: #A8030C;
-    color: white;
-    border: none;
-    padding: 4px 25px;
-    border-radius: 25px;
-    font-size: 24px;
-    cursor: pointer;
-  font-style: italic;
-  font-style: bold;
+    margin-top: auto; /* ESSENCIAL */
 }
