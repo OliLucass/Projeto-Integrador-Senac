@@ -693,143 +693,100 @@ body {
   flex: 1;
 }
 
-/* Empurra o rodapé pro fundo no Pesquisar */
+@media screen and (max-width: 768px) {
 
-.topo-universal {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  padding: 15px 5% !important;
-  background: rgba(19, 32, 65, 0.95) !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-  position: relative !important;
-  z-index: 1000 !important;
+  /* remove carrossel desktop */
+  .carousel-container{
+    display:none !important;
+  }
+
+  /* seção */
+  .secao{
+    margin-top:10px;
+  }
+
+  .secao h2{
+    font-size:20px;
+    margin-bottom:14px;
+    padding-left:10px;
+  }
+
+  /* 2 colunas / 3 linhas */
+  .jogos-grid{
+    display:grid !important;
+    grid-template-columns:repeat(2, 1fr);
+    gap:-5px;
+    padding:-30px;
+    margin-right: 0px;
+  }
+
+  /* CARD visível */
+  .card-jogo-container{
+    width:100%;
+    display:block !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+
+    background:#13192b;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 16px rgba(0,0,0,.35);
+  }
+
+  /* imagem */
+  .thumb-wrapper{
+    width:100%;
+    height:190px;
+    overflow:hidden;
+  }
+
+  .thumb-wrapper img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  /* texto */
+  .card-info-texto{
+    padding:10px;
+  }
+
+  .card-info-texto h4{
+    font-size:13px;
+    line-height:1.3;
+    min-height:34px;
+    margin-bottom:6px;
+  }
+
+  .v-new{
+    font-size:15px;
+    font-weight:700;
+  }
+
+  .v-old{
+    font-size:11px;
+  }
+
+  .menu-busca{
+    display:none !important;
+  }
 }
 
-.topo-universal .logo {
-  width: 100px !important;
-  height: auto !important;
-  border-radius: 12px !important;
-}
+@media screen and (max-width:430px){
 
-.topo-universal .topo-esquerda,
-.topo-universal .topo-direita {
-  display: flex !important;
-  align-items: center !important;
-  gap: 20px !important;
-}
+  .jogos-grid{
+    gap:10px;
+    padding:8px;
+  }
 
-.topo-universal .btn-nav,
-.topo-universal .btn-login {
-  border: none !important;
-  color: white !important;
-  padding: 12px 24px !important;
-  border-radius: 25px !important;
-  cursor: pointer !important;
-  font-weight: 600 !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  font-size: 15px !important;
-  text-decoration: none !important;
-}
+  .thumb-wrapper{
+    height:170px;
+  }
 
-.topo-universal .btn-nav.active,
-.topo-universal .btn-login:hover {
-  background: #e62429 !important;
-}
+  .card-info-texto h4{
+    font-size:12px;
+  }
 
-/* ÍCONES E USUÁRIO (Para ficar igualzinho à imagem 3) */
-.topo-universal .btn-icon {
-  background: transparent !important;
-  border: none !important;
-  font-size: 26px !important;
-  cursor: pointer !important;
-  color: white !important;
-  padding: 0 !important;
-}
-
-.topo-universal .user-box {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  padding: 6px 15px !important;
-  border-radius: 20px !important;
-  cursor: pointer !important;
-  position: relative !important;
-  transition: 0.3s !important;
-}
-
-.topo-universal .user-box:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-}
-
-.topo-universal .user-img {
-  width: 32px !important;
-  height: 32px !important;
-  border-radius: 50% !important;
-  object-fit: cover !important;
-  margin: 0 !important;
-}
-
-.topo-universal .user-nome {
-  font-size: 15px !important;
-  font-weight: 600 !important;
-  color: white !important;
-  margin: 0 !important;
-  font-family: sans-serif !important;
-}
-
-/* DROPDOWN MENU */
-.topo-universal .user-menu {
-  position: absolute !important;
-  top: 50px !important;
-  right: 0 !important;
-  background: #13192b !important;
-  border-radius: 10px !important;
-  padding: 10px 0 !important;
-  width: 180px !important;
-  display: none;
-  flex-direction: column !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
-  z-index: 9999 !important;
-}
-
-.topo-universal .user-menu a {
-  padding: 12px 20px !important;
-  color: white !important;
-  text-decoration: none !important;
-  font-size: 14px !important;
-  text-align: left !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  font-family: sans-serif !important;
-}
-
-.topo-universal .user-menu a:hover {
-  background: #1f2a44 !important;
-}
-
-/* BADGES (Bolinhas Vermelhas) */
-.badge-bolinha {
-  background: #e62429 !important;
-  color: white !important;
-  border-radius: 50% !important;
-  padding: 2px 6px !important;
-  font-size: 11px !important;
-  font-weight: bold !important;
-}
-
-/* RODAPÉ BLINDADO */
-.rodape-universal {
-  background: #111823 !important;
-  color: #cdd5e0 !important;
-  text-align: center !important;
-  padding: 30px !important;
-  border-top: 1px solid #30363d !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-  margin-top: auto !important;
-  font-family: sans-serif !important;
 }
