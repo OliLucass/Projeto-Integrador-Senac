@@ -1,359 +1,296 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Net;
-using ManagedDoom;
-using static Projeto_integrador.RepositorioJogos;
-using System.Diagnostics;
-
-namespace Projeto_integrador
+﻿namespace Projeto_integrador
 {
-    public partial class Sorteador : Form
+    partial class Sorteador
     {
-        private Dictionary<string, Image> _cacheImagens = new Dictionary<string, Image>();
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-        private RepositorioJogos _repositorio;
-        private string modo = "";
-        private Dictionary<string, int> categorias;
-
-        private List<string> _titulosAnimacao;
-        private int _animIndex;
-        private int _velocidade;
-        private RepositorioJogos.Jogo _jogoSorteado;
-
-        public Sorteador()
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
         {
-            InitializeComponent();
-            _repositorio = new RepositorioJogos();
-
-            btn_jogar.Visible = false;
-
-            categorias = new Dictionary<string, int>()
+            if (disposing && (components != null))
             {
-                { "Todas", 0 },
-                { "Ação", 1 },
-                { "Aventura", 2 },
-                { "Corrida", 3 },
-                { "Estratégia", 4 },
-                { "Esporte", 5 },
-                { "FPS", 6 },
-                { "Luta", 7 },
-                { "Terror", 8 },
-                { "Sobrevivência", 9 },
-                { "RPG", 10 }
-            };
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sorteador));
+            pictureBox1 = new PictureBox();
+            lb_titulo = new Label();
+            txt_user = new TextBox();
+            btn_bibl = new Button();
+            btn_loja = new Button();
+            btn_sortear = new Button();
+            pt_image_jogo = new PictureBox();
+            lb_resposta = new Label();
+            btn_nova = new Button();
+            grp_resultado = new GroupBox();
+            btn_jogar = new Button();
+            btn_trailer = new Button();
+            cb_cate = new ComboBox();
+            lb_cate = new Label();
+            timer_an = new System.Windows.Forms.Timer(components);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pt_image_jogo).BeginInit();
+            grp_resultado.SuspendLayout();
+            SuspendLayout();
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(372, 15);
+            pictureBox1.Margin = new Padding(4);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(294, 163);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            // 
+            // lb_titulo
+            // 
+            lb_titulo.AutoSize = true;
+            lb_titulo.BackColor = Color.FromArgb(168, 3, 12);
+            lb_titulo.FlatStyle = FlatStyle.Popup;
+            lb_titulo.Font = new Font("SansSerif", 14.2499981F, FontStyle.Italic, GraphicsUnit.Point, 2);
+            lb_titulo.ForeColor = Color.FromArgb(234, 234, 234);
+            lb_titulo.Location = new Point(193, 204);
+            lb_titulo.Margin = new Padding(4, 0, 4, 0);
+            lb_titulo.Name = "lb_titulo";
+            lb_titulo.Size = new Size(651, 22);
+            lb_titulo.TabIndex = 1;
+            lb_titulo.Text = "Escolha um Jogo Aleatório da sua Biblioteca Quimera, ou da  Própria Loja ";
+            // 
+            // txt_user
+            // 
+            txt_user.BackColor = Color.White;
+            txt_user.CharacterCasing = CharacterCasing.Upper;
+            txt_user.Font = new Font("Lucida Console", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txt_user.ForeColor = Color.Black;
+            txt_user.Location = new Point(193, 391);
+            txt_user.Margin = new Padding(4);
+            txt_user.Name = "txt_user";
+            txt_user.Size = new Size(651, 23);
+            txt_user.TabIndex = 2;
+            txt_user.Tag = "";
+            txt_user.TextChanged += txt_user_TextChanged;
+            // 
+            // btn_bibl
+            // 
+            btn_bibl.BackColor = Color.FromArgb(168, 3, 12);
+            btn_bibl.FlatStyle = FlatStyle.Flat;
+            btn_bibl.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_bibl.ForeColor = Color.FromArgb(234, 234, 234);
+            btn_bibl.Location = new Point(193, 274);
+            btn_bibl.Margin = new Padding(4);
+            btn_bibl.Name = "btn_bibl";
+            btn_bibl.Size = new Size(228, 48);
+            btn_bibl.TabIndex = 3;
+            btn_bibl.Text = "Minha Biblioteca";
+            btn_bibl.UseVisualStyleBackColor = false;
+            btn_bibl.Click += btn_bibl_Click_1;
+            // 
+            // btn_loja
+            // 
+            btn_loja.BackColor = Color.FromArgb(168, 3, 12);
+            btn_loja.FlatStyle = FlatStyle.Flat;
+            btn_loja.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_loja.ForeColor = Color.FromArgb(234, 234, 234);
+            btn_loja.Location = new Point(616, 274);
+            btn_loja.Margin = new Padding(4);
+            btn_loja.Name = "btn_loja";
+            btn_loja.Size = new Size(228, 48);
+            btn_loja.TabIndex = 4;
+            btn_loja.Text = "Toda Loja";
+            btn_loja.UseVisualStyleBackColor = false;
+            btn_loja.Click += btn_loja_Click;
+            // 
+            // btn_sortear
+            // 
+            btn_sortear.BackColor = Color.FromArgb(168, 3, 12);
+            btn_sortear.FlatStyle = FlatStyle.Flat;
+            btn_sortear.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_sortear.ForeColor = Color.FromArgb(234, 234, 234);
+            btn_sortear.Location = new Point(474, 498);
+            btn_sortear.Margin = new Padding(4);
+            btn_sortear.Name = "btn_sortear";
+            btn_sortear.Size = new Size(96, 48);
+            btn_sortear.TabIndex = 5;
+            btn_sortear.Text = "Sortear";
+            btn_sortear.UseVisualStyleBackColor = false;
+            btn_sortear.Click += btn_sortear_Click;
+            // 
+            // pt_image_jogo
+            // 
+            pt_image_jogo.Location = new Point(404, 27);
+            pt_image_jogo.Margin = new Padding(4);
+            pt_image_jogo.Name = "pt_image_jogo";
+            pt_image_jogo.Size = new Size(243, 299);
+            pt_image_jogo.TabIndex = 6;
+            pt_image_jogo.TabStop = false;
+            pt_image_jogo.Click += pt_image_jogo_Click;
+            // 
+            // lb_resposta
+            // 
+            lb_resposta.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lb_resposta.BackColor = Color.Transparent;
+            lb_resposta.BorderStyle = BorderStyle.Fixed3D;
+            lb_resposta.FlatStyle = FlatStyle.Flat;
+            lb_resposta.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lb_resposta.ForeColor = Color.White;
+            lb_resposta.Location = new Point(231, 418);
+            lb_resposta.Margin = new Padding(4, 0, 4, 0);
+            lb_resposta.Name = "lb_resposta";
+            lb_resposta.Size = new Size(586, 108);
+            lb_resposta.TabIndex = 7;
+            lb_resposta.Text = "Resposta do jogo sorteado";
+            lb_resposta.TextAlign = ContentAlignment.MiddleCenter;
+            lb_resposta.Click += lb_resposta_Click;
+            // 
+            // btn_nova
+            // 
+            btn_nova.BackColor = Color.FromArgb(168, 3, 12);
+            btn_nova.FlatStyle = FlatStyle.Flat;
+            btn_nova.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_nova.ForeColor = Color.FromArgb(234, 234, 234);
+            btn_nova.Location = new Point(445, 543);
+            btn_nova.Margin = new Padding(4);
+            btn_nova.Name = "btn_nova";
+            btn_nova.Size = new Size(156, 62);
+            btn_nova.TabIndex = 8;
+            btn_nova.Text = "Sortear Novamente";
+            btn_nova.UseVisualStyleBackColor = false;
+            btn_nova.Click += btn_nova_Click;
+            // 
+            // grp_resultado
+            // 
+            grp_resultado.Controls.Add(btn_jogar);
+            grp_resultado.Controls.Add(btn_trailer);
+            grp_resultado.Controls.Add(pt_image_jogo);
+            grp_resultado.Controls.Add(btn_nova);
+            grp_resultado.Controls.Add(lb_resposta);
+            grp_resultado.Font = new Font("SansSerif", 12F, FontStyle.Regular, GraphicsUnit.Point, 2);
+            grp_resultado.Location = new Point(2, 2);
+            grp_resultado.Margin = new Padding(4);
+            grp_resultado.Name = "grp_resultado";
+            grp_resultado.Padding = new Padding(4);
+            grp_resultado.Size = new Size(1048, 617);
+            grp_resultado.TabIndex = 9;
+            grp_resultado.TabStop = false;
+            grp_resultado.Text = "groupBox1";
             grp_resultado.Visible = false;
-            txt_user.Visible = false;
-
-            cb_cate.DataSource = new BindingSource(categorias, null);
-            cb_cate.DisplayMember = "Key";
-            cb_cate.ValueMember = "Value";
-            cb_cate.SelectedIndex = -1;
-
-            PreencherCategorias();
-            timer_an.Tick += TimerAnimacao_Tick;
-
-            txt_user.GotFocus += TxtUser_GotFocus;
-            txt_user.LostFocus += TxtUser_LostFocus;
-        }
-
-        private void JogarDoom()
-        {
-            try
-            {
-                Doom telaDoom = new Doom();
-                telaDoom.Show();
-                this.Hide();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao iniciar o DOOM: " + ex.Message);
-            }
-        }
-
-        private void TxtUser_GotFocus(object sender, EventArgs e)
-        {
-            if (txt_user.Text == "Digite seu username")
-            {
-                txt_user.Text = "";
-                txt_user.ForeColor = Color.Black;
-            }
-        }
-
-        private void TxtUser_LostFocus(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txt_user.Text))
-            {
-                txt_user.Text = "Digite seu username";
-                txt_user.ForeColor = Color.Gray;
-            }
-        }
-
-        public void ResetarTela()
-        {
-            lb_resposta.Text = "";
-            pt_image_jogo.Image = null;
-            grp_resultado.Visible = false;
-            cb_cate.Visible = true;
-            lb_cate.Visible = true;
-            cb_cate.SelectedIndex = -1;
-            txt_user.Visible = (modo == "minha_biblioteca");
+            // 
+            // btn_jogar
+            // 
+            btn_jogar.Font = new Font("SansSerif", 9.749999F, FontStyle.Bold, GraphicsUnit.Point, 2);
+            btn_jogar.Location = new Point(488, 333);
+            btn_jogar.Name = "btn_jogar";
+            btn_jogar.Size = new Size(75, 23);
+            btn_jogar.TabIndex = 10;
+            btn_jogar.Text = "Jogar?";
+            btn_jogar.UseVisualStyleBackColor = true;
             btn_jogar.Visible = false;
+            btn_jogar.Click += btn_jogar_Click;
+            // 
+            // btn_trailer
+            // 
+            btn_trailer.BackColor = Color.FromArgb(168, 3, 12);
+            btn_trailer.FlatStyle = FlatStyle.Flat;
+            btn_trailer.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_trailer.ForeColor = Color.FromArgb(234, 234, 234);
+            btn_trailer.Location = new Point(436, 362);
+            btn_trailer.Name = "btn_trailer";
+            btn_trailer.Size = new Size(176, 45);
+            btn_trailer.TabIndex = 9;
+            btn_trailer.Text = "Veja o trailer aqui!";
+            btn_trailer.UseVisualStyleBackColor = false;
+            btn_trailer.Click += btn_trailer_Click;
+            // 
+            // cb_cate
+            // 
+            cb_cate.Font = new Font("SansSerif", 11.2499981F, FontStyle.Regular, GraphicsUnit.Point, 2);
+            cb_cate.FormattingEnabled = true;
+            cb_cate.Location = new Point(458, 298);
+            cb_cate.Name = "cb_cate";
+            cb_cate.Size = new Size(123, 25);
+            cb_cate.TabIndex = 10;
+            // 
+            // lb_cate
+            // 
+            lb_cate.AutoSize = true;
+            lb_cate.BackColor = Color.FromArgb(168, 3, 12);
+            lb_cate.BorderStyle = BorderStyle.Fixed3D;
+            lb_cate.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lb_cate.ForeColor = Color.FromArgb(234, 234, 234);
+            lb_cate.Location = new Point(474, 274);
+            lb_cate.Name = "lb_cate";
+            lb_cate.Size = new Size(95, 21);
+            lb_cate.TabIndex = 11;
+            lb_cate.Text = "Categorias";
+            // 
+            // timer_an
+            // 
+            timer_an.Interval = 50;
+            // 
+            // Sorteador
+            // 
+            AutoScaleDimensions = new SizeF(14F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(10, 15, 28);
+            ClientSize = new Size(1050, 616);
+            Controls.Add(cb_cate);
+            Controls.Add(grp_resultado);
+            Controls.Add(lb_cate);
+            Controls.Add(btn_sortear);
+            Controls.Add(btn_loja);
+            Controls.Add(btn_bibl);
+            Controls.Add(txt_user);
+            Controls.Add(lb_titulo);
+            Controls.Add(pictureBox1);
+            Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 2);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4);
+            Name = "Sorteador";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Sorteador";
+            Load += Sorteador_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pt_image_jogo).EndInit();
+            grp_resultado.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
-        private void PreencherCategorias()
-        {
-            var categorias = _repositorio.ObterCategorias();
-            cb_cate.DataSource = null;
-            cb_cate.DataSource = new BindingSource(categorias, null);
-            cb_cate.DisplayMember = "Nome";
-            cb_cate.ValueMember = "Id";
-            if (cb_cate.Items.Count > 0)
-                cb_cate.SelectedIndex = 0;
-        }
+        #endregion
 
-        private void btn_bibl_Click_1(object sender, EventArgs e)
-        {
-            modo = "minha_biblioteca";
-            txt_user.Visible = true;
-            txt_user.Text = "Digite seu username";
-            txt_user.ForeColor = Color.Gray;
-            txt_user.Focus();
-        }
-
-        private void btn_loja_Click(object sender, EventArgs e)
-        {
-            modo = "loja";
-            txt_user.Visible = false;
-        }
-
-        private void btn_sortear_Click(object sender, EventArgs e)
-        {
-            ResetarTela();
-            _titulosAnimacao = null;
-            _animIndex = 0;
-            _velocidade = 0;
-            _jogoSorteado = null;
-
-            if (txt_user.Visible && txt_user.Text == "Digite seu username")
-                txt_user.Text = "";
-
-
-            if (string.IsNullOrWhiteSpace(modo))
-            {
-                MessageBox.Show("Escolha primeiro 'Minha Biblioteca' ou 'Toda Loja'.");
-                return;
-            }
-
-            if (modo == "minha_biblioteca")
-            {
-                string usuario = txt_user.Text.Trim();
-                if (string.IsNullOrWhiteSpace(usuario))
-                {
-                    MessageBox.Show("Digite o nome do usuário para buscar a biblioteca.");
-                    return;
-                }
-
-                if (!_repositorio.UsuarioExiste(usuario))
-                {
-                    MessageBox.Show("Usuário não existe.");
-                    return;
-                }
-
-                if (!_repositorio.UsuarioPossuiJogos(usuario))
-                {
-                    MessageBox.Show("Este usuário não possui jogos para sortear.");
-                    return;
-                }
-            }
-
-            int idCategoriaSelecionada = 0;
-            if (cb_cate.SelectedItem != null)
-            {
-                var categoriaSelecionada = (Categoria)cb_cate.SelectedItem;
-                idCategoriaSelecionada = categoriaSelecionada.Id;
-            }
-
-            _jogoSorteado = _repositorio.SortearJogo(modo, txt_user.Text.Trim(), idCategoriaSelecionada);
-            if (_jogoSorteado == null)
-            {
-                MessageBox.Show("Nenhum jogo encontrado.");
-                return;
-            }
-
-            cb_cate.Visible = false;
-            lb_cate.Visible = false;
-
-            _titulosAnimacao = new List<string>() { "Sorteando... 5", "Sorteando... 4", "Sorteando... 3", "Sorteando... 2", "Sorteando... 1" };
-
-            _animIndex = 0;
-            _velocidade = 300;
-            timer_an.Interval = _velocidade;
-            timer_an.Start();
-
-            grp_resultado.Visible = true;
-            lb_resposta.Text = "";
-            pt_image_jogo.Image = null;
-            cb_cate.Visible = false;
-            lb_cate.Visible = false;
-        }
-
-        private async void TimerAnimacao_Tick(object sender, EventArgs e)
-        {
-            if (_animIndex < _titulosAnimacao.Count)
-            {
-                lb_resposta.Text = _titulosAnimacao[_animIndex];
-                _animIndex++;
-            }
-            else
-            {
-                timer_an.Stop();
-
-                lb_resposta.Text = "🎮 " + _jogoSorteado.Titulo;
-
-                if (!string.IsNullOrWhiteSpace(_jogoSorteado.Titulo) &&
-                    _jogoSorteado.Titulo.Trim().Equals("Doom Eternal", StringComparison.OrdinalIgnoreCase))
-                {
-                    btn_jogar.Visible = true;
-                }
-                else
-                {
-                    btn_jogar.Visible = false;
-                }
-
-                if (!string.IsNullOrWhiteSpace(_jogoSorteado.Imagem))
-                {
-                    string url = _jogoSorteado.Imagem.Trim();
-
-                    try
-                    {
-                        if (_cacheImagens.ContainsKey(url))
-                        {
-                            pt_image_jogo.Image = _cacheImagens[url];
-                        }
-                        else
-                        {
-                            using (var wc = new WebClient())
-                            {
-                                byte[] data = wc.DownloadData(url);
-                                using (var ms = new System.IO.MemoryStream(data))
-                                {
-                                    Image img = Image.FromStream(ms);
-                                    pt_image_jogo.Image = img;
-                                    pt_image_jogo.SizeMode = PictureBoxSizeMode.Zoom;
-                                    _cacheImagens[url] = img;
-                                }
-                            }
-                        }
-                    }
-                    catch
-                    {
-                        pt_image_jogo.Image = null;
-                    }
-                }
-            }
-        }
-
-
-
-        private void btn_nova_Click(object sender, EventArgs e)
-        {
-            ResetarTela();
-            modo = "";
-            cb_cate.SelectedIndex = -1;
-            txt_user.Text = "Digite seu username";
-            txt_user.ForeColor = Color.Gray;
-        }
-
-        private void btn_trailer_Click(object sender, EventArgs e)
-        {
-            if (_jogoSorteado == null)
-            {
-                MessageBox.Show("Nenhum jogo foi sorteado ainda!");
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(_jogoSorteado.Trailer))
-            {
-                MessageBox.Show("Este jogo não possui trailer cadastrado.");
-                return;
-            }
-
-            Trailer telaTrailer = new Trailer(_jogoSorteado.Trailer, this);
-            telaTrailer.Show();
-            this.Hide();
-        }
-        private void pt_image_jogo_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lb_resposta_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txt_user_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Sorteador_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void btn_jogar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-
-                string caminhoDoom = Path.Combine(
-                    Application.StartupPath,
-                    @"..\..\..\managed-doom-master\managed-doom-master\ManagedDoom\bin\Debug\net8.0\managed-doom.exe"
-                );
-
-                caminhoDoom = Path.GetFullPath(caminhoDoom);
-
-                if (!File.Exists(caminhoDoom))
-                {
-                    MessageBox.Show("O executável do Doom não foi encontrado em:\n" + caminhoDoom,
-                        "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-
-                Process process = new Process();
-                process.StartInfo.FileName = caminhoDoom;
-                process.EnableRaisingEvents = true;
-
-
-                process.Exited += (sender2, e2) =>
-                {
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        btn_jogar.Visible = false;
-                        this.Show(); 
-                        MessageBox.Show("Jogo finalizado! Voltando ao sorteador.");
-                    });
-                };
-
-
-                process.Start();
-
-                this.Hide();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao iniciar o jogo: " + ex.Message);
-            }
-        }
+        private PictureBox pictureBox1;
+        private Label lb_titulo;
+        private TextBox txt_user;
+        private Button btn_bibl;
+        private Button btn_loja;
+        private Button btn_sortear;
+        private PictureBox pt_image_jogo;
+        private Label lb_resposta;
+        private Button btn_nova;
+        private GroupBox grp_resultado;
+        private System.Windows.Forms.Timer timer_an;
+        private ComboBox cb_cate;
+        private Label lb_cate;
+        private Button btn_trailer;
+        private Button btn_jogar;
     }
 }
