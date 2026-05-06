@@ -1,0 +1,418 @@
+.topo-simples {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 5%;
+    background: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.logo-auth {
+    width: 110px;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
+    filter: drop-shadow(0 0 8px rgba(229, 9, 20, 0.2));
+}
+
+.logo-auth:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 20px rgba(229, 9, 20, 0.7));
+}
+
+.topo-universal {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 15px 5% !important;
+    background: rgba(19, 32, 65, 0.95) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    z-index: 999999 !important;
+}
+
+.topo-universal .logo {
+    width: 100px !important;
+    height: auto !important;
+    border-radius: 12px !important;
+}
+
+.topo-universal .topo-esquerda,
+.topo-universal .topo-direita {
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+}
+
+.topo-universal .btn-nav,
+.topo-universal .btn-login {
+    border: none !important;
+    color: white !important;
+    padding: 12px 24px !important;
+    border-radius: 25px !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    font-size: 15px !important;
+    text-decoration: none !important;
+}
+
+.topo-universal .btn-nav.active,
+.topo-universal .btn-login:hover {
+    background: 
+#e62429 !important;
+}
+
+.topo-universal .btn-icon {
+    background: transparent !important;
+    border: none !important;
+    font-size: 26px !important;
+    cursor: pointer !important;
+    color: white !important;
+    padding: 0 !important;
+}
+
+.topo-universal .user-box {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    padding: 6px 15px !important;
+    border-radius: 25px !important;
+    cursor: pointer !important;
+    position: relative !important;
+    transition: 0.3s !important;
+    height: 44px !important;
+    box-sizing: border-box !important;
+}
+
+.topo-universal .user-box:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.topo-universal .user-img {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    margin: 0 !important;
+}
+
+.topo-universal .user-nome {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: white !important;
+    margin: 0 !important;
+    font-family: sans-serif !important;
+}
+
+.topo-universal .user-menu {
+    position: absolute !important;
+    top: 55px !important;
+    right: 0 !important;
+    background: 
+#13192b !important;
+    border-radius: 12px !important;
+    padding: 8px 0 !important;
+    width: 200px !important;
+    display: none;
+    flex-direction: column !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    z-index: 999999 !important;
+}
+
+.topo-universal .user-menu a {
+    padding: 12px 20px !important;
+    color: 
+#d1d5db !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    transition: all 0.2s ease !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    border-left: 0px solid transparent !important;
+}
+
+.topo-universal .user-menu a:hover {
+    background: rgba(230, 36, 41, 0.1) !important;
+    color: white !important;
+    padding-left: 25px !important;
+    border-left: 3px solid 
+#e62429 !important;
+}
+
+.badge-bolinha {
+    background: #e62429 !important;
+    color: white !important;
+    border-radius: 50% !important;
+    padding: 2px 6px !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+}
+
+.rodape-universal {
+    background: 
+#020817;
+    padding: 30px 20px;
+    text-align: center;
+    border-top: 2px solid 
+#e62429;
+    font-family: 'Poppins', sans-serif;
+}
+.footer-content p { color: #888; margin-bottom: 10px; }
+.footer-links { display: flex; justify-content: center; gap: 20px; }
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+.footer-links a:hover { color: 
+#e62429; }
+
+.coin-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: default;
+    transition: 0.3s;
+}
+
+.coin-container:hover {
+    background: rgba(255, 215, 0, 0.2);
+}
+
+.coin-icon {
+    font-size: 18px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+
+.coin-anim {
+    animation: coinPop 0.6s ease;
+}
+
+@keyframes coinPop {
+    0% {
+        transform: scale(1);
+        color: #ffd700;
+    }
+
+    50% {
+        transform: scale(1.5);
+        color: #fff;
+        text-shadow: 0 0 15px #fff;
+    }
+
+    100% {
+        transform: scale(1);
+        color: #ffd700;
+    }
+}
+
+.dust-effect {
+    opacity: 0 !important;
+    filter: blur(10px) grayscale(100%) !important;
+    transform: translateY(-50px) scale(1.2) !important;
+}
+
+.coin-tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.coin-tooltip {
+    visibility: hidden;
+    width: 260px;
+    background-color: #13192b;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 12px;
+    position: absolute;
+    z-index: 9999999;
+    top: 130%;
+    right: 0;
+    border: 1px solid #ffd700;
+    font-size: 13px;
+    line-height: 1.5;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    transition: opacity 0.3s, top 0.3s;
+}
+
+.coin-tooltip strong {
+    color: #ffd700;
+    font-size: 14px;
+}
+
+.coin-tooltip-container:hover .coin-tooltip {
+    visibility: visible;
+    opacity: 1;
+    top: 110%;
+}
+
+/* ========================================================
+   RESPONSIVIDADE MOBILE: HEADER LIMPO (Apple, Samsung, Xiaomi)
+   Telas de até 768px (Smartphones)
+======================================================== */
+
+/* 1. Reset Global Estrito para evitar barra de rolagem horizontal */
+html, body {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important; 
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@media screen and (max-width: 768px) {
+    /* Header Principal ocupando 100% com alinhamento lado a lado */
+    .topo-universal {
+        padding: 12px 15px !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Reduz um pouco o tamanho da logo */
+    .topo-universal .logo {
+        width: 85px !important;
+    }
+
+    /* 2. OCULTAR O BOTÃO "LOJA" */
+    .topo-universal .btn-nav {
+        display: none !important;
+    }
+
+    /* 3. OCULTAR O NOME DO USUÁRIO */
+    .topo-universal .user-nome {
+        display: none !important;
+    }
+
+    /* Compactando a distância entre os itens do lado direito (Carrinho, Moedas, Perfil) */
+    .topo-universal .topo-direita {
+        gap: 12px !important;
+    }
+
+    /* Ajuste do botão de Perfil: Removemos o fundo acinzentado e deixamos só a foto flutuando */
+    .topo-universal .user-box {
+        padding: 0 !important;
+        background: transparent !important;
+        height: auto !important;
+        gap: 0 !important;
+    }
+
+    .topo-universal .user-img {
+        width: 36px !important;
+        height: 36px !important;
+        border: 2px solid rgba(255, 255, 255, 0.1); /* Uma bordinha sutil na foto */
+    }
+
+    /* Ajuste do Ícone do Carrinho e a "Bolinha" de notificação */
+    .topo-universal .btn-icon {
+        font-size: 24px !important;
+    }
+    
+    .badge-bolinha {
+        top: -6px !important;
+        right: -8px !important;
+        padding: 2px 6px !important;
+        font-size: 10px !important;
+    }
+
+    /* Compactando o botão de Suporte */
+    .topo-universal .btn-login { 
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+    }
+
+    /* Ajuste da box de moedas */
+    .coin-container {
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+        gap: 4px !important;
+    }
+    
+    .coin-icon {
+        font-size: 14px !important;
+    }
+
+    /* Ocultar o tooltip (balãozinho de explicação) das moedas no mobile para não atrapalhar o toque */
+    .coin-tooltip {
+        display: none !important;
+    }
+
+    /* Evitar que o menu do usuário vaze da tela pela direita quando aberto */
+    .topo-universal .user-menu {
+        right: 0 !important;
+        top: 45px !important;
+        width: 160px !important;
+    }
+}
+
+/* ========================================================
+   AJUSTE EXTREMO PARA TELAS MUITO PEQUENAS (Max 400px)
+   Ex: iPhone SE, Galaxy antigas, Telas estreitas
+======================================================== */
+@media screen and (max-width: 400px) {
+    .topo-universal .topo-direita {
+        gap: 8px !important;
+    }
+    
+    /* Cursor de clique para a moeda */
+    .coin-container {
+        cursor: pointer !important;
+    }
+
+    /* Oculta os números das moedas por padrão */
+    #coin-counter {
+        display: none !important;
+    }
+
+    /* MÁGICA: O balão flutuante ativado pelo clique */
+    #coin-counter.mostrar-mobile {
+        display: block !important;
+        position: absolute;
+        top: 45px; /* Fica logo abaixo da moeda */
+        left: 50%;
+        transform: translateX(-50%); /* Centraliza perfeitamente */
+        background: #0b1120;
+        border: 1px solid #ffd700;
+        color: #ffd700;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 215, 0, 0.2);
+        z-index: 999999;
+        white-space: nowrap;
+    }
+
+    /* Bônus: Adiciona a palavra "moedas" na frente do número para ficar bem explicado */
+    #coin-counter.mostrar-mobile::after {
+        content: " moedas";
+    }
+
+    /* Reduz um pouco mais o botão de suporte */
+    .topo-universal .btn-login { 
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+    }
+}
