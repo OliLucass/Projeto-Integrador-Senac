@@ -142,14 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
 function toggleMenu() {
     const menu = document.getElementById("user-menu");
-    if (menu) {
-        menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-    }
+    if (menu) menu.style.display = menu.style.display === "flex" ? "none" : "flex";
 }
-
 document.addEventListener("click", function (e) {
     const userBox = document.querySelector(".user-box");
     const menu = document.getElementById("user-menu");
