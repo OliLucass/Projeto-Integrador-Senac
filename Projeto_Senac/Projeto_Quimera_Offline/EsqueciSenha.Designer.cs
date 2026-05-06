@@ -56,7 +56,7 @@
             // 
             // label1
             // 
-            label1.Font = new Font("SansSerif", 14.2499981F, FontStyle.Regular, GraphicsUnit.Point, 2);
+            label1.Font = new Font("SansSerif", 12F, FontStyle.Regular, GraphicsUnit.Point, 2);
             label1.ForeColor = Color.FromArgb(234, 234, 234);
             label1.Location = new Point(102, 43);
             label1.Name = "label1";
@@ -220,7 +220,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(10, 15, 28);
-            ClientSize = new Size(681, 423);
+            ClientSize = new Size(545, 393);
             Controls.Add(checkBox1);
             Controls.Add(verSenha);
             Controls.Add(lblMensagem);

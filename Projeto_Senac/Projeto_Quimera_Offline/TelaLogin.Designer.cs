@@ -43,7 +43,7 @@
             // label1
             // 
             label1.BackColor = Color.FromArgb(10, 15, 28);
-            label1.Font = new Font("SansSerif", 20F, FontStyle.Regular, GraphicsUnit.Point, 2);
+            label1.Font = new Font("SansSerif", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 2);
             label1.ForeColor = Color.Transparent;
             label1.Location = new Point(282, 53);
             label1.Name = "label1";

@@ -56,28 +56,13 @@
             cad.BackColor = Color.FromArgb(168, 3, 12);
             cad.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             cad.ForeColor = Color.FromArgb(234, 234, 234);
-            cad.Location = new Point(328, 365);
+            cad.Location = new Point(341, 292);
             cad.Name = "cad";
             cad.Size = new Size(116, 40);
             cad.TabIndex = 21;
             cad.Text = "Cadastrar";
             cad.UseVisualStyleBackColor = false;
             cad.Click += button1_Click;
-            // 
-            // url_foto
-            //
-            /*
-            url_foto.BackColor = Color.FromArgb(168, 3, 12);
-            url_foto.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            url_foto.ForeColor = Color.FromArgb(234, 234, 234);
-            url_foto.Location = new Point(289, 223);
-            url_foto.Name = "url_foto";
-            url_foto.Size = new Size(69, 25);
-            url_foto.TabIndex = 0;
-            url_foto.Text = "Escolher";
-            url_foto.UseVisualStyleBackColor = false;
-            url_foto.Click += url_foto_Click;
-            */
             // 
             // lb1
             // 
@@ -97,16 +82,16 @@
             email1.ForeColor = Color.FromArgb(234, 234, 234);
             email1.Location = new Point(78, 113);
             email1.Name = "email1";
-            email1.Size = new Size(43, 17);
+            email1.Size = new Size(47, 17);
             email1.TabIndex = 2;
-            email1.Text = "Email";
+            email1.Text = "Email:";
             // 
             // tipo_user1
             // 
             tipo_user1.AutoSize = true;
             tipo_user1.Font = new Font("Century Gothic", 9.75F);
             tipo_user1.ForeColor = Color.FromArgb(234, 234, 234);
-            tipo_user1.Location = new Point(78, 313);
+            tipo_user1.Location = new Point(78, 272);
             tipo_user1.Name = "tipo_user1";
             tipo_user1.Size = new Size(105, 17);
             tipo_user1.TabIndex = 3;
@@ -119,42 +104,42 @@
             nome1.ForeColor = Color.FromArgb(234, 234, 234);
             nome1.Location = new Point(305, 113);
             nome1.Name = "nome1";
-            nome1.Size = new Size(72, 17);
+            nome1.Size = new Size(76, 17);
             nome1.TabIndex = 4;
-            nome1.Text = "Seu nome";
+            nome1.Text = "Seu nome:";
             // 
             // nome_user1
             // 
             nome_user1.AutoSize = true;
             nome_user1.Font = new Font("Century Gothic", 9.75F);
             nome_user1.ForeColor = Color.FromArgb(234, 234, 234);
-            nome_user1.Location = new Point(549, 113);
+            nome_user1.Location = new Point(539, 113);
             nome_user1.Name = "nome_user1";
-            nome_user1.Size = new Size(58, 17);
+            nome_user1.Size = new Size(62, 17);
             nome_user1.TabIndex = 5;
-            nome_user1.Text = "Apelido";
+            nome_user1.Text = "Apelido:";
             // 
             // senha1
             // 
             senha1.AutoSize = true;
             senha1.Font = new Font("Century Gothic", 9.75F);
             senha1.ForeColor = Color.FromArgb(234, 234, 234);
-            senha1.Location = new Point(308, 213);
+            senha1.Location = new Point(305, 192);
             senha1.Name = "senha1";
-            senha1.Size = new Size(47, 17);
+            senha1.Size = new Size(51, 17);
             senha1.TabIndex = 6;
-            senha1.Text = "Senha";
+            senha1.Text = "Senha:";
             // 
             // cpf1
             // 
             cpf1.AutoSize = true;
             cpf1.Font = new Font("Century Gothic", 9.75F);
             cpf1.ForeColor = Color.FromArgb(234, 234, 234);
-            cpf1.Location = new Point(78, 222);
+            cpf1.Location = new Point(78, 192);
             cpf1.Name = "cpf1";
-            cpf1.Size = new Size(33, 17);
+            cpf1.Size = new Size(37, 17);
             cpf1.TabIndex = 8;
-            cpf1.Text = "CPF";
+            cpf1.Text = "CPF:";
             cpf1.Click += label8_Click;
             // 
             // label9
@@ -189,7 +174,7 @@
             // nome_user
             // 
             nome_user.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            nome_user.Location = new Point(549, 141);
+            nome_user.Location = new Point(539, 141);
             nome_user.Name = "nome_user";
             nome_user.Size = new Size(199, 22);
             nome_user.TabIndex = 15;
@@ -197,7 +182,7 @@
             // cpf
             // 
             cpf.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cpf.Location = new Point(78, 248);
+            cpf.Location = new Point(78, 218);
             cpf.Name = "cpf";
             cpf.Size = new Size(183, 22);
             cpf.TabIndex = 16;
@@ -211,17 +196,17 @@
             // senha
             // 
             senha.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            senha.Location = new Point(308, 248);
+            senha.Location = new Point(305, 218);
             senha.Name = "senha";
-            senha.Size = new Size(168, 22);
+            senha.Size = new Size(197, 22);
             senha.TabIndex = 17;
             // 
             // confsenha
             // 
             confsenha.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            confsenha.Location = new Point(522, 248);
+            confsenha.Location = new Point(539, 218);
             confsenha.Name = "confsenha";
-            confsenha.Size = new Size(174, 22);
+            confsenha.Size = new Size(199, 22);
             confsenha.TabIndex = 18;
             // 
             // label1
@@ -229,18 +214,18 @@
             label1.AutoSize = true;
             label1.Font = new Font("Century Gothic", 9.75F);
             label1.ForeColor = Color.FromArgb(234, 234, 234);
-            label1.Location = new Point(522, 213);
+            label1.Location = new Point(539, 192);
             label1.Name = "label1";
-            label1.Size = new Size(115, 17);
+            label1.Size = new Size(119, 17);
             label1.TabIndex = 19;
-            label1.Text = "Confirmar senha";
+            label1.Text = "Confirmar senha:";
             // 
             // tipo_user
             // 
             tipo_user.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             tipo_user.FormattingEnabled = true;
             tipo_user.Items.AddRange(new object[] { "comum", "adm" });
-            tipo_user.Location = new Point(78, 339);
+            tipo_user.Location = new Point(78, 301);
             tipo_user.Name = "tipo_user";
             tipo_user.Size = new Size(121, 25);
             tipo_user.TabIndex = 22;
@@ -260,7 +245,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(10, 15, 28);
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(813, 447);
             Controls.Add(lblMensagem);
             Controls.Add(tipo_user);
             Controls.Add(cad);

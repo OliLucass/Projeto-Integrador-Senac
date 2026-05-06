@@ -115,8 +115,7 @@ namespace Projeto_integrador
             try
             {
                 Conexao conexao = new Conexao();
-
-                using (MySqlConnection conn = conexao.GetConnection()) // usando sua classe
+                using (var conn = conexao.GetConnection()) // usando sua classe
                 {
                     conn.Open();
                     string query = "UPDATE cadastro SET senha = @senha WHERE email = @email";

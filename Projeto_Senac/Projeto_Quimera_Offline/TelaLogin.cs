@@ -42,9 +42,8 @@ namespace Projeto_integrador
                 return;
             }
 
-            string connectionString = "server=10.37.44.72;user id=root;password=root;database=projeto_quimera";
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            Conexao conexao = new Conexao();
+            using (MySqlConnection conn = conexao.GetConnection())
             {
                 try
                 {
@@ -70,7 +69,7 @@ namespace Projeto_integrador
                     }
                     else
                     {
-                        
+
 
                         MessageBox.Show("Email/usuário ou senha incorretos.");
                         esqueciSenha.Visible = true;
@@ -85,7 +84,7 @@ namespace Projeto_integrador
                 }
 
 
-                
+
 
             }
         }
@@ -131,6 +130,11 @@ namespace Projeto_integrador
 
             EsqueciSenha novoForm = new EsqueciSenha(); // substitua pelo nome do seu Form
             novoForm.Show();
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
 
         }
     }

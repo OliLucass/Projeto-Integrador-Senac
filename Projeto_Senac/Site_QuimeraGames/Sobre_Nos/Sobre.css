@@ -1,0 +1,443 @@
+/* RESET */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* BASE */
+.sobre-page {
+    background: #050811;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* CONTAINER */
+.sobre-content {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 20px;
+}
+
+/* ================= HERO ================= */
+.hero {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.hero h1 span {
+    display: block;
+    font-size: 1.1rem;
+    letter-spacing: 6px;
+    color: #e62429;
+    margin-top: 5px;
+}
+
+.hero p {
+    margin-top: 15px;
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+/* ================= GRID ================= */
+.vitral-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+}
+
+/* CARD */
+.card-equipe {
+    perspective: 1200px;
+}
+
+.card-inner {
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    position: relative;
+    height: 420px;
+}
+
+.card-equipe:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* === A CORREÇÃO ESTÁ AQUI === */
+/* Ambas as faces precisam ficar travadas no top 0 e left 0 */
+.card-front,
+.card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 200px 200px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* <--- ISSO IMPEDE O BRILHO DE VAZAR */
+}
+
+/* FRENTE (VITRAL) */
+.card-front {
+    background: radial-gradient(circle at top, #1a2238, #050811);
+    border: 3px solid rgba(230, 36, 41, 0.3);
+    box-shadow: inset 0 0 60px black;
+}
+
+.card-front::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(230, 36, 41, 0.25), transparent);
+    transform: skewX(-25deg);
+    animation: luzVitral 4s infinite;
+    pointer-events: none;
+    /* Deixa o clique atravessar o brilho */
+}
+
+@keyframes luzVitral {
+    0% {
+        left: -150%;
+    }
+
+    50% {
+        left: 150%;
+    }
+
+    100% {
+        left: 150%;
+    }
+
+    /* Dá uma pausa antes de repetir a animação */
+}
+
+.card-front img {
+    width: 140px;
+    filter: drop-shadow(0 0 20px red);
+    z-index: 1;
+    /* Mantém a imagem por cima do brilho */
+}
+
+.card-front span {
+    margin-top: 15px;
+    color: #e62429;
+    font-weight: bold;
+    z-index: 1;
+}
+
+/* BACK (VERSO) */
+.card-back {
+    transform: rotateY(180deg);
+    background: rgba(19, 25, 43, 0.98);
+    backdrop-filter: blur(15px);
+    border: 2px solid #e62429;
+    padding: 30px;
+    text-align: center;
+}
+
+.card-back h3 {
+    margin: 0 0 5px;
+    font-size: 1.4rem;
+}
+
+.card-back .idade {
+    color: #e62429;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.card-back p {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+.links a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 20px;
+    background: #e62429;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.links a:hover {
+    background: #b11a1f;
+    transform: scale(1.05);
+}
+
+/* ================= HISTORIA ================= */
+.historia {
+    margin-top: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: 沟通;
+    gap: 40px;
+    /* Espaço entre o texto e a imagem */
+    max-width: 1200px;
+    /* Mesma largura do vitral-grid para alinhar perfeitamente */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.historia-texto {
+    flex: 1;
+    text-align: left;
+    text-align: justify;
+    /* Justifica o texto à esquerda */
+}
+
+.historia h2 {
+    margin-bottom: 20px;
+}
+
+.historia p {
+    color: #ccc;
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.historia .destaque {
+    color: #e62429;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.historia-imagem img {
+    width: 400px;
+    /* Ajuste o tamanho conforme necessário */
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    /* Bordas arredondadas no quadrado */
+    border: 2px solid #e62429;
+    /* Opcional: borda para combinar com os cards */
+}
+
+/* ================= MVV ================= */
+.mvv {
+    display: flex;
+    gap: 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.mvv-card {
+    flex: 1;
+    min-width: 250px;
+    background: #13192b;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.mvv-card h3 {
+    color: #e62429;
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   MOBILE COMPLETO (CELULAR FINAL)
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    /* CONTAINER */
+    .sobre-content {
+        margin: 40px auto;
+        padding: 15px;
+    }
+
+    /* HERO */
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero h1 span {
+        font-size: 0.9rem;
+        letter-spacing: 4px;
+    }
+
+    .hero p {
+        font-size: 0.85rem;
+    }
+
+    /* GRID */
+    .vitral-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 40px;
+        justify-items: center;
+    }
+
+    /* =========================================
+       CARD AJUSTADO (SEM BUG ✅)
+       ========================================= */
+
+    .card-equipe {
+        width: 100%;
+        max-width: 280px;
+        height: 320px; /* tamanho fixo */
+        perspective: 1200px;
+    }
+
+    .card-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.7s;
+    }
+
+    /* remove hover no mobile (opcional) */
+    .card-equipe:hover .card-inner {
+        transform: none;
+    }
+
+    /* ativa no clique (se usar JS) */
+    .card-equipe.ativo .card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        backface-visibility: hidden;
+        border-radius: 140px 140px 15px 15px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+    
+
+    .card-front {
+        background: radial-gradient(circle at top, #1a2238, #050811);
+        border: 2px solid rgba(230, 36, 41, 0.3);
+        box-shadow: inset 0 0 40px black;
+    }
+
+    .card-front img {
+        width: 90px;
+    }
+
+    .card-front span {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: #e62429;
+    }
+
+    /* BACK CORRIGIDO 🔥 */
+    .card-back {
+        transform: rotateY(180deg);
+        background: #13192b;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .card-back h3 {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    .card-back .idade {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+    }
+
+    /* TEXTO CONTROLADO ✅ */
+    .card-back p {
+        font-size: 0.75rem;
+        line-height: 1.3;
+        max-height: 80px;
+        overflow: hidden;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
+
+    /* LINKS */
+    .links {
+        margin-top: 10px;
+    }
+
+    .links a {
+        font-size: 0.7rem;
+        padding: 6px 10px;
+        margin: 0 3px;
+    }
+
+    /* =========================================
+       HISTÓRIA
+       ========================================= */
+
+    .historia {
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 60px;
+    }
+
+    .historia-texto {
+        text-align: justify;
+    }
+
+    .historia-imagem img {
+        width: 100%;
+        height: auto;
+        border-radius: 15px;
+    }
+
+    /* =========================================
+       MVV
+       ========================================= */
+
+    .mvv {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .mvv-card {
+        width: 100%;
+        max-width: 280px;
+        padding: 20px;
+    }
+
+    .mvv-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .mvv-card p {
+        font-size: 0.85rem;
+    }
+}

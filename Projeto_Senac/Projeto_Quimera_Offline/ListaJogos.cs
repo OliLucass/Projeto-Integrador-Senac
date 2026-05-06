@@ -166,5 +166,10 @@ namespace Projeto_integrador
         {
 
         }
+
+        private void lb2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace Projeto_integrador
 {
     public static class SessaoAtual
     {
-        private static string connectionString = "server=10.37.44.72;user id=root;password=root;database=projeto_quimera";
+        private static string connString = "server=localhost;user id=root;password=admin;database=projeto_quimera";
         public static string UsuarioLogado { get; private set; } = null;
         public static string TipoUsuario { get; private set; } = null;
 

@@ -1,5 +1,4 @@
-﻿using ManagedDoom;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,7 +13,7 @@ namespace Projeto_integrador
 {
     public partial class Doom : Form
     {
-        private Thread _doomThread;
+        private Thread? _doomThread;
 
         public Doom()
         {
@@ -26,28 +25,40 @@ namespace Projeto_integrador
 
         private void Doom_Load(object sender, EventArgs e)
         {
-            _doomThread = new Thread(RunDoom);
-            _doomThread.Start();
+            RunDoom();
         }
 
         private void RunDoom()
         {
             try
             {
-                string wadPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WADs", "DOOM1.WAD");
+                string wadPath = Path.Combine(Application.StartupPath, "WADs", "doom1.wad");
+
+                // 🔥 COLOCA AQUI
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    MessageBox.Show("Caminho do WAD:\n" + wadPath);
+                }));
 
                 if (!File.Exists(wadPath))
                 {
-                    MessageBox.Show($"Arquivo WAD não encontrado em:\n{wadPath}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        MessageBox.Show($"Arquivo WAD não encontrado em:\n{wadPath}");
+                    }));
                     return;
                 }
 
-                string[] args = { "-iwad", wadPath };
-                ManagedDoom.Silk.SilkProgram.Main(args);
+                Environment.SetEnvironmentVariable("DOOMWADDIR", Path.GetDirectoryName(wadPath));
+
+                ManagedDoom.Silk.SilkProgram.Main(new string[0]);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao iniciar o Doom: " + ex.Message);
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    MessageBox.Show("Erro ao iniciar o Doom: " + ex.Message);
+                }));
             }
         }
 
@@ -56,7 +67,7 @@ namespace Projeto_integrador
             try
             {
                 if (_doomThread != null && _doomThread.IsAlive)
-                    _doomThread.Abort();
+                    _doomThread.Interrupt();
 
                 Form sorteador = Application.OpenForms.OfType<Sorteador>().FirstOrDefault();
                 if (sorteador != null)

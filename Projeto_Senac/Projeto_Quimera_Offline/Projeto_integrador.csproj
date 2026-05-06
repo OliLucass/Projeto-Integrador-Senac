@@ -23,4 +23,10 @@
   <ProjectReference Include="managed-doom-master\managed-doom-master\ManagedDoom\ManagedDoom.csproj" />
 </ItemGroup>
 
+<ItemGroup>
+  <None Update="WADs\doom1.wad">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
+
 </Project>

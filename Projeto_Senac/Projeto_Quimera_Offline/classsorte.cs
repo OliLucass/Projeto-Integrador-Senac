@@ -10,7 +10,6 @@ namespace Projeto_integrador
 {
     public class RepositorioJogos
     {
-        private string _connectionString = "server=10.37.44.72;user id=root;password=root;database=projeto_quimera";
 
         public class Jogo
         {
@@ -29,12 +28,13 @@ namespace Projeto_integrador
         {
             var categorias = new List<Categoria>();
 
-            using (var conexao = new MySqlConnection(_connectionString))
+            Conexao conexao = new Conexao();
+            using (var conn = conexao.GetConnection())
             {
-                conexao.Open();
+                conn.Open();
                 string sql = "SELECT id_categoria, tipo_categoria FROM categorias";
 
-                using (var cmd = new MySqlCommand(sql, conexao))
+                using (var cmd = new MySqlCommand(sql, conn))
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -53,7 +53,8 @@ namespace Projeto_integrador
 
         public bool UsuarioExiste(string username)
         {
-            using (var conn = new MySqlConnection(_connectionString))
+            Conexao conexao = new Conexao();
+            using (var conn = conexao.GetConnection())
             {
                 conn.Open();
                 string sql = "SELECT COUNT(*) FROM cadastro WHERE nome_user = @nome";
@@ -68,7 +69,8 @@ namespace Projeto_integrador
 
         public bool UsuarioPossuiJogos(string username)
         {
-            using (var conn = new MySqlConnection(_connectionString))
+            Conexao conexao = new Conexao();
+            using (var conn = conexao.GetConnection())
             {
                 conn.Open();
                 string sql = @"SELECT COUNT(*) 
@@ -88,9 +90,10 @@ namespace Projeto_integrador
         {
             var lista = new List<Jogo>();
 
-            using (var conexao = new MySqlConnection(_connectionString))
+            Conexao conexao = new Conexao();
+            using (MySqlConnection conn = conexao.GetConnection())
             {
-                conexao.Open();
+                conn.Open();
 
                 string sql;
                 if (modo == "loja")
@@ -114,7 +117,7 @@ namespace Projeto_integrador
                             WHERE c.nome_user = @usuario";
                 }
 
-                using (var cmd = new MySqlCommand(sql, conexao))
+                using (var cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@idCategoria", idCategoria);
                     if (modo != "loja") cmd.Parameters.AddWithValue("@usuario", usuario);

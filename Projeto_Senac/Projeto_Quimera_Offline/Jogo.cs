@@ -29,9 +29,9 @@
 
             public void Inserir()
             {
-                Conexao conexao = new Conexao();
-                using (var conn = conexao.GetConnection())
-                {
+            Conexao conexao = new Conexao();
+            using (var conn = conexao.GetConnection())
+            {
                     string sql = @"INSERT INTO jogos 
                     (id_categoria, titulo, desenvolvedora, distribuidora, informacoes, data_lancamento, req_sistema, Imagens_jogos, Imagens_cen1,Imagens_cen2)
                     VALUES 
