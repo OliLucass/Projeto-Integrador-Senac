@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-add-carrinho')?.addEventListener('click', () => gerenciarAcao('add_carrinho'));
     document.getElementById('btn-add-wishlist')?.addEventListener('click', () => gerenciarAcao('add_wishlist'));
-    
+
     document.getElementById('btn-comprar-agora')?.addEventListener('click', () => {
         if (!logado) {
             window.location.href = '../Entrar/Entrar.php';
@@ -41,31 +41,50 @@ document.addEventListener('DOMContentLoaded', () => {
     if (jaTemDesconto && inputCupom) {
         inputCupom.placeholder = "Promoção ativa (Cupom indisponível)";
         inputCupom.disabled = true;
-        if(btnCupom) btnCupom.disabled = true;
+        if (btnCupom) btnCupom.disabled = true;
     }
 
-    btnCupom?.addEventListener('click', () => {
+    // Variável para garantir que o cliente só aplique 1 vez e o desconto seja exato
+    let cupomJaAplicado = false;
+    let valorOriginalCupom = precoFinal ? parseFloat(precoFinal.getAttribute('data-valor')) : 0;
+
+    btnCupom?.addEventListener('click', (e) => {
+        e.preventDefault(); // Impede a página de "piscar/recarregar" ao clicar
+
+        if (cupomJaAplicado) {
+            return; // Se já aplicou, bloqueia novos cliques
+        }
+
         const cupomDigitado = inputCupom.value.trim().toUpperCase();
-        let valorBase = parseFloat(precoFinal.getAttribute('data-valor'));
         let desconto = 0;
 
-        if (cupomDigitado === 'QUIMERA5' && valorBase < 100) {
+        // Verifica a validade do cupom baseado no valor original
+        if (cupomDigitado === 'QUIMERA5' && valorOriginalCupom > 0 && valorOriginalCupom < 100) {
             desconto = 0.05;
-        } else if (cupomDigitado === 'QUIMERA10' && valorBase >= 100) {
+        } else if (cupomDigitado === 'QUIMERA10' && valorOriginalCupom >= 100) {
             desconto = 0.10;
         }
 
         if (desconto > 0) {
-            let valorNovo = (valorBase * (1 - desconto)).toFixed(2);
+            // Calcula o novo valor
+            let valorNovo = (valorOriginalCupom * (1 - desconto)).toFixed(2);
+
+            // Atualiza o HTML para o cliente ver e para o botão de Compra puxar o valor certo
             precoFinal.setAttribute('data-valor', valorNovo);
             precoFinal.innerText = 'R$ ' + parseFloat(valorNovo).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+            // Mostra mensagem de sucesso
             msgCupom.innerText = `Cupom aplicado! (-${desconto * 100}%)`;
-            msgCupom.style.color = "#4CAF50";
+            msgCupom.style.color = "#4CAF50"; // Verde de sucesso
+
+            // Trava o campo para não usarem de novo
             inputCupom.disabled = true;
             btnCupom.disabled = true;
+            cupomJaAplicado = true;
         } else {
+            // Mensagem de erro caso digitem errado ou tentem burlar a regra
             msgCupom.innerText = "Cupom inválido ou não aplicável.";
-            msgCupom.style.color = "#e50914";
+            msgCupom.style.color = "#e50914"; // Vermelho de erro
         }
     });
 
@@ -147,5 +166,143 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
+});
 
-}   );
+function toggleMenu() {
+    const menu = document.getElementById("user-menu");
+    if (menu) {
+        menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    }
+}
+
+// Fecha o menu se clicar fora
+document.addEventListener("click", function (e) {
+    const userBox = document.querySelector(".user-box");
+    const menu = document.getElementById("user-menu");
+    if (userBox && menu && !userBox.contains(e.target)) {
+        menu.style.display = "none";
+    }
+});
+
+// ==========================================================
+// GAMIFICAÇÃO: MASCOTE BLINDADO
+// ==========================================================
+document.addEventListener("DOMContentLoaded", () => {
+    const spawnDiv = document.getElementById('gamificacao-spawn');
+    const imgPath = spawnDiv ? spawnDiv.getAttribute('data-img') : '';
+
+    if (imgPath && imgPath.trim() !== '') {
+        console.log("🎲 Sorteio vencido! Tentando carregar mascote:", imgPath);
+
+        setTimeout(() => {
+            let mascote = document.createElement('img');
+            mascote.src = imgPath;
+            mascote.className = 'mascote-gamification';
+
+            // Estilo do Mascote (Absolutamente inquebrável e visível)
+            Object.assign(mascote.style, {
+                position: 'fixed',
+                width: '100px',
+                height: '100px',
+                borderRadius: '50%',
+                zIndex: '2147483647', // O maior z-index possível na web
+                cursor: 'pointer',
+                border: '4px solid #ffd700',
+                boxShadow: '0 0 30px rgba(255, 215, 0, 1)',
+                transition: 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                bottom: '30px', // Fica fixo a 30px do final da tela (Livre de textos)
+                objectFit: 'cover'
+            });
+
+            // Sorteia o lado (Canto Inferior Esquerdo ou Direito) para não atrapalhar o meio da tela
+            const lado = Math.random() > 0.5 ? 'left' : 'right';
+            if (lado === 'left') {
+                mascote.style.left = '30px';
+            } else {
+                mascote.style.right = '30px';
+            }
+
+            // Se a imagem estiver com o nome errado na pasta, ele avisa!
+            mascote.onerror = function () {
+                console.error("❌ Erro: A foto não foi encontrada no caminho ->", imgPath);
+                mascote.remove();
+            };
+
+            mascote.style.transform = 'scale(0)';
+            document.body.appendChild(mascote);
+
+            // Animação de entrada
+            setTimeout(() => mascote.style.transform = 'scale(1)', 100);
+
+            let clicado = false;
+
+            // O Clique de Coleta
+            mascote.onclick = () => {
+                if (clicado) return;
+                clicado = true;
+
+                // Animação de sucção
+                mascote.style.transform = 'scale(0) rotate(360deg)';
+
+                fetch('coletar_coin.php', { method: 'POST' })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.sucesso) {
+                            console.log("🪙 Moeda coletada e salva no banco!");
+
+                            // Atualiza variável global do pagamento.js (Se ela existir nessa página)
+                            if (typeof saldoCoinsAtual !== 'undefined') {
+                                saldoCoinsAtual++;
+                            }
+
+                            // 1. Atualiza Badge do Header
+                            const counterTopo = document.getElementById('coin-counter');
+                            const boxCoins = document.getElementById('box-coins');
+                            if (counterTopo) counterTopo.innerText = parseInt(counterTopo.innerText) + 1;
+                            if (boxCoins) {
+                                boxCoins.classList.remove('coin-anim');
+                                void boxCoins.offsetWidth;
+                                boxCoins.classList.add('coin-anim');
+                            }
+
+                            // 2. Atualiza formulário do pagamento (Se estiver na tela de pagamento)
+                            const txtCheck = document.getElementById('txt-usar-coins');
+                            if (txtCheck && typeof saldoCoinsAtual !== 'undefined') {
+                                const desc = (saldoCoinsAtual * 0.01).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+                                txtCheck.innerText = `Usar minhas ${saldoCoinsAtual} moedas (Desconto de R$ ${desc})`;
+
+                                const boxMoedas = document.getElementById('box-usar-moedas');
+                                if (boxMoedas) boxMoedas.style.display = 'block';
+
+                                // Se a caixa já estiver marcada, abate do preço na hora!
+                                if (typeof usandoCoins !== 'undefined' && usandoCoins && typeof atualizarInterfacePreco === 'function') {
+                                    atualizarInterfacePreco();
+                                }
+                            }
+                        }
+                    }).catch(err => console.error("❌ Erro no fetch de coins:", err));
+
+                setTimeout(() => mascote.remove(), 500);
+            };
+
+            // Vira pó em 5 segundos se não clicar
+            setTimeout(() => {
+                if (!clicado && mascote && mascote.parentElement) {
+                    mascote.style.filter = 'blur(10px) grayscale(100%)';
+                    mascote.style.opacity = '0';
+                    mascote.style.transform = 'translateY(-50px) scale(1.2)';
+                    setTimeout(() => mascote.remove(), 1000);
+                }
+            }, 5000);
+
+        }, 2000); // Demora 2 segundos para aparecer após abrir a página
+    }
+});
+
+document.getElementById('btn-add-lista')?.addEventListener('click', () => {
+        
+            window.location.href = '../Usuario_Logado/meus_pedidos.php';
+            return;
+        
+
+    });
