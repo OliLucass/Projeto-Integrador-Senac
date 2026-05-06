@@ -1,25 +1,22 @@
 <?php
-// Configuração do banco de dados
-$host = "192.168.1.87"; // ou "localhost" se for local
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$host = "10.37.44.28"; 
 $db = "projeto_quimera";
 $usuario = "root";
-$senha = "admin"; // verifique se essa senha está correta
+$senha = "";
 
 try {
-    // Cria conexão PDO
-    $pdo = new PDO(
-        "mysql:host=$host;port=3306;dbname=$db;charset=utf8",
-        $usuario,
-        $senha
-    );
 
-    // Define modo de erro como exceção (boa prática)
+    $pdo = new PDO("mysql:host=$host;port=3306;dbname=projeto_quimera;charset=utf8", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // conexão OK (não exibe mensagem no site)
+    // echo "Conectado com sucesso!"; // só pra teste
 
 } catch (PDOException $e) {
-    // Mostra erro apenas se falhar conexão
-die("ESTE ARQUIVO ESTÁ SENDO EXECUTADO");
+    die("Erro ao conectar: " . $e->getMessage());
+    
 }
 ?>
