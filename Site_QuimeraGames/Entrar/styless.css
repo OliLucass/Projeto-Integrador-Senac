@@ -1,220 +1,303 @@
+/* =========================================
+   ESTRUTURA GERAL DA PÁGINA
+   ========================================= */
 body {
   margin: 0;
-  height: 100vh;
-
   display: flex;
   flex-direction: column;
-  justify-content: center;  
-  align-items: center;       
-
+  min-height: 100vh;
   background-color: #0b0f1a;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-login {
+  flex: 1;
+  /* Ocupa o espaço livre e empurra o rodapé para baixo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 80px;
+  /* Evita sobrepor a logo do header */
+}
+
+/* =========================================
+   CAIXA DE LOGIN (UPGRADE PREMIUM)
+   ========================================= */
+.h1box {
+width: 100%;
+    max-width: 440px;
+    /* RESTAURADO: Degradê original do time */
+    background: linear-gradient(to top, #132041, #1b3c91);
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px 0 30px 0;
 }
 
 h1 {
   color: white;
-  margin-bottom: 25px;
   text-align: center;
   font-size: 26px;
-  margin-right: 28px;
+  margin: 0 0 25px 0;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
-.h1box {
-  border-radius: 10px;
-  width: 440px;
-  height: 490px;
-  padding-right: 2px;
-  padding-left: 50px;
-  padding-top: 10px;
-  background: linear-gradient(to top,#132041,#1b3c91);
-  margin-top: 100px;
-}
-
-.tudoai{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 130px;
-    width: 95.8% ; 
-    height: 120px;
-
-    background: linear-gradient(to bottom,#0f2449,#020817);
-    padding: 20px 40px;
-    color: white;
-    margin-top: 120px;
-}
-
-.div1 {
+.conteudo {
+  padding: 0 40px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  margin-bottom: 20px;
+  gap: 15px;
 }
 
+/* Campos de Formulário */
+.div1,
 .div2 {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
-.primeira_cadastre{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+label {
+  color: #a0aec0;
+  /* Cinza claro moderno */
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.primeira{
-    font-size: 28px;
-    font-weight: bold;
-    font-style: italic;
-}
-
-.cad{
-    background-color: #A8030C;
-    color: white;
-    border: none;
-    padding: 4px 25px;
-    border-radius: 25px;
-    font-size: 24px;
-    cursor: pointer;
-  font-style: italic;
-  font-style: bold;
-}
-
-.cad:hover{
-  background-color: #d83b43;
-}
-
-.texto{
-    max-width: 350px;
-    font-size: 18px;
-    color: #cfd6e6;
-}
-
-.iniciar_sessao {
-  color: #ffffff;
-  background-color: #A8030C;
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: white;
   padding: 14px;
-  font-size: 20px;
-  font-style: italic;
-  font-style: bold;
-  border-radius: 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #e62429;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Container da Senha com Olhinho */
+.input-senha-container {
   display: flex;
-  justify-self: center;
-  width: 300px;
-  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.input-senha-container input {
+  padding-right: 45px;
+  /* Espaço pro olhinho não sobrepor o texto */
+}
+
+.lembrar {
+  position: absolute;
+  right: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.lembrar input[type="checkbox"] {
+  display: none;
+  /* Esconde a caixinha feia */
+}
+
+.lembrar label {
+cursor: pointer;
+    font-size: 20px;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.lembrar label:hover {
+    transform: scale(1.2);
+}
+
+.lembrar input[type="checkbox"]:checked+label {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.label-olho {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.label-olho:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.icone-senha {
+    width: 22px; /* Ajuste esse valor para o tamanho ideal da sua imagem */
+    height: auto;
+    font-size: 20px; /* Tamanho caso seja o emoji */
+}
+
+.oculto { display: none; }
+.visivel { display: block; }
+
+/* Botão Principal */
+.iniciar_sessao {
+  width: 100%;
+  color: #ffffff;
+  background-color: #e62429;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
 .iniciar_sessao:hover {
-  background-color: #d83b43;
+  background-color: #c0181d;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(230, 36, 41, 0.4);
 }
 
+/* Link de Problemas */
 .problemas_iniciar {
-  display: flex;
   text-align: center;
-  color: black;
-  margin-left: 60px;
-  margin-top: 10px;
-  font-size: 15px;
+  color: #a0aec0;
+  margin-top: 20px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
 .problemas_iniciar:hover {
-  color: rgb(63, 63, 63);
-} 
+  color: #e62429;
+  text-decoration: underline;
+}
 
-.topo {
+/* =========================================
+   RODAPÉ CUSTOMIZADO (.tudoai)
+   ========================================= */
+.tudoai {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  
+  justify-content: space-evenly;
+  /* Espalha os itens de forma responsiva */
   width: 100%;
-  margin-top: 55px;
-  gap: 20px;
-}
-
-.logo {
-  width: 100px;
-  height: auto;
-  border-radius: 12px;
-  margin-top: 5px;
-  margin-left: 15px;
-}
-
-.topo-esquerda,
-.topo-direita {
-  display: flex;
-  align-items: center;
-  gap: 50px;
-  padding: 0 20px;
-  margin-right: 20px;
-}
-
-.btn-nav,
-.btn-login {
-  border: none;
+  box-sizing: border-box;
+  /* Garante que não crie scroll horizontal */
+  background: linear-gradient(to bottom, #0d162a, #020817);
+  padding: 40px 20px;
   color: white;
-  padding: 12px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.primeira_cadastre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Centraliza botão e texto */
+  gap: 15px;
+}
+
+.primeira {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.cad {
+  background-color: transparent;
+  color: white;
+  border: 2px solid #e62429;
+  padding: 10px 30px;
   border-radius: 25px;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
-  font-weight: 600;
   transition: 0.3s;
-  background: rgba(255, 255, 255, 0.05);
-  gap: 30px;
 }
 
-.btn-nav.active,
-.btn-login:hover {
-  background: #e50914;
+.cad:hover {
+  background-color: #e62429;
+  box-shadow: 0 0 15px rgba(230, 36, 41, 0.4);
 }
 
+.texto {
+  max-width: 400px;
+  font-size: 16px;
+  color: #a0aec0;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* =========================================
+   MENSAGEM DE ERRO
+   ========================================= */
 .erro-msg {
   position: fixed;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  
-  background: #e50914;
+  background: #e62429;
   color: white;
-  padding: 12px 25px;
+  padding: 15px 30px;
   border-radius: 8px;
   font-weight: bold;
-
   z-index: 9999;
   opacity: 1;
   transition: 0.5s;
+  box-shadow: 0 4px 15px rgba(230, 36, 41, 0.4);
 }
 
-.conteudo {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 17px;
-  background-color: #8fa2cf;
-  padding: 35px;
-  color: rgb(0, 0, 0);
-  border-radius: 10px;
-  font-size: 18px;
+@media (max-width:768px){
+
+.h1box{
+ width:95%;
+ padding:35px 20px;
+ transform: scale(0.94);
+ margin-top: -30px;
+ margin-bottom: -50px;
 }
 
-.lembrar {
-  display: flex;
-  align-items: flex-start;
-  margin-right: 260px;
-  white-space: nowrap;
-  margin-top: 8px;
+h1{
+ font-size:24px;
 }
 
-input {
-  width: 100%;
-  padding: 6px;
-  border-radius: 6px;
-  border: none;
+input{
+ font-size:16px;
+ padding:14px;
 }
 
-button {
-  padding: 8px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
+.iniciar_sessao{
+ padding:14px;
+ font-size:17px;
+}
+
+.cad{
+  font-size: 15px;
+  width: 150px;
+}
+
+.primeira{
+  font-size: 20px;
+  text-align: center;
+}
+
+.texto{
+  font-size: 15px;
+}
+
 }
