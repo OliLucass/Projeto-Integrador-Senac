@@ -1,0 +1,373 @@
+/* =========================================
+   RESET E BASE
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background-color: #0b1320;
+    /* Fundo azul escuro */
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+
+    /* A Mágica: Trava as camadas para o fundo não sumir */
+    position: relative;
+    z-index: 0;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    /* Fica colado na tela ao rolar */
+
+    /* Deixamos a imagem gigante para que, ao girar, ela não falte nos cantos */
+    top: -50%;
+    left: -50%;
+    width: 200vw;
+    height: 200vh;
+
+    background-image: url('../imagens/logo.png');
+    background-size: 180px;
+    background-repeat: repeat;
+    opacity: 0.04;
+    transform: rotate(-10deg);
+    pointer-events: none;
+
+    /* Fica atrás dos cartões, mas na frente do fundo azul escuro */
+    z-index: -1;
+}
+
+/* =========================================
+   MENU DO USUÁRIO (FLUTUANTE NO CANTO DIREITO)
+   🌟 CORREÇÃO 2: Estilização do Menu
+   ========================================= */
+#user-menu {
+    position: absolute;
+    top: 75px;
+    /* Distância perfeita abaixo do header */
+    right: 4%;
+    /* Fica alinhado com o seu perfil */
+    background-color: #111827;
+    /* Azul marinho escuro */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: none;
+    /* Começa escondido, o JS quem mostra */
+    flex-direction: column;
+    padding: 10px 0;
+    min-width: 190px;
+    z-index: 9999;
+}
+
+#user-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 25px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+#user-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #e50914;
+    /* Um toque premium da Quimera ao passar o mouse */
+}
+
+
+/* =========================================
+   CONTEÚDO PRINCIPAL E CARTÃO
+   ========================================= */
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.card-conta {
+    display: flex;
+    align-items: center;
+    gap: 90px;
+    background: linear-gradient(160deg, #132041, #0f1a35);
+    padding: 70px 90px;
+    border-radius: 30px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    min-width: 900px;
+}
+
+/* =========================================
+   PERFIL (FOTO E CPF)
+   ========================================= */
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.perfil-esquerda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar {
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+}
+
+.avatar:hover {
+    transform: scale(1.03);
+}
+
+.cpf {
+    color: #aaa;
+    font-size: 13px;
+    margin-top: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.trocarfoto_salvar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 150px;
+}
+
+.btn-foto {
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+    width: 120px;
+    text-align: center;
+}
+
+.btn-foto:hover {
+    background: #e50914;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   INFO (FORMULÁRIO DE DADOS)
+   ========================================= */
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 380px;
+}
+
+.info h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.form-info {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo label {
+    font-size: 13px;
+    color: #a0aec0;
+    font-weight: 600;
+}
+
+input {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 15px;
+    transition: 0.3s;
+    outline: none;
+}
+
+input:focus {
+    border-color: #e50914;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+input[readonly] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+button[type="submit"] {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    background: #e50914;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(229, 9, 20, 0.5);
+    background: #c0181d;
+}
+
+.msg {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* ==================================================
+   MOBILE - CONTA RESPONSIVA
+   cola no FINAL do seu style.css
+================================================== */
+
+@media screen and (max-width: 768px) {
+
+    body{
+        overflow-x: hidden;
+    }
+
+    .container{
+        padding: 20px 12px !important;
+        align-items: flex-start !important;
+    }
+
+    .card-conta{
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 25px 18px !important;
+        border-radius: 22px !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 30px !important;
+    }
+
+    /* PERFIL */
+    .perfil{
+        width: 100% !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 18px !important;
+    }
+
+    .perfil-esquerda{
+        width: 100% !important;
+    }
+
+    .avatar{
+        width: 150px !important;
+        height: 150px !important;
+        border-radius: 18px !important;
+    }
+
+    .cpf{
+        font-size: 12px !important;
+        text-align: center !important;
+        margin-top: 10px !important;
+    }
+
+    .trocarfoto_salvar{
+        width: 100% !important;
+        margin-top: 0 !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .btn-foto{
+        width: 100px !important;
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+
+    /* INFO */
+    .info{
+        width: 100% !important;
+        gap: 14px !important;
+    }
+
+    .info h2{
+        font-size: 24px !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+    }
+
+    .form-info{
+        gap: 14px !important;
+    }
+
+    .campo label{
+        font-size: 13px !important;
+    }
+
+    input{
+        width: 100% !important;
+        padding: 13px 14px !important;
+        font-size: 16px !important;
+    }
+
+    button[type="submit"]{
+        width: 100% !important;
+        padding: 14px !important;
+        font-size: 16px !important;
+    }
+
+    .msg{
+        font-size: 14px !important;
+    }
+}
+
+
+/* CELULARES PEQUENOS */
+@media screen and (max-width: 420px){
+
+    .avatar{
+        width: 130px !important;
+        height: 130px !important;
+    }
+
+    .info h2{
+        font-size: 21px !important;
+    }
+
+    .btn-foto{
+        width: 100% !important;
+    }
+
+}
