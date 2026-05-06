@@ -2,26 +2,46 @@
 session_start();
 require_once '../conexa.php';
 
+// 1. Definições básicas de sessão
+$logado = isset($_SESSION['usuario_nome']);
 $id_user = $_SESSION['id_user'] ?? 0;
+$email_user = $_SESSION['usuario_email'] ?? '';
+
+$usuario = [];
+
+if ($id_user > 0) {
+    $stmt_user = $pdo->prepare("SELECT url_foto FROM cadastro WHERE id_user = ?");
+    $stmt_user->execute([$id_user]);
+    $usuario = $stmt_user->fetch(PDO::FETCH_ASSOC) ?? [];
+}
 
 $qtd_carrinho = 0;
 $qtd_wishlist = 0;
-if ($id_user > 0) {
-    $stmt_conta_cart = $pdo->prepare("SELECT COUNT(*) FROM carrinho WHERE id_usuario = ?");
-    $stmt_conta_cart->execute([$id_user]);
-    $qtd_carrinho = $stmt_conta_cart->fetchColumn();
+$usuario = ['url_foto' => ''];
 
-    $stmt_conta_wish = $pdo->prepare("SELECT COUNT(*) FROM lista_desejos WHERE id_user = ?");
-    $stmt_conta_wish->execute([$id_user]);
-    $qtd_wishlist = $stmt_conta_wish->fetchColumn();
+if ($logado && $id_user > 0) {
+    // 3. BUSCA OS DADOS ATUALIZADOS DO USUÁRIO (Essencial para a foto de perfil)
+    $stmt_u = $pdo->prepare("SELECT * FROM cadastro WHERE email = ?");
+    $stmt_u->execute([$email_user]);
+    $usuario = $stmt_u->fetch(PDO::FETCH_ASSOC);
+
+    // 4. CONTAGEM PARA O BADGE DO CARRINHO
+    $stmt_c = $pdo->prepare("SELECT COUNT(*) FROM carrinho WHERE id_usuario = ?");
+    $stmt_c->execute([$id_user]);
+    $qtd_carrinho = $stmt_c->fetchColumn();
+
+    // 5. CONTAGEM PARA O BADGE DA LISTA DE DESEJOS
+    $stmt_w = $pdo->prepare("SELECT COUNT(*) FROM lista_desejos WHERE id_user = ?");
+    $stmt_w->execute([$id_user]);
+    $qtd_wishlist = $stmt_w->fetchColumn();
 }
 
-$query = "SELECT j.* FROM jogos j INNER JOIN lista_desejos ld ON j.id_play = ld.id_play WHERE ld.id_user = :u";
-$stmt = $pdo->prepare($query);
-$stmt->execute(['u' => $id_user]);
-$itens = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// 6. Lógica específica da página (exemplo para a Wishlist)
+$query_itens = "SELECT j.* FROM jogos j INNER JOIN lista_desejos ld ON j.id_play = ld.id_play WHERE ld.id_user = :u";
+$stmt_itens = $pdo->prepare($query_itens);
+$stmt_itens->execute(['u' => $id_user]);
+$itens = $stmt_itens->fetchAll(PDO::FETCH_ASSOC);
 
-$logado = isset($_SESSION['usuario_nome']);
 $link_home = $logado ? 'usuariologado.php' : '../Index/index.php';
 ?>
 
@@ -30,51 +50,18 @@ $link_home = $logado ? 'usuariologado.php' : '../Index/index.php';
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minha Lista de Desejos - QuimeraGames</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="wishlist_carrinho.css">
+    <link rel="stylesheet" href="../css/global.css?v=<?php echo time(); ?>">
+    <link rel="icon" type="image/x-icon" href="/GitHub/ProjIntegrador/Site_QuimeraGames/favicon.ico">
 </head>
 
 <body>
 
-    <header class="topo-universal">
-        <div class="topo-esquerda">
-            <a href="<?php echo $link_home; ?>"><img class="logo" src="../imagens/logo.png" alt="Logo"></a>
-            <a href="<?php echo $link_home; ?>" style="text-decoration: none;"><button
-                    class="btn-nav active">Loja</button></a>
-        </div>
-
-        <div class="topo-direita">
-            <?php if ($logado): ?>
-                <div style="position: relative; display: inline-block;">
-                    <button type="button" class="btn-icon" onclick="window.location.href='carrinho.php'">🛒</button>
-                    <?php if (isset($qtd_carrinho) && $qtd_carrinho > 0): ?>
-                        <span class="badge-bolinha"
-                            style="position: absolute; top: -8px; right: -12px; pointer-events: none;"><?php echo $qtd_carrinho; ?></span>
-                    <?php endif; ?>
-                </div>
-
-                <div class="user-box" onclick="toggleMenu()">
-                    <img src="../imagens/aidento.jpg" class="user-img" alt="Avatar">
-                    <span class="user-nome"><?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></span>
-
-                    <div id="user-menu" class="user-menu">
-                        <a href="../Conta/conta.php">Conta</a>
-                        <a href="../Pagamento/pagamento.php">Pagamento</a>
-                        <a href="wishlist.php">
-                            Lista de desejo
-                            <?php if (isset($qtd_wishlist) && $qtd_wishlist > 0): ?>
-                                <span class="badge-bolinha"><?php echo $qtd_wishlist; ?></span>
-                            <?php endif; ?>
-                        </a>
-                        <a href="logout.php">Sair</a>
-                    </div>
-                </div>
-            <?php else: ?>
-                <a href="../Entrar/Entrar.php" style="text-decoration: none;"><button class="btn-login">Entrar</button></a>
-            <?php endif; ?>
-            <a href="../Sac/Suporte.php" style="text-decoration: none;"><button class="btn-login">Suporte</button></a>
-        </div>
+    <header>
+        <?php include '../header_footer_global/header.php'; ?>
     </header>
 
     <div class="wish-container">
@@ -111,20 +98,8 @@ $link_home = $logado ? 'usuariologado.php' : '../Index/index.php';
         <?php endif; ?>
     </div>
 
-    <footer class="rodape-universal">QuimeraGames &copy; 2026</footer>
-
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById("user-menu");
-            if (menu) menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-        }
-        document.addEventListener("click", function (e) {
-            const userBox = document.querySelector(".user-box");
-            const menu = document.getElementById("user-menu");
-            if (userBox && menu && !userBox.contains(e.target)) menu.style.display = "none";
-        });
-    </script>
-
+    <?php include '../header_footer_global/footer.php'; ?>
+    <script src="../Usuario_Logado/script.js" defer></script>
 </body>
 
 </html>
