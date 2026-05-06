@@ -1,300 +1,288 @@
+/* =========================================
+   ESTRUTURA GERAL DA PÁGINA
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
   display: flex;
-  align-items: center;    
-  justify-content: center; 
-  background:#0b1320;
-  min-height: 100vh;      
-  margin: 0;              
-}
-
-h1 {
-  color: #EAEAEA;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.topo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  gap: 20px;
-  position: fixed;
-  top: 20px;
-  left: 0;
-}
-
-.logo {
-  width: 100px;
-  height: auto;
-  border-radius: 12px;
-  margin-top: 5px;
-  margin-left: 15px;
-}
-
-.topo-esquerda,
-.topo-direita {
-  display: flex;
-  align-items: center;
-  gap: 50px;
-  padding: 0 20px;
-  margin-right: 20px;
-}
-
-.container {
-  display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  background-color: #0b0f1a;
+}
+
+.main-suporte {
+  flex: 1;
+  /* Ocupa o espaço livre e joga o footer pra baixo */
+  display: flex;
+  justify-content: center;
   align-items: center;
-  width: 90%;
-  max-width: 400px;
-  height: auto;
-  background: linear-gradient(to top,#132041,#1b3c91);
-  padding: 28px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgb(37, 153, 247);
-  box-sizing: border-box;
-  margin-top: 80px;
-  margin-bottom: 30px;
+  padding: 100px 20px 40px 20px;
+  /* Evita bater no topo */
 }
 
-.btn-nav {
-  background: transparent;
-  color: #e0e6f0;
-  border: 1px solid #3a4e72;
-  border-radius: 8px;
-  padding: 7px 18px;
-  font-size: 14px;
-  cursor: pointer;
+/* =========================================
+   CARTÃO DE SUPORTE (PREMIUM DARK)
+   ========================================= */
+.card-suporte {
+  width: 100%;
+  max-width: 480px;
+  /* Um pouco mais largo para a área de texto ficar boa */
+  padding: 35px 30px;
+  border-radius: 16px;
+  background: linear-gradient(to top, #132041, #1b3c91);
+  /* O degradê da equipe */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeUp 0.6s ease;
 }
 
-.btn-nav.btn-ativo {
-  background: #243b6a;
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-suporte h1 {
+  text-align: center;
   color: white;
+  margin-bottom: 25px;
+  font-size: 26px;
+  letter-spacing: 1px;
 }
 
-.btn-nav:hover, .btn-loja:hover {
-  opacity: 0.85;
-}
-
-.inputNome {
-  width: 100%;
-  height: 14px;
-  outline: none;
-  border: none;
-  background: #EAEAEA;
-  padding: 10px 12px;
-  border-radius: 10px;
-  box-sizing: border-box;
-}
-
-.inputEmail {
-  width: 100%;
-  border-radius: 10px;
-  height: 14px;
-  outline: none;
-  border: none;
-  background: #EAEAEA;
-  padding: 10px 12px;
-  box-sizing: border-box;
-}
-
-.inputCpf {
-  width: 100%;
-  border-radius: 10px;
-  height: 14px;
-  outline: none;
-  border: none;
-  background: #EAEAEA;
-  padding: 10px 12px;
-  box-sizing: border-box;
-}
-
-.inputContainer {
+/* =========================================
+   INPUTS ANIMADOS (FLUTUANTES)
+   ========================================= */
+.input-group {
   position: relative;
+  margin-bottom: 20px;
   width: 100%;
 }
 
-.inputReclamacao {
-  
+.input-group input,
+.input-group textarea {
   width: 100%;
-  padding: 10px; 
-  height: 200px;
-  border: none;
-  border-radius: 10px;
+  padding: 14px 15px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
   outline: none;
-  resize: none;
-  box-sizing: border-box; 
+  font-size: 15px;
+  transition: 0.3s;
 }
 
+/* Textarea específico */
+.input-group textarea {
+  height: 140px;
+  resize: none;
+  padding-right: 55px;
+  /* Evita que o texto passe por baixo do botão da setinha */
+}
 
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: #e62429;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Label Flutuante Dark Mode */
+.input-group>label {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: #a0aec0;
+  transition: 0.3s;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* A mágica que sobe a palavra */
+.input-group input:focus+label,
+.input-group input:not(:placeholder-shown)+label,
+.input-group textarea:focus+label,
+.input-group textarea:not(:placeholder-shown)+label {
+  top: -10px;
+  left: 10px;
+  font-size: 13px;
+  color: #e62429;
+  background: #1b3c91;
+  /* Camufla com a cor superior do cartão */
+  padding: 0 5px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* =========================================
+   BOTÃO ENVIAR (SETA DENTRO DO CAMPO)
+   ========================================= */
 .btnEnviar {
   position: absolute;
-  right: 5px;
-  bottom: 5px;
+  right: 10px;
+  bottom: 10px;
+  background: #e62429;
+  color: white;
   border: none;
-  background: transparent;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 20px;
-}
-
-.label {
-  display: block;
-  font-size: 18px;
-  margin: 6px 0px 0px;
-  color: #ebe5e5;
-}
-
-.labelVoltar {
-  font-size: 15px;
-  margin-right: 5px;
-  margin-top: 20%;
-  align-items: baseline;
-  color:aliceblue
-}
-
-.rodape {
+  transition: 0.3s;
   display: flex;
   align-items: center;
-  margin-top: 20px;     
-  margin-bottom: -10px;
-  border-bottom-left-radius: 14px;
-  border-bottom-right-radius: 14px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 1;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(230, 36, 41, 0.3);
+}
+
+.btnEnviar:hover {
+  background: #c0181d;
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(230, 36, 41, 0.5);
+}
+
+/* =========================================
+   RODAPÉ VOLTAR
+   ========================================= */
+.footer-voltar {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
 }
 
 .btnVoltar {
+  background: transparent;
+  color: white;
   border: none;
-  color: red;
-  font-size: 25px;
-  margin-right: 5px;
-  margin-top: 20%;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  align-items: baseline;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+  padding: 0;
 }
 
-
-.modal-overlay {
-    display: none; 
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
+.btnVoltar:hover,
+.labelVoltar:hover {
+  color: #e62429;
 }
 
-.modal-content {
-    background-color:#132041; 
-    color: white;
-    padding: 40px;
-    border-radius: 15px;
-    text-align: center;
-    width: 300px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.3s ease-in-out;
+.labelVoltar {
+  color: white;
+  font-weight: 600;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.icon-check i {
-    font-size: 70px;
-    margin-bottom: 15px;
-    color: white;
-}
-
-.modal-content h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    font-family: Arial, sans-serif;
-}
-
-.modal-content p {
-    font-size: 16px;
-    margin-bottom: 25px;
-    font-family: Arial, sans-serif;
-}
-
-#btnFecharModal {
-    background-color: rgba(255, 255, 255, 0.3);
-    color: white;
-    border: none;
-    padding: 10px 40px;
-    font-size: 18px;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#btnFecharModal:hover {
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
+/* =========================================
+   MENSAGEM DE ERRO & MODAL
+   ========================================= */
 .bloco-erro {
-    background: #4a1010;
-    border-left: 5px solid #e63b2e;
-    border-radius: 4px;
-    padding: 10px 16px;
-    margin-bottom: 10px;
-    width: 100%;
-    box-sizing: border-box;
+  background: rgba(230, 36, 41, 0.1);
+  border-left: 5px solid #e62429;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .bloco-erro ul {
-    margin: 0;
-    padding-left: 18px;
-    color: #f5a5a5;
-    font-size: 13px;
+  margin: 0;
+  padding-left: 18px;
+  color: #ffb3b3;
+  font-size: 14px;
 }
 
-.bloco-erro ul li {
-    margin: 4px 0;
-}
-
-.item {
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  box-sizing: border-box;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
 }
 
-.item div {
+.modal-content {
+  background-color: #132041;
+  color: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  width: 90%;
+  max-width: 350px;
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: scaleUp 0.3s ease-out;
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.icon-check i {
+  font-size: 60px;
+  margin-bottom: 20px;
+  color: #4caf50;
+}
+
+.modal-content h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-size: 15px;
+  color: #a0aec0;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.modal-content strong {
+  color: white;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+#btnFecharModal {
+  background-color: #e62429;
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
   width: 100%;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-@media (max-width: 480px) {
-
-  .container {
-    width: 95%;
-    padding: 16px;
-    margin-top: 70px;
-  }
-
-  h1 {
-    font-size: 18px;
-  }
-
-  .label {
-    font-size: 15px;
-  }
-
-  .inputReclamacao {
-    height: 140px;
-  }
-
-  .logo {
-    width: 70px;
-  }
-
-  .modal-content {
-    width: 85%;
-    padding: 25px;
-  }
-
+#btnFecharModal:hover {
+  background-color: #c0181d;
 }
