@@ -67,13 +67,16 @@ try {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuimeraGames</title>
+  <title>Quimera Games</title>
   <link rel="stylesheet" href="../Css/stylles.css">
+  <link rel="stylesheet" href="../css/global.css?v=<?php echo time(); ?>">
+  <link rel="icon" type="image/x-icon" href="/GitHub/ProjIntegrador/Site_QuimeraGames/favicon.ico">
 </head>
 
 <body>
   <header>
-    <?php include_once '../header_global/header_index.php' ?>
+    <?php include '../header_footer_global/header.php'; ?>
+    <?php include '../header_footer_global/menu_usuario.php'; ?>
   </header>
 
   <div id="overlay-escuro" class="fundo-escuro"></div>
@@ -218,10 +221,7 @@ try {
 
   </div>
 
-  <footer class="rodape"
-    style="text-align: center; padding: 30px; background: #111823; color: #cdd5e0; border-top: 1px solid #30363d; margin-top: 60px;">
-    QuimeraGames &copy; 2026
-  </footer>
+  <?php include '../header_footer_global/footer.php'; ?>
 
   <script src="Script.js" defer></script>
 </body>
