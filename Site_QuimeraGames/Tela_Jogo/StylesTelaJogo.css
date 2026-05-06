@@ -1,0 +1,184 @@
+/* =======================================================
+   ESTRUTURA BASE (DESKTOP)
+   ======================================================= */
+.game-page-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.game-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.game-left-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-right-col {
+    width: 350px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.media-thumbnails {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+.thumb-wrapper {
+    width: 150px;
+    height: 84px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* BOTÕES DE AÇÃO PRINCIPAIS */
+.btn-action {
+    width: 100%;
+    height: 55px; /* Altura fixa para garantir consistência */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* AJUSTE DO GRUPO DE CUPOM PARA SER IGUAL AOS BOTÕES DE COMPRA */
+.cupom-area {
+    margin-top: 15px;
+}
+
+.cupom-input-group {
+    display: flex;
+    flex-direction: column; /* Empilha o input e o botão */
+    gap: 10px;
+}
+
+.cupom-input-group input {
+    width: 100%;
+    height: 50px;
+    padding: 0 15px;
+    font-size: 1rem;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: #fff;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+#btn-aplicar-cupom {
+    width: 100%;
+    height: 55px; /* Mesma altura do botão de comprar */
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #333; /* Cor neutra, pode mudar para a cor do seu tema */
+    color: white;
+    transition: background 0.3s;
+}
+
+#btn-aplicar-cupom:hover {
+    background-color: #444;
+}
+
+/* =======================================================
+   RESPONSIVIDADE (TABLETS E REORDENAÇÃO) - Telas < 992px
+   ======================================================= */
+@media (max-width: 992px) {
+    .game-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .game-left-col, .game-right-col {
+        display: contents;
+    }
+
+    #painel-midia { order: 1; }
+    #galeria-thumbnails { order: 2; }
+    .buy-panel { order: 3; width: 100%; }
+    .game-description { order: 4; width: 100%; }
+    .info-table { order: 5; width: 100%; }
+    .game-rating { order: 6; width: 100%; }
+    .system-requirements { order: 7; width: 100%; }
+}
+
+/* =======================================================
+   RESPONSIVIDADE (CELULARES) - Telas < 768px
+   ======================================================= */
+@media (max-width: 768px) {
+    .game-page-container {
+        padding: 15px;
+        overflow-x: hidden; 
+    }
+
+    #painel-midia {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        width: calc(100% + 30px) !important;
+        border-radius: 0 !important;
+    }
+
+    #galeria-thumbnails {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        width: calc(100% + 30px) !important;
+        padding-left: 15px;
+        box-sizing: border-box;
+    }
+
+    .price-box {
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .v-new-side {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .btn-action, #btn-aplicar-cupom {
+        height: 60px; /* Um pouco maior no mobile para facilitar o toque */
+        font-size: 1.2rem;
+    }
+
+    .cupom-input-group input {
+        height: 55px;
+    }
+}
