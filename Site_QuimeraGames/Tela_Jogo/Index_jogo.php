@@ -2,37 +2,59 @@
 session_start();
 require_once '../conexa.php';
 
+// 3. Definições de sessão e badges
+$logado = isset($_SESSION['usuario_nome']);
+$id_user_logado = $_SESSION['id_user'] ?? 0;
+$email_user = $_SESSION['usuario_email'] ?? '';
+
 // 1. Pega o ID do jogo da URL
 $id_jogo = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
-// Validação básica se o ID existe
+// --- SISTEMA DE SORTEIO DE COIN (GAMIFICAÇÃO) ---
+$spawn_animal = false;
+if ($logado) {
+    $chance = rand(1, 100);
+    // 30% de chance de aparecer um mascote
+    if ($chance <= 100) {
+       $animais = ['bode.png', 'leao.png', 'cobra.png', 'dragao.png'];
+        $animal_sorteado = $animais[array_rand($animais)];
+        // Caminho da imagem (ajuste para a pasta onde você salvou as fotos deles)
+        $spawn_animal = '../imagens/' . $animal_sorteado;
+    }
+}
+// ------------------------------------------------
+
 if ($id_jogo === 0) {
     die("<h2 style='color:black; text-align:center; margin-top:50px; font-family:sans-serif;'>Jogo não encontrado na URL. Volte para a loja.</h2>");
 }
 
-// 2. Consulta a média das avaliações (usando try-catch para evitar erro fatal)
+// 2. Consulta a média das avaliações
 try {
-    $stmt_media = $pdo->prepare("SELECT AVG(nota) as media FROM avaliacoes WHERE id_play = :id");
+    $stmt_media = $pdo->prepare("SELECT AVG(nota) as media FROM avaliacao WHERE id_play = :id");
     $stmt_media->bindValue(':id', $id_jogo, PDO::PARAM_INT);
     $stmt_media->execute();
     $dados = $stmt_media->fetch(PDO::FETCH_ASSOC);
-
-    // Verifique se o retorno é um número válido
     $media_nota = ($dados && $dados['media'] !== null) ? number_format((float) $dados['media'], 1, '.', '') : '0.0';
 } catch (PDOException $e) {
     $media_nota = '0.0';
 }
 
-// 3. Definições de sessão e badges
-$logado = isset($_SESSION['usuario_nome']);
-$id_user_logado = $_SESSION['id_user'] ?? 0;
+$link_home = $logado ? '../Usuario_Logado/usuariologado.php' : '../Index/index.php';
 $veio_do_desconto = isset($_GET['desconto']) && $_GET['desconto'] == '1';
 
+// Variáveis essenciais para o Header funcionar!
 $qtd_carrinho = 0;
 $qtd_wishlist = 0;
 $ta_na_lista = false;
+$usuario = ['url_foto' => ''];
 
 if ($logado && $id_user_logado > 0) {
+    // Busca a foto do usuário com segurança
+    $stmt_user = $pdo->prepare("SELECT url_foto FROM cadastro WHERE email = :email");
+    $stmt_user->bindParam(":email", $email_user);
+    $stmt_user->execute();
+    $usuario = $stmt_user->fetch(PDO::FETCH_ASSOC) ?: $usuario;
+
     // Conta Carrinho
     $stmt_cart = $pdo->prepare("SELECT COUNT(*) FROM carrinho WHERE id_usuario = ?");
     $stmt_cart->execute([$id_user_logado]);
@@ -51,7 +73,7 @@ if ($logado && $id_user_logado > 0) {
     }
 }
 
-// 4. Busca os dados do jogo (continuação do seu código original)
+// 4. Busca os dados do jogo
 try {
     $query = "SELECT j.*, c.tipo_categoria 
               FROM jogos j 
@@ -99,6 +121,19 @@ try {
 } catch (PDOException $e) {
     die("<h2 style='color:black;'>Erro na consulta: " . $e->getMessage() . "</h2>");
 }
+
+
+    
+$sql = "SELECT COUNT(*) FROM compra 
+        WHERE id_user = ? AND id_play = ?";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$id_user_logado, $id_jogo]);
+
+$jaComprou = $stmt->fetchColumn() > 0;
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -110,51 +145,18 @@ try {
     <title><?php echo htmlspecialchars($jogo['titulo']); ?> - QuimeraGames</title>
     <link rel="stylesheet" href="../Css/stylles.css">
     <link rel="stylesheet" href="../Css/Styles.css">
+    <link rel="stylesheet" href="../css/global.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="StylesTelaJogo.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
 
-    <header class="topo-universal">
-        <div class="topo-esquerda">
-            <a href="<?php echo $link_home; ?>"><img class="logo" src="../imagens/logo.png" alt="Logo"></a>
-            <a href="<?php echo $link_home; ?>" style="text-decoration: none;"><button
-                    class="btn-nav active">Loja</button></a>
-        </div>
-
-        <div class="topo-direita">
-            <?php if ($logado): ?>
-                <div style="position: relative; display: inline-block;">
-                    <button type="button" class="btn-icon"
-                        onclick="window.location.href='../Usuario_Logado/carrinho.php'">🛒</button>
-                    <?php if (isset($qtd_carrinho) && $qtd_carrinho > 0): ?>
-                        <span class="badge-bolinha"
-                            style="position: absolute; top: -8px; right: -12px; pointer-events: none;"><?php echo $qtd_carrinho; ?></span>
-                    <?php endif; ?>
-                </div>
-
-                <div class="user-box" onclick="toggleMenu()">
-                    <img src="../imagens/aidento.jpg" class="user-img" alt="Avatar">
-                    <span class="user-nome"><?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></span>
-
-                    <div id="user-menu" class="user-menu">
-                        <a href="../Conta/conta.php">Conta</a>
-                        <a href="../Pagamento/pagamento.php">Pagamento</a>
-                        <a href="../Usuario_Logado/wishlist.php">
-                            Lista de desejo
-                            <?php if (isset($qtd_wishlist) && $qtd_wishlist > 0): ?>
-                                <span class="badge-bolinha"><?php echo $qtd_wishlist; ?></span>
-                            <?php endif; ?>
-                        </a>
-                        <a href="../Usuario_Logado/logout.php">Sair</a>
-                    </div>
-                </div>
-            <?php else: ?>
-                <a href="../Entrar/Entrar.php" style="text-decoration: none;"><button class="btn-login">Entrar</button></a>
-            <?php endif; ?>
-
-            <a href="../Sac/Suporte.php" style="text-decoration: none;"><button class="btn-login">Suporte</button></a>
-        </div>
+    <header style="position: relative; z-index: 999999; overflow: visible;">
+        <?php include '../header_footer_global/header.php'; ?>
+        <?php include '../header_footer_global/menu_usuario.php'; ?>
     </header>
+
+    <div id="gamificacao-spawn" data-img="<?php echo $spawn_animal ? $spawn_animal : ''; ?>" style="display: none;"></div>
 
     <div class="container game-page-container">
         <div id="dados-sessao" data-logado="<?php echo $logado ? 'true' : 'false'; ?>"
@@ -287,13 +289,19 @@ try {
                         <?php endif; ?>
                     </div>
 
+                    <?php if ($jaComprou): ?>
+
+                    <button class="btn-action btn-cart" id="btn-add-lista">Minha lista</button>
+
+                        <?php else: ?>
+
                     <button class="btn-action btn-buy" id="btn-comprar-agora">
                         Comprar
                     </button>
                     <button class="btn-action btn-cart" id="btn-add-carrinho">Carrinho</button>
 
-                    <button class="btn-action btn-epic-wishlist <?php echo $ta_na_lista ? 'active' : ''; ?>"
-                        id="btn-add-wishlist">
+                    <button class="btn-action btn-epic-wishlist <?php echo $ta_na_lista ? 'active' : ''; ?>"id="btn-add-wishlist">
+
                         <?php if ($ta_na_lista): ?>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="#e62429" stroke="#e62429" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -308,7 +316,7 @@ try {
                             Lista de desejo
                         <?php endif; ?>
                     </button>
-
+                            <?php endif; ?>
                     <div class="cupom-area">
                         <p class="cupom-titulo"> Sugestão de Cupom: <strong><?php echo $cupom_sugerido; ?></strong>
                         </p>
@@ -319,10 +327,6 @@ try {
                         <p id="msg-cupom"></p>
                     </div>
 
-                    <button class="btn-action btn-steam" style="margin-top: 20px;"
-                        onclick="window.open('https://store.steampowered.com/', '_blank')">
-                        Ativar na Steam
-                    </button>
                     <p class="steam-aviso">Este produto é ativado via <strong>chave de ativação</strong></p>
                 </div>
 
@@ -345,30 +349,27 @@ try {
         </div>
     </div>
 
-    <footer class="rodape"
-        style="text-align: center; padding: 30px; background: #111823; color: #cdd5e0; border-top: 1px solid #30363d; margin-top: 60px;">
-        QuimeraGames &copy; 2026
-    </footer>
-    <script src="Script_jogo.js" defer></script>
-
     <script>
+        // Esta função garante que o menu vai abrir ao clicar na foto
         function toggleMenu() {
             const menu = document.getElementById("user-menu");
-            menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+            if (menu) {
+                menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+            }
         }
 
-        // fecha se clicar fora
+        // Esta função garante que o menu fecha ao clicar fora dele
         document.addEventListener("click", function (e) {
             const userBox = document.querySelector(".user-box");
             const menu = document.getElementById("user-menu");
-
-            if (!userBox.contains(e.target)) {
+            if (userBox && menu && !userBox.contains(e.target)) {
                 menu.style.display = "none";
             }
         });
-
     </script>
 
+    <script src="Script_jogo.js" defer></script>
+    <?php include '../header_footer_global/footer.php'; ?>
 </body>
 
 </html>
