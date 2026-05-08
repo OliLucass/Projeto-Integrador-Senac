@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - Quimera Games</title>
-    <link rel="stylesheet" href="cStyles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="cstyles.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../css/global.css?v=<?php echo time(); ?>">
     <link rel="icon" type="image/x-icon" href="/GitHub/ProjIntegrador/Site_QuimeraGames/favicon.ico">
 </head>
@@ -17,9 +17,9 @@
     require_once '../conexa.php';
 
     // === CORREÇÃO DA LOGO: Avisa para o header para onde o clique deve ir ===
-    $link_home = '../Index/index.php';
+    $link_home = '../index/index.php';
     ?>
-    <a href="../Index/index.php" class="logo-link">
+    <a href="../index/index.php" class="logo-link">
         <img class="logo-auth" src="../imagens/logo.png" alt="QuimeraGames Logo">
     </a>
     <main class="main-cadastro">
@@ -84,7 +84,7 @@
     <footer class="rodape">
         <div class="primeira_cadastre">
             <label class="primeira">Já tem uma conta? Faça login para continuar.</label>
-            <button class="cad" onclick="window.location.href='../Entrar/Entrar.php'">Entrar</button>
+            <button class="cad" onclick="window.location.href='../entrar/entrar.php'">Entrar</button>
         </div>
 
         <div class="texto">
@@ -140,9 +140,9 @@
                     $_SESSION['email_verificacao'] = $email;
                     
 
-                    require_once '../PHPMailer/src/PHPMailer.php';
-                    require_once '../PHPMailer/src/SMTP.php';
-                    require_once '../PHPMailer/src/Exception.php';
+                    require_once '../phpmailer/src/phpmailer.php';
+                    require_once '../phpmailer/src/smtp.php';
+                    require_once '../phpmailer/src/exception.php';
 
                     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
                     $mail->CharSet = 'UTF-8';
@@ -198,7 +198,7 @@
 </html>";
                         $mail->send();
 
-                        header("Location: ../Verificar_email/index.php");
+                        header("Location: ../verificar_email/index.php");
                         exit;
 
                     } catch (Exception $e) {
