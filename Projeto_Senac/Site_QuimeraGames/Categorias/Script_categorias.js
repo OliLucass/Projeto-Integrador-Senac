@@ -1,198 +1,136 @@
-<?php
-session_start();
-require_once("../conexa.php");
+document.addEventListener('DOMContentLoaded', () => {
 
-// Proteção de acesso
-if (!isset($_SESSION['usuario_nome'])) {
-  header("Location: ../entrar/entrar.php");
-  exit;
-}
-
-$email = $_SESSION['usuario_email'];
-$id_user = $_SESSION['id_user'] ?? 0;
-$logado = true;
-$link_home = '../usuario_logado/usuariologado.php';
-
-// --- INÍCIO DA LÓGICA DE DADOS (Unificada) ---
-
-/* 1. BUSCA USUARIO E BADGES */
-// Buscamos tudo de uma vez para garantir que as variáveis existam
-$stmt = $pdo->prepare("SELECT * FROM cadastro WHERE email = :email");
-$stmt->bindParam(":email", $email);
-$stmt->execute();
-$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$qtd_carrinho = 0;
-$qtd_wishlist = 0;
-
-if ($id_user > 0) {
-    $stmt_c = $pdo->prepare("SELECT COUNT(*) FROM carrinho WHERE id_usuario = ?");
-    $stmt_c->execute([$id_user]);
-    $qtd_carrinho = $stmt_c->fetchColumn();
-
-    $stmt_w = $pdo->prepare("SELECT COUNT(*) FROM lista_desejos WHERE id_user = ?");
-    $stmt_w->execute([$id_user]);
-    $qtd_wishlist = $stmt_w->fetchColumn();
-}
-
-$msg = "";
-
-/* 📸 UPLOAD FOTO */
-if (isset($_POST['upload_foto'])) {
-  if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
-
-    $ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
-    $nomeArquivo = uniqid() . "." . $ext;
-    $caminhoFisico = "../uploads/" . $nomeArquivo;
-
-    if (move_uploaded_file($_FILES['foto']['tmp_name'], $caminhoFisico)) {
-
-        /* APAGA FOTO ANTIGA */
-        if (!empty($usuario['url_foto'])) {
-            $fotoAntiga = "../uploads/" . $usuario['url_foto'];
-
-            if (file_exists($fotoAntiga)) {
-                unlink($fotoAntiga);
+    // 1. Menu Sanfona (Filtros)
+    const botoesFiltro = document.querySelectorAll('.btn-filtro-toggle');
+    botoesFiltro.forEach(botao => {
+        botao.addEventListener('click', () => {
+            const conteudo = botao.nextElementSibling;
+            const seta = botao.querySelector('.seta');
+            conteudo.classList.toggle('ativo');
+            if (seta) {
+                seta.style.transform = conteudo.classList.contains('ativo') ? 'rotate(180deg)' : 'rotate(0deg)';
             }
-        }
-
-        /* SALVA NOVA FOTO NO BANCO */
-        $updateFoto = $pdo->prepare("
-            UPDATE cadastro 
-            SET url_foto = :foto 
-            WHERE email = :email
-        ");
-
-        $updateFoto->execute([
-            ':foto' => $nomeArquivo,
-            ':email' => $email
-        ]);
-
-        $usuario['url_foto'] = $nomeArquivo;
-        $msg = "✅ Foto atualizada!";
-    }
-  }
-}
-
-/* ✏️ ATUALIZAR NOME */
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['upload_foto'])) {
-  $novo_user = $_POST['nome_user'];
-  if ($novo_user === $usuario['nome_user']) {
-    $msg = "⚠️ Nenhuma alteração feita.";
-  } else {
-    $check = $pdo->prepare("SELECT id_user FROM cadastro WHERE nome_user = :nome_user AND email != :email");
-    $check->execute([':nome_user' => $novo_user, ':email' => $email]);
-    if ($check->rowCount() > 0) {
-      $msg = "❌ Esse nome já existe!";
-    } else {
-      $update = $pdo->prepare("UPDATE cadastro SET nome_user = :nome_user WHERE email = :email");
-      $update->execute([':nome_user' => $novo_user, ':email' => $email]);
-      $_SESSION['usuario_nome'] = $novo_user;
-      $usuario['nome_user'] = $novo_user;
-      $msg = "✅ Nome atualizado!";
-    }
-  }
-}
-
-function mascararCPF($cpf) {
-  return substr($cpf, 0, 3) . '.***.***-' . substr($cpf, -2);
-}
-// --- FIM DA LÓGICA ---
-?>
-
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conta</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="../css/global.css?v=<?php echo time(); ?>">
-  <link rel="icon" type="image/x-icon" href="/GitHub/ProjIntegrador/Site_QuimeraGames/favicon.ico">
-</head>
-
-<body>
-
-  <header>
-    <?php include '../header_footer_global/header.php'; ?>
-  </header>
-
-  <div class="container">
-    <div class="card-conta">
-
-      <!-- FOTO -->
-      <div class="perfil">
-
-        <div class="perfil-esquerda">
-          <form id="formFoto" method="POST" enctype="multipart/form-data">
-            <img src="../uploads/<?php echo $usuario['url_foto']; ?>" class="avatar">
-            <input type="file" name="foto" id="foto" hidden>
-          </form>
-
-          <div class="cpf">
-            CPF: <?php echo mascararCPF($usuario['cpf']); ?>
-          </div>
-        </div>
-
-        <div class="trocarfoto_salvar">
-          <label for="foto" class="btn-foto">Trocar foto</label>
-          <button type="submit" form="formFoto" name="upload_foto" class="btn-foto">Salvar</button>
-        </div>
-
-      </div>
-      <!-- INFO -->
-      <div class="info">
-        <h2>Configurações da Conta</h2>
-
-        <form method="POST" class="form-info">
-
-          <div class="campo">
-            <label>Apelido de usuário</label>
-            <input name="nome_user" value="<?php echo $usuario['nome_user']; ?>">
-          </div>
-
-          <div class="campo">
-            <label>Nome completo</label>
-            <input value="<?php echo $usuario['nome']; ?>" readonly>
-          </div>
-
-          <div class="campo">
-            <label>Email</label>
-            <input value="<?php echo $usuario['email']; ?>" readonly>
-          </div>
-
-          <button type="submit">Atualizar dados</button>
-        </form>
-
-        <?php if ($msg): ?>
-          <p class="msg"><?php echo $msg; ?></p>
-        <?php endif; ?>
-      </div>
-
-    </div>
-  </div>
-
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById("user-menu");
-      if (menu) {
-        menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-      }
-    }
-
-    document.addEventListener("click", function (e) {
-      const userBox = document.querySelector(".user-box");
-      const menu = document.getElementById("user-menu");
-      if (userBox && menu && !userBox.contains(e.target)) {
-        menu.style.display = "none";
-      }
+        });
     });
 
+    // 2. Lógica de Filtragem de Jogos
+    const inputBusca = document.getElementById('input-filtro-nome');
+    const checkboxes = document.querySelectorAll('.filtro-checkbox');
+    const jogosCards = document.querySelectorAll('.jogo-card');
 
-  </script>
-  <?php include '../header_footer_global/footer.php'; ?>
+    function aplicarFiltros() {
+        const termoDigitado = inputBusca ? inputBusca.value.toLowerCase().trim() : '';
+        const chkGratis = document.getElementById('chk-gratis')?.checked;
+        const chkAte50 = document.getElementById('chk-ate50')?.checked;
+        const chkDesconto = document.getElementById('chk-desconto')?.checked;
 
-</body>
+        jogosCards.forEach(card => {
+            const tituloJogo = card.getAttribute('data-titulo') || '';
+            const isGratis = card.getAttribute('data-gratis') === 'true';
+            const isAte50 = card.getAttribute('data-ate50') === 'true';
+            const hasDesconto = card.getAttribute('data-desconto') === 'true';
 
-</html>
+            let mostrar = true;
+
+            if (termoDigitado !== '' && !tituloJogo.includes(termoDigitado)) mostrar = false;
+
+            if (mostrar && (chkGratis || chkAte50 || chkDesconto)) {
+                let atende = false;
+                if (chkGratis && isGratis) atende = true;
+                if (chkAte50 && isAte50) atende = true;
+                if (chkDesconto && hasDesconto) atende = true;
+                if (!atende) mostrar = false;
+            }
+
+            card.style.display = mostrar ? 'flex' : 'none';
+        });
+    }
+
+    if (inputBusca) inputBusca.addEventListener('input', aplicarFiltros);
+    checkboxes.forEach(chk => chk.addEventListener('change', aplicarFiltros));
+
+    // 3. Lógica das Setas de Categorias
+    const gridCategorias = document.getElementById('grid-categorias');
+    const setaEsquerda = document.getElementById('seta-esquerda');
+    const setaDireita = document.getElementById('seta-direita');
+
+    if (gridCategorias && setaEsquerda && setaDireita) {
+        const scrollAmount = 450;
+        setaEsquerda.addEventListener('click', (e) => {
+            e.preventDefault();
+            gridCategorias.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+        setaDireita.addEventListener('click', (e) => {
+            e.preventDefault();
+            gridCategorias.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+    }
+
+    // =========================================================
+    // 4. LÓGICA DE ABRIR OS MENUS (BLINDADA CONTRA CONFLITOS)
+    // =========================================================
+    const btnExplorar = document.getElementById('btn-explorar');
+    const btnCategorias = document.getElementById('btn-categorias');
+    const painelExplorar = document.getElementById('painel-explorar');
+    const painelCategorias = document.getElementById('painel-categorias');
+    const overlay = document.getElementById('overlay-escuro');
+
+    function atualizarOverlay() {
+        if ((painelExplorar && painelExplorar.classList.contains('show')) ||
+            (painelCategorias && painelCategorias.classList.contains('show'))) {
+            if (overlay) overlay.classList.add('ativo');
+        } else {
+            if (overlay) overlay.classList.remove('ativo');
+        }
+    }
+
+    if (btnExplorar && painelExplorar) {
+        btnExplorar.addEventListener('click', (e) => {
+            // Esse comando bloqueia o Script.js da Home e impede o fechamento imediato
+            e.stopImmediatePropagation();
+
+            if (painelCategorias) painelCategorias.classList.remove('show');
+            painelExplorar.classList.toggle('show');
+            atualizarOverlay();
+        });
+    }
+
+    if (btnCategorias && painelCategorias) {
+        btnCategorias.addEventListener('click', (e) => {
+            e.stopImmediatePropagation();
+
+            if (painelExplorar) painelExplorar.classList.remove('show');
+            painelCategorias.classList.toggle('show');
+            atualizarOverlay();
+        });
+    }
+
+    // Fechar tudo ao clicar fora com segurança
+    document.addEventListener('click', (e) => {
+        let fechouAlgo = false;
+
+        // Fecha painel Explorar
+        if (painelExplorar && painelExplorar.classList.contains('show') && !painelExplorar.contains(e.target) && e.target !== btnExplorar) {
+            painelExplorar.classList.remove('show');
+            fechouAlgo = true;
+        }
+
+        // Fecha painel Categorias
+        if (painelCategorias && painelCategorias.classList.contains('show') && !painelCategorias.contains(e.target) && e.target !== btnCategorias) {
+            painelCategorias.classList.remove('show');
+            fechouAlgo = true;
+        }
+
+        if (fechouAlgo) atualizarOverlay();
+
+        // Fecha menu do usuário (com proteção contra erros)
+        const userBox = document.querySelector(".user-box");
+        const menu = document.getElementById("user-menu");
+        if (userBox && menu && menu.style.display === "flex") {
+            if (!userBox.contains(e.target) && !menu.contains(e.target)) {
+                menu.style.display = "none";
+            }
+        }
+    });
+
+});
