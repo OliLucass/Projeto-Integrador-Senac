@@ -51,7 +51,7 @@ if (senha.length < 8) {
 
 
 function voltarPagina(){
-    window.location.href = "../Index/index.php";
+    window.location.href = "../index/index.php";
 }
 
 function validaCPF(cpf) {
