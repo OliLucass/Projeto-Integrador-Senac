@@ -333,3 +333,100 @@ body {
 .categoria-container {
     flex: 1;
 }
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+
+  /* ================= LAYOUT ================= */
+  .categoria-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ================= FILTRO ================= */
+  .barra-filtros {
+    width: 100%;
+    order: -1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    padding: 15px;
+  }
+
+  /* TÍTULO */
+  .barra-filtros h3 {
+    margin-bottom: 5px;
+  }
+
+  /* ================= CAMPO DE BUSCA (AGORA CORRETO) ================= */
+  .filtro-busca {
+    width: 100%;
+
+    height: 45px !important; /* ✅ tamanho correto */
+    padding: 0 12px !important;
+
+    display: flex;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+  }
+
+  .filtro-busca input {
+    height: 100% !important;
+    width: 100%;
+
+    padding: 0 !important;
+    margin-left: 8px;
+
+    font-size: 14px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+  }
+
+  /* ================= FILTROS ABAIXO ================= */
+  .filtros-linha {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .filtro-grupo {
+    background: rgba(0,0,0,0.25);
+    padding: 12px;
+    border-radius: 10px;
+    border-bottom: none;
+  }
+
+  .btn-filtro-toggle {
+    padding: 0;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .filtro-conteudo {
+    display: flex !important;
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  .seta {
+    display: none;
+  }
+
+  /* ================= GRID (3 POR LINHA) ================= */
+  .jogos-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 18px;
+  }
+
+  /* ================= CARDS ================= */
+  .thumb-wrapper {
+    aspect-ratio: 3/4;
+  }
+
+}
