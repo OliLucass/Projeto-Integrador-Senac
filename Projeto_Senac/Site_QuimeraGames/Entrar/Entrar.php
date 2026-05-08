@@ -27,11 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['usuario_email'] = $dados['email'];
         $_SESSION['id_user'] = $dados['id_user'];
 
-        header("Location: ../Usuario_logado/usuariologado.php");
+        header("Location: ../usuario_logado/usuariologado.php");
         exit;
 
     } else {
-        header("Location: Entrar.php?erro=1");
+        header("Location: entrar.php?erro=1");
         exit;
     }
 }
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h1>Entre na QuimeraGames</h1>
 
             <div class="conteudo">
-                <form method="post" action="Entrar.php">
+                <form method="post" action="entrar.php">
                     <div class="div1">
                         <label>Nome de usuário ou email</label>
                         <input type="text" name="usuario" required autocomplete="off">
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div> <button type="submit" class="iniciar_sessao">Iniciar Sessão</button>
                 </form>
 
-                <a href="../Sac/Suporte.php" class="problemas_iniciar">Problemas para iniciar sessão?</a>
+                <a href="../sac/suporte.php" class="problemas_iniciar">Problemas para iniciar sessão?</a>
             </div>
         </div>
     </main>
