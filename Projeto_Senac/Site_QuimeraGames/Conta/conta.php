@@ -4,14 +4,14 @@ require_once("../conexa.php");
 
 // Proteção de acesso
 if (!isset($_SESSION['usuario_nome'])) {
-  header("Location: ../Entrar/Entrar.php");
+  header("Location: ../entrar/entrar.php");
   exit;
 }
 
 $email = $_SESSION['usuario_email'];
 $id_user = $_SESSION['id_user'] ?? 0;
 $logado = true;
-$link_home = '../Usuario_Logado/usuariologado.php';
+$link_home = '../usuario_logado/usuariologado.php';
 
 // --- INÍCIO DA LÓGICA DE DADOS (Unificada) ---
 
@@ -40,13 +40,34 @@ $msg = "";
 /* 📸 UPLOAD FOTO */
 if (isset($_POST['upload_foto'])) {
   if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
+
     $ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
     $nomeArquivo = uniqid() . "." . $ext;
     $caminhoFisico = "../uploads/" . $nomeArquivo;
 
     if (move_uploaded_file($_FILES['foto']['tmp_name'], $caminhoFisico)) {
-        $updateFoto = $pdo->prepare("UPDATE cadastro SET url_foto = :foto WHERE email = :email");
-        $updateFoto->execute([':foto' => $nomeArquivo, ':email' => $email]);
+
+        /* APAGA FOTO ANTIGA */
+        if (!empty($usuario['url_foto'])) {
+            $fotoAntiga = "../uploads/" . $usuario['url_foto'];
+
+            if (file_exists($fotoAntiga)) {
+                unlink($fotoAntiga);
+            }
+        }
+
+        /* SALVA NOVA FOTO NO BANCO */
+        $updateFoto = $pdo->prepare("
+            UPDATE cadastro 
+            SET url_foto = :foto 
+            WHERE email = :email
+        ");
+
+        $updateFoto->execute([
+            ':foto' => $nomeArquivo,
+            ':email' => $email
+        ]);
+
         $usuario['url_foto'] = $nomeArquivo;
         $msg = "✅ Foto atualizada!";
     }
