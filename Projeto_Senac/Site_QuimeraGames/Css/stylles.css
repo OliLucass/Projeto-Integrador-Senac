@@ -693,7 +693,7 @@ body {
   flex: 1;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
 
   /* remove carrossel desktop */
   .carousel-container{
@@ -769,7 +769,7 @@ body {
     font-size:11px;
   }
 
-  .menu-busca{
+   .btn-dropdown{
     display:none !important;
   }
 }
@@ -788,5 +788,108 @@ body {
   .card-info-texto h4{
     font-size:12px;
   }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+
+  /* remove carrossel desktop */
+  .carousel-container{
+    display:none !important;
+  }
+
+  /* seção */
+  .secao{
+    margin-top:10px;
+  }
+
+  .secao h2{
+    font-size:20px;
+    margin-bottom:14px;
+    padding-left:10px;
+  }
+
+  /* 2 colunas / 3 linhas */
+  .jogos-grid{
+    display:grid !important;
+    grid-template-columns:repeat(2, 1fr);
+    gap:-5px;
+    padding:-30px;
+    margin-right: 0px;
+  }
+
+  /* CARD visível */
+  .card-jogo-container{
+    width:100%;
+    display:block !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+
+    background:#13192b;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 16px rgba(0,0,0,.35);
+  }
+
+  /* imagem */
+  .thumb-wrapper{
+    width:100%;
+    height:450px;
+    overflow:hidden;
+  }
+
+  .thumb-wrapper img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  /* texto */
+  .card-info-texto{
+    padding:10px;
+  }
+
+  .card-info-texto h4{
+    font-size:13px;
+    line-height:1.3;
+    min-height:34px;
+    margin-bottom:6px;
+  }
+
+  .v-new{
+    font-size:15px;
+    font-weight:700;
+  }
+
+  .v-old{
+    font-size:11px;
+  }
+
+
+
+
+ 
+
+.categorias-painel-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+
+  padding: 0;
+  scroll-snap-type: x mandatory;
+}
+
+.card-cat-item {
+  flex: 0 0 calc(50% - 10px);
+  min-width: unset;
+
+  scroll-snap-align: start;
+}
+
+
+
 
 }
