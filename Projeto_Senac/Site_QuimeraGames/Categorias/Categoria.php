@@ -25,7 +25,7 @@ if ($id_user > 0) {
 
 // 3. Variáveis de Estado
 $logado = isset($_SESSION['usuario_nome']);
-$link_home = $logado ? '../Usuario_Logado/usuariologado.php' : '../Index/index.php';
+$link_home = $logado ? '../usuario_logado/usuariologado.php' : '../index/index.php';
 
 // 4. Busca de Categoria (se houver filtro)
 $categoria = isset($_GET['categoria']) ? (int) $_GET['categoria'] : 0;
@@ -107,8 +107,8 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($categoria['tipo_categoria']) ?>Quimera Games</title>
-    <link rel="stylesheet" href="../Css/stylles.css">
-    <link rel="stylesheet" href="../Css/Stylle.css">
+    <link rel="stylesheet" href="../css/stylles.css">
+    <link rel="stylesheet" href="../css/stylle.css">
     <link rel="stylesheet" href="../css/global.css?v=<?php echo time(); ?>">
     <link rel="icon" type="image/x-icon" href="/GitHub/ProjIntegrador/Site_QuimeraGames/favicon.ico">
 </head>
@@ -133,7 +133,7 @@ try {
                     <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070"
                         class="img-banner-explorar">
                     <div class="overlay-banner"></div>
-                    <a href="../mais_vendidos/Index.php" class="btn-mais-vendidos-banner">
+                    <a href="../mais_vendidos/index.php" class="btn-mais-vendidos-banner">
                         Mais vendidos
                     </a>
                 </div>
@@ -150,7 +150,7 @@ try {
                         <?php foreach ($categorias_bd as $cat): ?>
                             <?php $nome_cat = $nomes_categorias[$cat['id_categoria']] ?? 'Outros'; ?>
 
-                            <a href="../Categorias/categoria.php?id=<?php echo $cat['id_categoria']; ?>"
+                            <a href="../categorias/categoria.php?id=<?php echo $cat['id_categoria']; ?>"
                                 class="card-cat-item">
                                 <div class="img-cat-wrapper">
                                     <img src="<?php echo htmlspecialchars($cat['capa']); ?>" alt="<?php echo $nome_cat; ?>">
@@ -191,7 +191,7 @@ try {
                             $has_desconto = $tem_desconto ? 'true' : 'false';
                             ?>
 
-                            <a href="../Tela_Jogo/index_jogo.php?id=<?= $jogo['id_play'] ?><?= $tem_desconto ? '&desconto=1' : '' ?>"
+                            <a href="../tela_jogo/index_jogo.php?id=<?= $jogo['id_play'] ?><?= $tem_desconto ? '&desconto=1' : '' ?>"
                                 class="jogo-card" data-titulo="<?= strtolower(htmlspecialchars($jogo['titulo'])) ?>"
                                 data-gratis="<?= $is_gratis ?>" data-ate50="<?= $is_ate50 ?>"
                                 data-desconto="<?= $has_desconto ?>">
@@ -238,11 +238,11 @@ try {
                     <button class="btn-filtro-toggle">Preço <span class="seta">v</span></button>
                     <div class="filtro-conteudo ativo">
                         <label><input type="checkbox" id="chk-gratis" class="filtro-checkbox"> <span
-                                class="checkbox-custom"></span> Gratuitos</label>
+                                class="checkbox-custom"></span>Gratuitos</label>
                         <label><input type="checkbox" id="chk-ate50" class="filtro-checkbox"> <span
-                                class="checkbox-custom"></span> Até R$ 50,00</label>
+                                class="checkbox-custom"></span>Até R$ 50,00</label>
                         <label><input type="checkbox" id="chk-desconto" class="filtro-checkbox"> <span
-                                class="checkbox-custom"></span> Com Desconto</label>
+                                class="checkbox-custom"></span>Com Desconto</label>
                     </div>
                 </div>
             </aside>
@@ -250,8 +250,8 @@ try {
     </div>
 
     <?php include '../header_footer_global/footer.php'; ?>
-    <script src="Script_categorias.js"></script>
-    <script src="../Index/Script.js" defer></script>
+    <script src="script_categorias.js"></script>
+    <script src="../index/script.js" defer></script>
 </body>
 
 </html>
